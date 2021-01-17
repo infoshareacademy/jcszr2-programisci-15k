@@ -9,32 +9,10 @@ namespace RealEstateOffice
         void MainMenu()
         {
             //task 4
-            //FilterMenu()
+            //FilterOperationMenu()
             //AddOperationMenu()
             //RemoveOperationMenu()
             //EditionOperationMenu()
-
-            //TODO: Pozostałe menu przekształcić na klasy
-        }
-
-        void FilterMenu()
-        {
-            //task 5
-        }
-
-        void AddOperationMenu()
-        {
-            //task 6
-        }
-
-        void RemoveOperationMenu()
-        {
-            //task 8
-        }
-
-        void EditionOperationMenu()
-        {
-            //task 7
         }
     }
 }
