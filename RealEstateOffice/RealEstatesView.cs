@@ -9,7 +9,7 @@ namespace RealEstateOffice
         //Metoda display do wyświetlania widoku listy nieruchomości
        void  Display()
         {
-
+            //Oczekujemy listy obiektów RealEstate z backendu
         }
 
 
