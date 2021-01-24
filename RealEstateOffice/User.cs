@@ -6,6 +6,8 @@ namespace RealEstateOffice
 {
     class User
     {
+        //pole enum userType które wyznacza uprawnienia (admin = 1, pracownik biura nieruchomości = 2, klient = 3)
+        
         //odpowiednik jednego wiersza w Users.csv
         //posiada pola ID; Login; Password; Name; Surname; EmailAddress;
     }
