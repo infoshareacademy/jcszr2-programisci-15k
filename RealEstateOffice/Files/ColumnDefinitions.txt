@@ -3,4 +3,4 @@ ID; DateAndTime; TypeOfCRUDOperation; UserName;
 realestate columns:
 ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
 users columns:
-ID; Login; Password; Name; Surname; EmailAddress;
+ID; Login; Password; Name; Surname; EmailAddress; UserType;
