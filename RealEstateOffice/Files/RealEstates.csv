@@ -1,5 +1,4 @@
-﻿ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
-1;1;400000;40;Jan;Wiśniewski;Gdańsk;Wielkpolska;5/20;
+﻿1;1;400000;40;Jan;Wiśniewski;Gdańsk;Wielkpolska;5/20;
 2;1;380000;38;Marian;Kowalski;Gdynia;Długa;74/2
 3;1;210000;21;Adam;Marczak;Gdańsk;Grunwaldzka;13/2
 4;1;1200000;120;Rafał;Laskowski;Gdynia;Świętojańska;54
