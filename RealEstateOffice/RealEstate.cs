@@ -73,7 +73,7 @@ namespace RealEstateOffice
         private string street;
         private int estateAddress;
 
-        public int TypeOfRealEstate { get => typeOfRealEstate; set => typeOfRealEstate = value; }
+       
         public decimal Price { get => price; set => price = value; }
         public int Area { get => area; set => area = value; }
         public string OwnerName { get => ownerName; set => ownerName = value; }
