@@ -43,6 +43,9 @@ namespace RealEstateOffice
                     switch (choice)
                     {
                         case 1:
+
+                            Filter emptyFilter = new Filter();
+                            DatabaseContext.RealEstatesFilter(emptyFilter);                            
                             //przekazujemy pusty nowo stworzony filtr do backendu jako argument funkcji
                             //backend zwraca właściwie dobraną listę obiektów RealEstate które Display() formatuje i tu wyświetla
                             break;
@@ -94,6 +97,7 @@ namespace RealEstateOffice
                         case 10:
                             if (isFilterBeingMade)
                             {
+                                DatabaseContext.RealEstatesFilter(filter);
                                 //przekazujemy istniejący filtr do backendu jako argument funkcji
                                 //pola nie wypełnione przez użytkownika (null) w obiekcie filter nie mają być brane pod uwagę
                                 //backend zwraca właściwie dobraną listę obiektów RealEstate które Display() formatuje i tu wyświetla

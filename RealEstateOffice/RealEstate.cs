@@ -14,31 +14,23 @@ namespace RealEstateOffice
         }
         
         private bool _isIdSet;
-        private bool _isCreationDateSet;
-        
-        //pola obiektu: ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
-
-        private int _id;
-        public enum TypeOfRealEstate
-        {
-            Dom,    // 0
-            Mieszkanie,   // 1
-            Działka,      // 2
-            Garaż,      // 3
-            Lokal_usługowy // 4
-        }
-
+        private bool _isCreationDateSet;  //ustawiane raz w  seterach
+        //---------------------------------------------------------
         private TypeOfRealEstate _typeOfRealEstate;
-        private int _price;
+        private DateTime _creationDate;
+        private DateTime _modificationDate;
+        private Decimal _price;
         private int _area;
         private string _ownerName;
         private string _ownerSurname;
         private string _city;
         private string _street;
-        private string _estateAddress;
-        private DateTime _creationDate;
-        private DateTime _modificationDate;
+        private int _estateAddress;
 
+        //pola obiektu: ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
+
+        private int _id;
+                
         public int Id
         {
             set
@@ -64,23 +56,24 @@ namespace RealEstateOffice
             }
         }
 
-     
-        private Decimal price;
-        private int area;
-        private string ownerName;
-        private string ownerSurname;
-        private string city;
-        private string street;
-        private int estateAddress;
+                
+        public decimal Price { get => _price; set => _price = value; }
+        public int Area { get => _area; set => _area = value; }
+        public string OwnerName { get => _ownerName; set => _ownerName = value; }
+        public string OwnerSurname { get => _ownerSurname; set => _ownerSurname = value; }
+        public string City { get => _city; set => _city = value; }
+        public string Street { get => _street; set => _street = value; }
+        public int EstateAddress { get => _estateAddress; set => _estateAddress = value; }
 
-       
-        public decimal Price { get => price; set => price = value; }
-        public int Area { get => area; set => area = value; }
-        public string OwnerName { get => ownerName; set => ownerName = value; }
-        public string OwnerSurname { get => ownerSurname; set => ownerSurname = value; }
-        public string City { get => city; set => city = value; }
-        public string Street { get => street; set => street = value; }
-        public int EstateAddress { get => estateAddress; set => estateAddress = value; }
+        public enum TypeOfRealEstate
+        {
+            Dom,    // 0
+            Mieszkanie,   // 1
+            Działka,      // 2
+            Garaż,      // 3
+            Lokal_usługowy // 4
+        }
+
 
     }
 }
