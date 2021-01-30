@@ -12,6 +12,23 @@ namespace RealEstateOffice
             _isIdSet = false;
             _isCreationDateSet = false;
         }
+
+
+        public RealEstate(int ID,int TypeOfRealEstate,decimal Price,int Area,string OwnerName,string OwnerSurname, string City,string Street, string EstateAddress)
+        {
+            this._id = ID;
+            this._typeOfRealEstate = (TypeOfRealEstate)TypeOfRealEstate;
+            this._price = Price;
+            this._area = Area;
+            this._ownerName = OwnerName;
+            this._ownerSurname = OwnerSurname;
+            this._city = City;
+            this._street = Street;
+            this._estateAddress = EstateAddress;
+
+
+
+        }
         
         private bool _isIdSet;
         private bool _isCreationDateSet;  //ustawiane raz w  seterach
@@ -25,7 +42,7 @@ namespace RealEstateOffice
         private string _ownerSurname;
         private string _city;
         private string _street;
-        private int _estateAddress;
+        private string _estateAddress;
 
         //pola obiektu: ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
 
@@ -42,6 +59,13 @@ namespace RealEstateOffice
                 _isIdSet = true;
                 _id = value;
             }
+
+            get 
+            {
+                return this._id;
+            }
+
+
         }
         public DateTime CreationDate
         {
@@ -63,7 +87,7 @@ namespace RealEstateOffice
         public string OwnerSurname { get => _ownerSurname; set => _ownerSurname = value; }
         public string City { get => _city; set => _city = value; }
         public string Street { get => _street; set => _street = value; }
-        public int EstateAddress { get => _estateAddress; set => _estateAddress = value; }
+        public string EstateAddress { get => _estateAddress; set => _estateAddress = value; }
 
         public enum TypeOfRealEstate
         {

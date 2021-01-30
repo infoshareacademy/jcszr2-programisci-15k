@@ -45,7 +45,7 @@ namespace RealEstateOffice
                         case 1:
 
                             Filter emptyFilter = new Filter();
-                            DatabaseContext.RealEstatesFilter(emptyFilter);                            
+                            RealEstatesView.Display(DatabaseContext.RealEstatesFilter(emptyFilter));
                             //przekazujemy pusty nowo stworzony filtr do backendu jako argument funkcji
                             //backend zwraca właściwie dobraną listę obiektów RealEstate które Display() formatuje i tu wyświetla
                             break;

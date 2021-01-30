@@ -7,12 +7,39 @@ namespace RealEstateOffice
 {
     class DatabaseContext
     {
-        public static void RealEstatesFilter(Filter filter)
+        public static List<RealEstate> RealEstatesFilter(Filter filter)
         {
-            
-            //metoda przyjmuje obiekt klasy Filter z filtrami z frontendu
-            //output to będzie lista wpisów (lista obiektów RealEstate)
+            String path = "..\\Files\\RealEstates.csv";
+            string fullPath =  DatabaseContext.bingPathToAppDir(path); 
+            List<RealEstate> RealEstateList = new List<RealEstate>();
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                string line;
+                long count = 0;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    //RealEstateList.Add(new RealEstate(ID, TypeOfRealEstate, Price, Area, OwnerName, OwnerSurname, City, Street, EstateAddress));
+                    RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), ParseTextLine(line, 4), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8)));
+
+                    
+                }
+            }
+                      
+
+            return RealEstateList;
+
+
         }
+
+
+        static string ParseTextLine(string Line,int column)
+        {
+            string[] columns = Line.Split(";");
+            string output = columns[column]; 
+            return output;
+        }
+
 
         void AddToDatabase(RealEstate realEstate)
         {
