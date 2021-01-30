@@ -29,5 +29,6 @@ namespace RealEstateOffice
             //Console.ReadLine();
 
             //wszystkie te właściwości zapisujemy do klasy RealEstate
+        }
     }
 }
