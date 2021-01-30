@@ -6,6 +6,7 @@ namespace RealEstateOffice
 {
     class RealEstatesView
     {
+               
         //Metoda display do wyświetlania widoku listy nieruchomości
        void  Display()
         {
