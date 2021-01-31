@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace RealEstateOffice
@@ -16,7 +17,7 @@ namespace RealEstateOffice
             using (StreamReader reader = new StreamReader(fullPath))
             {
                 string line;
-                long count = 0;
+               
                 while ((line = reader.ReadLine()) != null)
                 {
                     //RealEstateList.Add(new RealEstate(ID, TypeOfRealEstate, Price, Area, OwnerName, OwnerSurname, City, Street, EstateAddress));
@@ -25,11 +26,7 @@ namespace RealEstateOffice
                     
                 }
             }
-                      
-
             return RealEstateList;
-
-
         }
 
 
@@ -41,12 +38,59 @@ namespace RealEstateOffice
         }
 
 
-        void AddToDatabase(RealEstate realEstate)
+        public static void AddToDatabase(RealEstate realEstate)
         {
+            //ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
             //ID zostaje ustalony automatycznie
             //Data stworzenia wpisu zostaje ustalona automatycznie
             //funkcja przyjmuje obiekt RealEstate
-            //task 3
+
+
+            String path = "..\\Files\\RealEstates.csv";
+            string realativePath = DatabaseContext.bingPathToAppDir(path);
+
+            var lastLine = File.ReadLines(realativePath).Last(); // z tego wyciągam  ID 
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("");
+            sb.Append(GetLastLineId(lastLine)); //Id
+            sb.Append(";");
+            sb.Append((int)realEstate.typeOfRealEstate);  //TypeOfRealEstate
+            sb.Append(";");
+            sb.Append(realEstate.Price);
+            sb.Append(";");
+            sb.Append(realEstate.Area);
+            sb.Append(";");
+            sb.Append(realEstate.OwnerName);
+            sb.Append(";");
+            sb.Append(realEstate.OwnerSurname);
+            sb.Append(";");
+            sb.Append(realEstate.City);
+            sb.Append(";");
+            sb.Append(realEstate.Street);
+            sb.Append(";");
+            sb.Append(realEstate.EstateAddress);
+            
+                       
+
+            using (StreamWriter sw = File.AppendText(realativePath))
+            {
+                sw.Write(sb);
+               
+            }
+
+            Console.Clear();
+            Console.WriteLine("Record added to database.Press any key");
+            Console.ReadLine();
+        }
+
+        static int GetLastLineId(String lastLine)
+        {
+            string[] columns = lastLine.Split(";");
+            var lastId = Convert.ToInt32(columns[0]);
+            lastId = lastId + 1;
+            return lastId;
         }
 
         void RemoveFromDatabase()
