@@ -6,7 +6,7 @@ namespace RealEstateOffice
 {
     class StartMenu
     {
-        void BeginStartMenu()
+       public static void BeginStartMenu()
         {
             //pierwszy ekran
             //1 - opcja zalogowania się

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace RealEstateOffice
 {
-    class Menu
+    public class Menu
     {
-        void MainMenu()
+        public void MainMenu()
         {
             //Zależnie od typu zalogowanego użytkownika zmienia się ilość opcji
 
@@ -35,38 +35,38 @@ namespace RealEstateOffice
 
             //wyloguj się
             //powrót do start menu
-            //Console.WriteLine("Podaj numer operacji, którą chcesz wykonać");
-            //Console.WriteLine("1. Filtrowanie listy nieruchomości");
-            //Console.WriteLine("2. Dodawanie nowej nieruchomości");
-            //Console.WriteLine("3. Usuwanie nieruchomości z listy");
-            //Console.WriteLine("4. Edytowanie listy nieruchomości");
-            //Console.WriteLine("5. Wyloguj się");
-            //Console.ReadLine();
-            //int choice;
-            
-            //switch (choice)
-            //{
-            //    case 1:
-            //    //FilterMenu
-            //    break;
-            //    case 2:
-            //    // AddMenu
-            //    break;
-            //    case 3:
-            //    // RemoveMenu
-            //    break;
-            //    case 4:
-            //    //EditionMenu
-            //    break;
-            //    case 5:
-            //        //StartMenu
-            //        break;
-            //    default:
-            //        //
-            //        break;
-            //}
+            Console.WriteLine("Podaj numer operacji, którą chcesz wykonać");
+            Console.WriteLine("1. Filtrowanie listy nieruchomości");
+            Console.WriteLine("2. Dodawanie nowej nieruchomości");
+            Console.WriteLine("3. Usuwanie nieruchomości z listy");
+            Console.WriteLine("4. Edytowanie listy nieruchomości");
+            Console.WriteLine("5. Wyloguj się");
+            Console.ReadLine();
+            int choice;
+            int.TryParse(Console.ReadLine(), out choice);
+            switch (choice)
+            {
+                case 1:
+                    FilterMenu.FilterOperationMenu();
+                    break;
+                case 2:
+                    AddMenu.AddOperationMenu();
+                    break;
+                case 3:
+                    RemoveMenu.RemoveOperationMenu();
+                    break;
+                case 4:
+                    EditionMenu.EditionOperationMenu();
+                    
+                    break;
+                case 5:
+                    StartMenu.BeginStartMenu();
+                    break;
+                default:
+                    break;
+            }
 
-            
+
 
 
 

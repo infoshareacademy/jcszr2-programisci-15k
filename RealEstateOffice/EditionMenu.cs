@@ -4,7 +4,7 @@ namespace RealEstateOffice
 {
     class EditionMenu
     {
-        void EditionOperationMenu()
+        public static void EditionOperationMenu()
         {
             //task 7
             //Pytanie do użytkownika jaki wpis chce edytować (pytanie o ID)
