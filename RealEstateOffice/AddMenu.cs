@@ -23,7 +23,9 @@ namespace RealEstateOffice
             realEstate.Street = FilterMenu.SetStringFromConsole();
             Console.WriteLine("Wpisz nr domu, mieszkania:");
             realEstate.EstateAddress = FilterMenu.SetStringFromConsole();
-            //AddToDatabase(realEstate);
+
+            DatabaseContext.AddToDatabase(realEstate);
+           
             //jakieś potwierdzenie trzeba napisać, np zwrócić z backendu ID wpisu
             //koniec funkcji
             //task 6
