@@ -6,7 +6,7 @@ namespace RealEstateOffice
 {
     public class Menu
     {
-        public void MainMenu()
+        public static void MainMenu()
         {
             //Zależnie od typu zalogowanego użytkownika zmienia się ilość opcji
 
@@ -41,7 +41,7 @@ namespace RealEstateOffice
             Console.WriteLine("3. Usuwanie nieruchomości z listy");
             Console.WriteLine("4. Edytowanie listy nieruchomości");
             Console.WriteLine("5. Wyloguj się");
-            Console.ReadLine();
+            
             int choice;
             int.TryParse(Console.ReadLine(), out choice);
             switch (choice)

@@ -8,10 +8,8 @@ namespace RealEstateOffice
         {
             //pojawia się StartMenu aby można było się zalogować i dalej robić rzeczy jako użytkownik odpowiedniego typu
             //FilterMenu.FilterOperationMenu();
-            AddMenu.AddOperationMenu(); 
-
-
-
+            //AddMenu.AddOperationMenu(); 
+            Menu.MainMenu();  
         }
     }
 }
