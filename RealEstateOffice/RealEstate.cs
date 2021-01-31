@@ -80,7 +80,12 @@ namespace RealEstateOffice
             }
         }
 
-                
+        public TypeOfRealEstate typeOfRealEstate
+        {
+            get => _typeOfRealEstate;
+            set => _typeOfRealEstate = value;
+        }
+
         public decimal Price { get => _price; set => _price = value; }
         public int Area { get => _area; set => _area = value; }
         public string OwnerName { get => _ownerName; set => _ownerName = value; }
