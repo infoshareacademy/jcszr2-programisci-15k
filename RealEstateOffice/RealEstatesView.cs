@@ -12,9 +12,14 @@ namespace RealEstateOffice
         {
             //Oczekujemy listy obiektów RealEstate z backendu
             Console.Clear();
+            //test formatowania tabelki:
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
             foreach (var realEstate in realEstates)
             {
-                Console.WriteLine("RealEstate: {0},{1},{2},{3},{4},{5},{6},{7}", realEstate.Id, realEstate.OwnerName, realEstate.OwnerSurname, realEstate.Price, realEstate.City, realEstate.EstateAddress,realEstate.Area,realEstate.Price);
+                Console.WriteLine($"|ID#{realEstate.Id,-3} | {realEstate.typeOfRealEstate,-10} | {realEstate.Price,10:#,##} PLN | " +
+                                  $"{realEstate.Area,5} m^2 | {realEstate.OwnerName,-12} | {realEstate.OwnerSurname,-12} | " +
+                                  $"{realEstate.City,-7} | {realEstate.Street,-16} | {realEstate.EstateAddress,-5} |");
+                Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
             }
             Console.ReadLine();
         }

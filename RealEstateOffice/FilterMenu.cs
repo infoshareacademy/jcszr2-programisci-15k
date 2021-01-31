@@ -17,7 +17,7 @@ namespace RealEstateOffice
                 Console.Clear();
                 Console.WriteLine("Jakie nieruchomości chcesz wyświetlić?");
                 Console.WriteLine();
-                Console.WriteLine("1. Wyświetl wszystkie nieruchomości. (tu nic jeszcze nie ma)");
+                Console.WriteLine("1. Wyświetl wszystkie nieruchomości.");
                 Console.WriteLine("2. Filtruj nieruchomości przez kategorię.");
                 Console.WriteLine("3. Filtruj nieruchomości przez właściciela.");
                 Console.WriteLine("4. Filtruj nieruchomości przez miejscowość.");
@@ -29,14 +29,17 @@ namespace RealEstateOffice
                 Console.WriteLine();
                 if (isFilterBeingMade)
                 {
+                    Console.WriteLine("10. Wyświetl tylko nieruchomości z aktywnymi filtrami. (tu nic jeszcze nie ma)");
+                    Console.WriteLine("11. Porzuć obecne filtry.");
+                    Console.WriteLine();
                     Console.WriteLine("Obecne filtry:");
                     Console.WriteLine("---");
                     filter.ShowActiveFilters();
                     Console.WriteLine("---");
-                    Console.WriteLine("10. Wyświetl tylko nieruchomości z aktywnymi filtrami. (tu nic jeszcze nie ma)");
-                    Console.WriteLine("11. Porzuć obecne filtry.");
+                    Console.WriteLine();
                 }
                 Console.WriteLine("0. Wróć do głównego menu.");
+                Console.WriteLine();
 
                 if (int.TryParse(Console.ReadLine(), out var choice))
                 {
@@ -56,21 +59,21 @@ namespace RealEstateOffice
                             break;
                         case 3:
                             Console.WriteLine("Wpisz imię właściciela:");
-                            filter.OwnerName = Console.ReadLine().Trim();
+                            filter.OwnerName = SetStringFromConsole();
                             Console.WriteLine("Wpisz nazwisko właściciela:");
-                            filter.OwnerSurname = Console.ReadLine().Trim();
+                            filter.OwnerSurname = SetStringFromConsole();
 
                             isFilterBeingMade = true;
                             break;
                         case 4:
                             Console.WriteLine("Wpisz nazwę miejscowości:");
-                            filter.City = Console.ReadLine().Trim();
+                            filter.City = SetStringFromConsole();
 
                             isFilterBeingMade = true;
                             break;
                         case 5:
                             Console.WriteLine("Wpisz nazwę ulicy:");
-                            filter.Street = Console.ReadLine().Trim();
+                            filter.Street = SetStringFromConsole();
 
                             isFilterBeingMade = true;
                             break;
@@ -97,7 +100,7 @@ namespace RealEstateOffice
                         case 10:
                             if (isFilterBeingMade)
                             {
-                                DatabaseContext.RealEstatesFilter(filter);
+                                RealEstatesView.Display(DatabaseContext.RealEstatesFilter(filter));
                                 //przekazujemy istniejący filtr do backendu jako argument funkcji
                                 //pola nie wypełnione przez użytkownika (null) w obiekcie filter nie mają być brane pod uwagę
                                 //backend zwraca właściwie dobraną listę obiektów RealEstate które Display() formatuje i tu wyświetla
@@ -218,6 +221,24 @@ namespace RealEstateOffice
             else
             {
                 filter.ModificationDateLatest = dateLatest;
+            }
+        }
+
+        public static string SetStringFromConsole()
+        {
+            string input;
+
+            while (true)
+            {
+                input = Console.ReadLine().Trim();
+                if (input == String.Empty)
+                {
+                    Console.WriteLine("Wpisz właściwą wartość.");
+                }
+                else
+                {
+                    return input;
+                }
             }
         }
     }
