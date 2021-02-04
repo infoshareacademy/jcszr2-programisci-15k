@@ -16,6 +16,7 @@ namespace RealEstateOffice
 
             //2 - opcja stworzenia nowego profilu użytkownika
             //dodaje nowego użytkownika i dodaje nowy wpis w bazie użytkowników w backendzie
+            NewUserMenu.AddUser();
         }
     }
 }
