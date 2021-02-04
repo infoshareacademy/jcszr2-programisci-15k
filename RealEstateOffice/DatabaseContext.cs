@@ -93,12 +93,39 @@ namespace RealEstateOffice
             return lastId;
         }
 
-        void RemoveFromDatabase()
-        {
+      
+        
             //funkcja przyjmuje realEstate.ID
             //
             //task 3
+            public static void RemoveFromDatabase(int LineToDelete)
+            {
+                String path = "..\\Files\\RealEstates.csv";
+                string fullPath = DatabaseContext.bingPathToAppDir(path);
+                StreamReader sr = new StreamReader(fullPath);
+                
+                string line;
+            
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(";");
+                        if (LineToDelete != Convert.ToInt32(columns[0]))
+                        {
+                          writer.WriteLine(line);
+                        }
+                    }
+                                    
+                }
+            }
+
         }
+
+                
 
         void EditRecordInDatabase()
         {
