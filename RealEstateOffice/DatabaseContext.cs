@@ -93,14 +93,16 @@ namespace RealEstateOffice
             return lastId;
         }
 
-        void RemoveFromDatabase()
+        public static void RemoveFromDatabase(int id)
         {
             //funkcja przyjmuje realEstate.ID
             //
+            //sprawdzenie czy wpis z takim ID istnieje, jeśli tak to
+            //przekazanie do frontendu potwierdzenia że wpis został usunięty
             //task 3
         }
 
-        void EditRecordInDatabase()
+        public static void EditRecordInDatabase(int id)
         {
             //Data modyfikacji wpisu zostaje ustalona/nadpisana automatycznie
             //funkcja przyjmuje realEstate.ID
