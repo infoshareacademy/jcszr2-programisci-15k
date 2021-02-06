@@ -97,6 +97,8 @@ namespace RealEstateOffice
         
             //funkcja przyjmuje realEstate.ID
             //
+            //sprawdzenie czy wpis z takim ID istnieje, jeśli tak to
+            //przekazanie do frontendu potwierdzenia że wpis został usunięty
             //task 3
             public static void RemoveFromDatabase(int LineToDelete)
             {
