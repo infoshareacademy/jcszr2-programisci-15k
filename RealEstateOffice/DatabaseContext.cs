@@ -123,6 +123,9 @@ namespace RealEstateOffice
                 }
             }
 
+            sr.Close();
+            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath,true);
+
         }
 
                 

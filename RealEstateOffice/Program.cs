@@ -10,7 +10,7 @@ namespace RealEstateOffice
             //FilterMenu.FilterOperationMenu();
             //AddMenu.AddOperationMenu(); 
             Menu.MainMenu(); 
-            //DatabaseContext.RemoveFromDatabase(17);
+            //DatabaseContext.RemoveFromDatabase(3);
         }
     }
 }
