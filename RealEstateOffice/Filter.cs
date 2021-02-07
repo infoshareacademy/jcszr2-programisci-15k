@@ -29,21 +29,14 @@ namespace RealEstateOffice
         public void FilterReset()
         {
             _typeOfRealEstate = null;
-            NoType = 0;
             OwnerName = null;
-            NoName = 0;
             OwnerSurname = null;
-            NoSurname = 0;
             City = null;
-            NoCity = 0;
             Street = null;
-            NoStreet = 0;
             PriceLowest = null;
             PriceHighest = null;
-            NoPrice = 0;
             AreaSmallest = null;
             AreaBiggest = null;
-            NoArea = 0;
             CreationDateEarliest = null;
             CreationDateLatest = null;
             ModificationDateEarliest = null;
@@ -86,25 +79,19 @@ namespace RealEstateOffice
         }
 
         private RealEstate.TypeOfRealEstate ? _typeOfRealEstate;
-        public int NoType;
         public string OwnerName;
-        public int NoName;
         public string OwnerSurname;
-        public int NoSurname;
         public string City;
         public int NoCity;
         public string Street;
-        public int NoStreet;
-        public int ? PriceLowest;
-        public int ? PriceHighest;
-        public int NoPrice;
-        public int ? AreaSmallest;
-        public int ? AreaBiggest;
-        public int NoArea;
-        public DateTime ? CreationDateEarliest;
-        public DateTime ? CreationDateLatest;
-        public DateTime ? ModificationDateEarliest;
-        public DateTime ? ModificationDateLatest;
+        public int? PriceLowest;
+        public int? PriceHighest;
+        public int? AreaSmallest;
+        public int? AreaBiggest;
+        public DateTime? CreationDateEarliest;
+        public DateTime? CreationDateLatest;
+        public DateTime? ModificationDateEarliest;
+        public DateTime? ModificationDateLatest;
         public RealEstate.TypeOfRealEstate ? TypeOfRealEstate
         {
             set
