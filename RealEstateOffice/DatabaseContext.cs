@@ -22,8 +22,7 @@ namespace RealEstateOffice
                 {
                     //RealEstateList.Add(new RealEstate(ID, TypeOfRealEstate, Price, Area, OwnerName, OwnerSurname, City, Street, EstateAddress));
                     RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), ParseTextLine(line, 4), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8)));
-
-                    
+                  
                 }
             }
             return RealEstateList;
@@ -93,20 +92,21 @@ namespace RealEstateOffice
             return lastId;
         }
 
-      
+
         
+        public static void RemoveFromDatabase(int LineToDelete)
+            {
             //funkcja przyjmuje realEstate.ID
             //
             //sprawdzenie czy wpis z takim ID istnieje, jeśli tak to
             //przekazanie do frontendu potwierdzenia że wpis został usunięty
             //task 3
-            public static void RemoveFromDatabase(int LineToDelete)
-            {
-                String path = "..\\Files\\RealEstates.csv";
-                string fullPath = DatabaseContext.bingPathToAppDir(path);
-                StreamReader sr = new StreamReader(fullPath);
-                
-                string line;
+
+            String path = "..\\Files\\RealEstates.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            StreamReader sr = new StreamReader(fullPath);
+            string line;
+            int linesDeleted = 0;
             
 
             using (StreamReader reader = new StreamReader(fullPath))
@@ -119,25 +119,116 @@ namespace RealEstateOffice
                         if (LineToDelete != Convert.ToInt32(columns[0]))
                         {
                           writer.WriteLine(line);
+                        } 
+                        else
+                        {
+                            linesDeleted++;
                         }
+
                     }
                                     
                 }
             }
-
             sr.Close();
+
+            Console.WriteLine("Records deleted" +" : "+ linesDeleted);
             File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath,true);
+            System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
 
         }
 
                 
 
-        void EditRecordInDatabase()
+        public static string EditRecordInDatabase(RealEstate realEstate,int id)
         {
+
+            //ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
             //Data modyfikacji wpisu zostaje ustalona/nadpisana automatycznie
             //funkcja przyjmuje realEstate.ID
             //funkcja przyjmuje też pola RealEstate które użytkownik chce zmodyfikować
             //task 3
+            String path = "..\\Files\\RealEstates.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            string line;
+            string lineToChange="";
+            string s1 = String.Empty;
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+               
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(";");
+                        if (Convert.ToInt32(columns[0]) == id)
+                        {
+                          lineToChange = line; // this is  line to modify
+                        }
+                    }
+            }
+
+
+            
+            if (String.IsNullOrEmpty(lineToChange) )
+            {
+                    Console.WriteLine("No RealEstate record in our database with this ID !");
+                    Console.ReadLine();
+                
+            } 
+            else
+            {
+                    string[] columnsToChange = lineToChange.Split(";");
+
+
+                    if ((int)realEstate.typeOfRealEstate != 0)
+                    {
+                        int type = (int)realEstate.typeOfRealEstate;
+                        columnsToChange[1] = type.ToString();
+                    }
+
+
+                    if (realEstate.Price != 0)
+                    {
+                        columnsToChange[2] = realEstate.Price.ToString();
+                    }
+
+
+                    if (realEstate.Area != 0)
+                    {
+                        columnsToChange[3] = realEstate.Area.ToString();
+                    }
+
+                    if (!String.IsNullOrEmpty(realEstate.OwnerName))
+                    {
+                        columnsToChange[4] = realEstate.OwnerName;
+                    }
+
+                    if (!String.IsNullOrEmpty(realEstate.OwnerSurname))
+                    {
+                        columnsToChange[5] = realEstate.OwnerSurname;
+                    }
+
+                    if (!String.IsNullOrEmpty(realEstate.City))
+                    {
+                        columnsToChange[6] = realEstate.City;
+                    }
+
+                    if (!String.IsNullOrEmpty(realEstate.Street))
+                    {
+                        columnsToChange[7] = realEstate.Street;
+                    }
+
+                    if (!String.IsNullOrEmpty(realEstate.EstateAddress))
+                    {
+                        columnsToChange[8] = realEstate.EstateAddress;
+                    }
+
+                    s1 = string.Join(";", columnsToChange);
+                
+            }
+
+
+            return s1;
+
         }
 
 
@@ -168,5 +259,39 @@ namespace RealEstateOffice
         }
 
 
+        public static void  saveLine(int idOfLineToChange, string lineToSave)
+        {
+            String path = "..\\Files\\RealEstates.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            StreamReader sr = new StreamReader(fullPath);
+
+            string line;
+
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(";");
+                        if (idOfLineToChange == Convert.ToInt32(columns[0]))
+                        {
+                            writer.WriteLine(lineToSave);
+                        }
+                        else 
+                        {
+                            writer.WriteLine(line);
+                        }
+                    }
+
+                }
+            }
+
+            sr.Close();
+            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath, true);
+            Console.WriteLine("Edited record have been saved.");
+            System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
+        }
     }
 }
