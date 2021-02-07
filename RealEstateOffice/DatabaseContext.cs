@@ -29,6 +29,37 @@ namespace RealEstateOffice
         }
 
 
+        public static List<RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
+        {
+            Filter emptyFilter = new Filter();
+            List<RealEstate> allRealEstateList = new List<RealEstate>();
+            List<RealEstate> filteredRealEstateList = new List<RealEstate>();
+            allRealEstateList = DatabaseContext.RealEstatesFilter(emptyFilter);  //gets hole list of Real Estates
+                        
+            foreach (var realEstate in from realEstate in allRealEstateList
+                                       where ((realEstate.Price > filter.PriceLowest && realEstate.Price < filter.PriceHighest) || filter.NoPrice == 1)
+                                         &&  (realEstate.Area > filter.AreaSmallest && realEstate.Area < filter.AreaBiggest || filter.NoArea == 1) 
+                                         &&  (realEstate.City == filter.City  || filter.NoCity ==1)
+                                         &&  (realEstate.OwnerSurname == filter.OwnerSurname || filter.NoSurname == 1 )
+                                         &&  (realEstate.Street == filter.Street || filter.NoStreet == 1)
+                                         && (realEstate.OwnerName == filter.OwnerName || filter.NoName == 1)
+                                         && (realEstate.typeOfRealEstate == filter.TypeOfRealEstate || filter.NoType ==1 )
+
+                                       select new { realEstate.Id, realEstate.typeOfRealEstate, realEstate.Price, realEstate.Area, realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress })
+
+            {
+                filteredRealEstateList.Add(new RealEstate(Convert.ToInt32(realEstate.Id), Convert.ToInt32(realEstate.typeOfRealEstate), System.Convert.ToDecimal(realEstate.Price), Convert.ToInt32(realEstate.Area), realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress));
+                Console.WriteLine($"{realEstate.Id} {realEstate.typeOfRealEstate} {realEstate.Price} {realEstate.Area} {realEstate.OwnerName} {realEstate.OwnerSurname} {realEstate.City} {realEstate.Street} {realEstate.EstateAddress} ");
+            }
+
+            Console.ReadLine();
+            return filteredRealEstateList;
+     
+        }
+
+
+
+
         static string ParseTextLine(string Line,int column)
         {
             string[] columns = Line.Split(";");
