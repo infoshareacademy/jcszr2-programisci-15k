@@ -37,13 +37,13 @@ namespace RealEstateOffice
             allRealEstateList = DatabaseContext.RealEstatesFilter(emptyFilter);  //gets hole list of Real Estates
                         
             foreach (var realEstate in from realEstate in allRealEstateList
-                                       where ((realEstate.Price > filter.PriceLowest && realEstate.Price < filter.PriceHighest) || filter.NoPrice == 1)
-                                         &&  (realEstate.Area > filter.AreaSmallest && realEstate.Area < filter.AreaBiggest || filter.NoArea == 1) 
-                                         &&  (realEstate.City == filter.City  || filter.NoCity ==1)
-                                         &&  (realEstate.OwnerSurname == filter.OwnerSurname || filter.NoSurname == 1 )
-                                         &&  (realEstate.Street == filter.Street || filter.NoStreet == 1)
-                                         && (realEstate.OwnerName == filter.OwnerName || filter.NoName == 1)
-                                         && (realEstate.typeOfRealEstate == filter.TypeOfRealEstate || filter.NoType ==1 )
+                                       where ((filter.PriceLowest != null && filter.PriceHighest != null) && (realEstate.Price > filter.PriceLowest && realEstate.Price < filter.PriceHighest))
+                                         &&  ((filter.AreaSmallest != null   && filter.AreaBiggest != null)  && realEstate.Area > filter.AreaSmallest && realEstate.Area < filter.AreaBiggest ) 
+                                         &&  (!string.IsNullOrEmpty(filter.City) &&  realEstate.City == filter.City  )
+                                         &&  (!string.IsNullOrEmpty(filter.OwnerSurname) &&  realEstate.OwnerSurname == filter.OwnerSurname  )
+                                         &&  (!string.IsNullOrEmpty(filter.Street) &&  realEstate.Street == filter.Street )
+                                         &&  (!string.IsNullOrEmpty(filter.OwnerName) && realEstate.OwnerName == filter.OwnerName )
+                                         &&  filter.TypeOfRealEstate != null && realEstate.typeOfRealEstate == filter.TypeOfRealEstate
 
                                        select new { realEstate.Id, realEstate.typeOfRealEstate, realEstate.Price, realEstate.Area, realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress })
 

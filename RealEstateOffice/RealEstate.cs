@@ -100,7 +100,8 @@ namespace RealEstateOffice
             Mieszkanie,   // 1
             Działka,      // 2
             Garaż,      // 3
-            Lokal_usługowy // 4
+            Lokal_usługowy, // 4
+            None
         }
 
 
