@@ -93,16 +93,46 @@ namespace RealEstateOffice
             return lastId;
         }
 
-        public static void RemoveFromDatabase(int id)
-        {
+      
+        
             //funkcja przyjmuje realEstate.ID
             //
             //sprawdzenie czy wpis z takim ID istnieje, jeśli tak to
             //przekazanie do frontendu potwierdzenia że wpis został usunięty
             //task 3
+            public static void RemoveFromDatabase(int LineToDelete)
+            {
+                String path = "..\\Files\\RealEstates.csv";
+                string fullPath = DatabaseContext.bingPathToAppDir(path);
+                StreamReader sr = new StreamReader(fullPath);
+                
+                string line;
+            
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(";");
+                        if (LineToDelete != Convert.ToInt32(columns[0]))
+                        {
+                          writer.WriteLine(line);
+                        }
+                    }
+                                    
+                }
+            }
+
+            sr.Close();
+            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath,true);
+
         }
 
-        public static void EditRecordInDatabase(int id)
+                
+
+        void EditRecordInDatabase()
         {
             //Data modyfikacji wpisu zostaje ustalona/nadpisana automatycznie
             //funkcja przyjmuje realEstate.ID
