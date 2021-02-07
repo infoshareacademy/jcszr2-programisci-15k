@@ -73,10 +73,10 @@ namespace RealEstateOffice
                                     //tu obiekt realestate jest przekazywany do backendu który nadpisuje wpis w bazie danych
                                     //jakieś potwierdzenie pomyślnego wprowadzenia zmian powinno się wyświetlić
 
-                                    string changedLine = DatabaseContext.EditRecordInDatabase(realEstate, 20);  ///realEstate.Id  nie jest zczytane
+                                    string changedLine = DatabaseContext.EditRecordInDatabase(realEstate,choice);  ///realEstate.Id  nie jest zczytane
                                     if (!String.IsNullOrEmpty(changedLine))
-                                    {
-                                        DatabaseContext.saveLine(10, changedLine);
+                                    { 
+                                        DatabaseContext.saveLine(choice, changedLine);
                                     }
                                     
                                    

@@ -15,25 +15,7 @@ namespace RealEstateOffice
         //{
 
         //}
-        public static void ListOfUsers(List<User> users)
-        {
-            //Oczekujemy listy obiektów User z backendu
-            Console.Clear();
-            //test formatowania tabelki:
-            Console.WriteLine(
-                "----------------------------------------------------------------------------------------------------------------------");
-            foreach (var user in users)
-            {
-                Console.WriteLine($"|ID#{user.Id,-3} | {user.Login,-10} | {user.Password,10}| " +
-                                  $"{user.Name,15} | {user.Surname,-15} | {user.EmailAddress,-12} | " +
-                                  $"{user.TypeOfUserType,-7}|");
-                Console.WriteLine(
-                    "----------------------------------------------------------------------------------------------------------------------");
-            }
-
-            Console.ReadLine();
-        }
-
+       
         public static void AddToDatabase(User user)
         {
             String path = "..\\Files\\Users.csv";
@@ -79,6 +61,8 @@ namespace RealEstateOffice
         //RemoveUser();
         //metoda do edycji uzytkowników
         //EditUser();
+        //login
+        //Login();
 
         public void OpenFile()
         {
