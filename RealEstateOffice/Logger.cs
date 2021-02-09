@@ -1,14 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace RealEstateOffice
 {
     class Logger
     {
-        void AddLineToLog()
+         public static List<Log> DisplayLogList()
         {
-            //task 9
+            //ID; LogDate; TypeOfCRUDOperation; UserName;
+            String path = "..\\Files\\Log.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            List<Log> logList = new List<Log>();
+            
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    
+                    logList.Add(new Log(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToDateTime(ParseTextLine(line, 1)), ParseTextLine(line, 2), ParseTextLine(line, 2)));
+
+                }
+            }
+
+            return logList;
         }
+
+
+        public static void AddLineToLog(Log log)
+        {
+            String path = "..\\Files\\Log.csv";
+            string relativePath = UserDatabaseContext.bingPathToAppDir(path);
+
+            // pobieram ID z ostatniej linijki w users.csv
+            var lastLine = File.ReadLines(relativePath).Last();
+            string[] columns = lastLine.Split(";");
+            var lastId = Convert.ToInt32(columns[0]);
+
+            DateTime logDate = DateTime.Today;
+
+            //ID; LogDate; TypeOfCRUDOperation; UserName;
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("");
+            sb.Append(lastId + 1); //Id = lastId + 1
+            sb.Append(";");
+            sb.Append(logDate);
+            sb.Append(";");
+            sb.Append(log.TypeOfCRUDOperation);
+            sb.Append(";");
+            sb.Append(log.UserName);
+
+            using (StreamWriter sw = File.AppendText(relativePath))
+            {
+                sw.Write(sb);
+            }
+
+            Console.Clear();
+            Console.WriteLine("Log record added to database. Press any key.");
+            Console.ReadLine();
+        }
+
+        static string ParseTextLine(string Line, int column)
+        {
+            string[] columns = Line.Split(";");
+            string output = columns[column];
+            return output;
+        }
+
+
+        public static string bingPathToAppDir(string localPath)
+        {
+            string currentDir = Environment.CurrentDirectory;
+            DirectoryInfo directory = new DirectoryInfo(
+                Path.GetFullPath(Path.Combine(currentDir, @"..\..\" + localPath)));
+            return directory.ToString();
+        }
+
+
     }
 }
