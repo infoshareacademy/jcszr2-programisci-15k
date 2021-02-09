@@ -15,7 +15,6 @@ namespace RealEstateOffice
             //int test =UserDatabaseContext.Login("m.ruszczyk", "haslo");
             //Console.WriteLine(test);
             //Console.ReadLine();
-
              Menu.MainMenu(); 
             //DatabaseContext.RemoveFromDatabase(15);
             
