@@ -9,13 +9,29 @@ namespace RealEstateOffice
     class UserDatabaseContext
     {
         //metoda  która  pobierze  wszystkich uzytkowników
-        //ListOfUsers();
+        public static List<User> ListOfUser()
+        {
+            String path = "..\\Files\\Users.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            List<User> UserList = new List<User>();
 
-        //public static void ListOfUsers(List<User> user)
-        //{
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                string line;
 
-        //}
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // ID; Login; Password; Name; Surname; EmailAddress; UserType;
+                    UserList.Add(new User(Convert.ToInt32(ParseTextLine(line, 0)), ParseTextLine(line,1), ParseTextLine(line, 2), ParseTextLine(line, 3), ParseTextLine(line, 4), ParseTextLine(line, 5), Convert.ToInt32(ParseTextLine(line, 6))));
+
+                }
+            }
+            return UserList;
+
+        }
        
+
+        //metoda do dodawania uzytkowników
         public static void AddToDatabase(User user)
         {
             String path = "..\\Files\\Users.csv";
@@ -40,10 +56,9 @@ namespace RealEstateOffice
             sb.Append(";");
             sb.Append(user.EmailAddress);
             sb.Append(";");
-            sb.Append(user.TypeOfUserType.ToString());
+            sb.Append((int)user.TypeOfUserType);
             sb.Append(";");
-
-
+            
             using (StreamWriter sw = File.AppendText(relativePath))
             {
                 sw.Write(sb);
@@ -55,14 +70,144 @@ namespace RealEstateOffice
 
         }
 
-        //metoda do dodawania uzytkowników
-        //AddUser()
+        
+        
         //metoda do uswania 
-        //RemoveUser();
+        public static void RemoveUser(int LineToDelete)
+        {
+            String path = "..\\Files\\Users.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            StreamReader sr = new StreamReader(fullPath);
+            string line;
+            int linesDeleted = 0;
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(";");
+                        if (LineToDelete != Convert.ToInt32(columns[0]))
+                        {
+                            writer.WriteLine(line);
+                        }
+                        else
+                        {
+                            linesDeleted++;
+                        }
+
+                    }
+
+                }
+            }
+            sr.Close();
+
+            Console.WriteLine("Records deleted" + " : " + linesDeleted);
+            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath, true);
+            System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
+        }
+
+
+
         //metoda do edycji uzytkowników
-        //EditUser();
+        public static string EditUser(User user, int id)
+        {
+            
+            String path = "..\\Files\\User.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            string line;
+            string lineToChange = "";
+            string s1 = String.Empty;
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] columns = line.Split(";");
+                    if (Convert.ToInt32(columns[0]) == id)
+                    {
+                        lineToChange = line; // this is  line to modify
+                    }
+                }
+            }
+
+
+
+            if (String.IsNullOrEmpty(lineToChange))
+            {
+                Console.WriteLine("No User record in our database with this ID !");
+                Console.ReadLine();
+
+            }
+            else
+            {
+                string[] columnsToChange = lineToChange.Split(";");
+                //ID; Login; Password; Name; Surname; EmailAddress; UserType;
+
+                if (!String.IsNullOrEmpty(user.Login) )
+                {
+                    columnsToChange[1] = user.Login;
+                }
+
+                if (!String.IsNullOrEmpty(user.Password))
+                {
+                    columnsToChange[2] = user.Password;
+                }
+
+                if (!String.IsNullOrEmpty(user.Name))
+                {
+                    columnsToChange[3] = user.Name;
+                }
+
+                if (!String.IsNullOrEmpty(user.Surname))
+                {
+                    columnsToChange[4] = user.Surname;
+                }
+
+                if (!String.IsNullOrEmpty(user.EmailAddress))
+                {
+                    columnsToChange[5] = user.EmailAddress;
+                }
+
+                if ((int)user.TypeOfUserType != 0)
+                {
+                    int type = (int)user.TypeOfUserType;
+                    columnsToChange[1] = type.ToString();
+                }
+
+
+                s1 = string.Join(";", columnsToChange);
+
+            }
+
+
+            return s1;
+
+        }
+
+
         //login
-        //Login();
+        public static int Login(string login,string password)
+        {
+
+            List<User> userList = new List<User>();
+            userList = UserDatabaseContext.ListOfUser();
+
+            int count = (from x in userList where x.Login ==login && x.Password ==password select x).Count();
+           
+            if (count == 1 )
+            {
+              return 1; //Login user
+            }
+            else
+            {
+                return 0;  //No such user in database
+            }
+                   
+        }
+      
 
         public void OpenFile()
         {
@@ -80,6 +225,14 @@ namespace RealEstateOffice
                 }
             }
         }
+
+        static string ParseTextLine(string Line, int column)
+        {
+            string[] columns = Line.Split(";");
+            string output = columns[column];
+            return output;
+        }
+
 
 
         public static string bingPathToAppDir(string localPath)
