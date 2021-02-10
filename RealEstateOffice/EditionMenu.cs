@@ -26,13 +26,14 @@ namespace RealEstateOffice
                         Console.WriteLine("Które pole chcesz zmienić?");
                         Console.WriteLine();
                         Console.WriteLine("1. Kategorię nieruchomości.");
-                        Console.WriteLine("2. Imię i nazwisko właściciela.");
-                        Console.WriteLine("3. Miejscowość.");
-                        Console.WriteLine("4. Nazwę ulicy.");
-                        Console.WriteLine("5. Adres.");
-                        Console.WriteLine("6. Cenę.");
-                        Console.WriteLine("7. Powierzchnię.");
-                        Console.WriteLine("8. Zatwierdź zmiany.");
+                        Console.WriteLine("2. Cenę.");
+                        Console.WriteLine("3. Powierzchnię.");
+                        Console.WriteLine("4. Liczbę pokoi.");
+                        Console.WriteLine("5. Imię i nazwisko właściciela.");
+                        Console.WriteLine("6. Miejscowość.");
+                        Console.WriteLine("7. Nazwę ulicy.");
+                        Console.WriteLine("8. Adres.");
+                        Console.WriteLine("9. Zatwierdź zmiany.");
                         Console.WriteLine();
                         Console.WriteLine("0. Wróć do głównego menu.");
 
@@ -45,41 +46,38 @@ namespace RealEstateOffice
                                     AddMenu.UserSetEnum(realEstate);
                                     break;
                                 case 2:
+                                    AddMenu.UserSetPrice(realEstate);
+                                    break;
+                                case 3:
+                                    AddMenu.UserSetArea(realEstate);
+                                    break;
+                                case 4:
+                                    AddMenu.UserSetRoomsAmount(realEstate);
+                                    break;
+                                case 5:
                                     Console.WriteLine("Wpisz imię właściciela:");
                                     realEstate.OwnerName = FilterMenu.SetStringFromConsole();
                                     Console.WriteLine("Wpisz nazwisko właściciela:");
                                     realEstate.OwnerSurname = FilterMenu.SetStringFromConsole();
                                     break;
-                                case 3:
+                                case 6:
                                     Console.WriteLine("Wpisz nazwę miejscowości:");
                                     realEstate.City = FilterMenu.SetStringFromConsole();
                                     break;
-                                case 4:
+                                case 7:
                                     Console.WriteLine("Wpisz nazwę ulicy:");
                                     realEstate.Street = FilterMenu.SetStringFromConsole();
                                     break;
-                                case 5:
+                                case 8:
                                     Console.WriteLine("Wpisz nr domu, mieszkania:");
                                     realEstate.EstateAddress = FilterMenu.SetStringFromConsole();
                                     break;
-                                case 6:
-                                    AddMenu.UserSetPrice(realEstate);
-                                    break;
-                                case 7:
-                                    AddMenu.UserSetArea(realEstate);
-                                    break;
-                                case 8:
-                                    //todo:
-                                    //tu obiekt realestate jest przekazywany do backendu który nadpisuje wpis w bazie danych
-                                    //jakieś potwierdzenie pomyślnego wprowadzenia zmian powinno się wyświetlić
-
-                                    string changedLine = DatabaseContext.EditRecordInDatabase(realEstate,choice);  ///realEstate.Id  nie jest zczytane
+                                case 9:
+                                    string changedLine = DatabaseContext.EditRecordInDatabase(realEstate,choice);
                                     if (!String.IsNullOrEmpty(changedLine))
                                     { 
                                         DatabaseContext.saveLine(choice, changedLine);
                                     }
-                                    
-                                   
                                     isEditionMenuRunning = false;
                                     break;
                                 case 0:
@@ -101,15 +99,6 @@ namespace RealEstateOffice
                     Console.WriteLine("Wpisz właściwą wartość.");
                 }
             }
-
-
-            //task 7
-            //Pytanie do użytkownika jaki wpis chce edytować (pytanie o ID)
-            //Pytanie do użytkownika jakie pola chce edytować, po czym pobrać te wartości
-            //Przekazać te pola i ID do odpowiedniej metody z backendu
-
-            //Console.WriteLine("Podaj ID nieruchomości, którą chcesz edytować");
-            //Console.ReadLine();
         }
     }
 }

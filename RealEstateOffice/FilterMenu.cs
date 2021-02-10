@@ -24,13 +24,14 @@ namespace RealEstateOffice
                 Console.WriteLine("5. Filtruj nieruchomości przez nazwę ulicy.");
                 Console.WriteLine("6. Filtruj nieruchomości w danym zakresie cenowym.");
                 Console.WriteLine("7. Filtruj nieruchomości w danym zakresie powierzchni.");
-                Console.WriteLine("8. Filtruj nieruchomości których wpisy zostały dodane w danym zakresie czasu.");
-                Console.WriteLine("9. Filtruj nieruchomości których wpisy zostały zmienione w danym zakresie czasu.");
+                Console.WriteLine("8. Filtruj nieruchomości po liczbie pokoi.");
+                Console.WriteLine("9. Filtruj nieruchomości których wpisy zostały dodane w danym zakresie czasu.");
+                Console.WriteLine("10. Filtruj nieruchomości których wpisy zostały zmienione w danym zakresie czasu.");
                 Console.WriteLine();
                 if (isFilterBeingMade)
                 {
-                    Console.WriteLine("10. Wyświetl tylko nieruchomości z aktywnymi filtrami. (tu nic jeszcze nie ma)");
-                    Console.WriteLine("11. Porzuć obecne filtry.");
+                    Console.WriteLine("11. Wyświetl tylko nieruchomości z aktywnymi filtrami.");
+                    Console.WriteLine("12. Porzuć obecne filtry.");
                     Console.WriteLine();
                     Console.WriteLine("Obecne filtry:");
                     Console.WriteLine("---");
@@ -88,16 +89,21 @@ namespace RealEstateOffice
                             isFilterBeingMade = true;
                             break;
                         case 8:
-                            LetUserSetDateSpan(filter, true);
+                            LetUserSetRoomAmountSpan(filter);
 
                             isFilterBeingMade = true;
                             break;
                         case 9:
-                            LetUserSetDateSpan(filter, false);
+                            LetUserSetDateSpan(filter, true);
 
                             isFilterBeingMade = true;
                             break;
                         case 10:
+                            LetUserSetDateSpan(filter, false);
+
+                            isFilterBeingMade = true;
+                            break;
+                        case 11:
                             if (isFilterBeingMade)
                             {
                                 RealEstatesView.Display(DatabaseContext.RealEstatesFilter(filter));
@@ -106,7 +112,7 @@ namespace RealEstateOffice
                                 //backend zwraca właściwie dobraną listę obiektów RealEstate które Display() formatuje i tu wyświetla
                             }
                             break;
-                        case 11:
+                        case 12:
                             if (isFilterBeingMade)
                             {
                                 filter.FilterReset();
@@ -186,6 +192,27 @@ namespace RealEstateOffice
             }
             filter.AreaBiggest = areaBig;
         }
+
+        private static void LetUserSetRoomAmountSpan(Filter filter)
+        {
+            var fewRooms = 0;
+            var manyRooms = 0;
+            
+                Console.WriteLine("Wpisz minimalną ilość pokoi.");
+                while (!int.TryParse(Console.ReadLine(), out fewRooms) || (fewRooms < 0))
+                {
+                    Console.WriteLine("Wpisz poprawną liczbę.");
+                }
+                filter.RoomAmountSmallest = fewRooms;
+
+                Console.WriteLine("Wpisz maksymalną ilość pokoi.");
+                while (!int.TryParse(Console.ReadLine(), out manyRooms) || (manyRooms < fewRooms))
+                {
+                    Console.WriteLine("Wpisz poprawną liczbę.");
+                }
+                filter.RoomAmountBiggest = manyRooms;
+        }
+
         private static void LetUserSetDateSpan(Filter filter, bool isCreation)
         {
             DateTime dateEarliest;

@@ -20,6 +20,8 @@ namespace RealEstateOffice
             PriceHighest = null;
             AreaSmallest = null;
             AreaBiggest = null;
+            RoomAmountSmallest = null;
+            RoomAmountBiggest = null;
             CreationDateEarliest = null;
             CreationDateLatest = null;
             ModificationDateEarliest = null;
@@ -37,6 +39,8 @@ namespace RealEstateOffice
             PriceHighest = null;
             AreaSmallest = null;
             AreaBiggest = null;
+            RoomAmountSmallest = null;
+            RoomAmountBiggest = null;
             CreationDateEarliest = null;
             CreationDateLatest = null;
             ModificationDateEarliest = null;
@@ -68,6 +72,10 @@ namespace RealEstateOffice
             {
                 Console.WriteLine($"Powierzchnia: od {AreaSmallest} m^2 do {AreaBiggest} m^2");
             }
+            if (RoomAmountSmallest != null && RoomAmountBiggest != null)
+            {
+                Console.WriteLine($"Ilość pokoi: między {RoomAmountSmallest} a {RoomAmountBiggest}");
+            }
             if (CreationDateEarliest != null && CreationDateLatest != null)
             {
                 Console.WriteLine("Wpis nieruchomości dodany między {0:dd/MM/yyyy} a {1:dd/MM/yyyy}", CreationDateEarliest, CreationDateLatest);
@@ -78,21 +86,22 @@ namespace RealEstateOffice
             }
         }
 
-        private RealEstate.TypeOfRealEstate ? _typeOfRealEstate;
+        private RealEstate.TypeOfRealEstate? _typeOfRealEstate;
         public string OwnerName;
         public string OwnerSurname;
         public string City;
-        public int NoCity;
         public string Street;
         public int? PriceLowest;
         public int? PriceHighest;
         public int? AreaSmallest;
         public int? AreaBiggest;
+        public int? RoomAmountSmallest;
+        public int? RoomAmountBiggest;
         public DateTime? CreationDateEarliest;
         public DateTime? CreationDateLatest;
         public DateTime? ModificationDateEarliest;
         public DateTime? ModificationDateLatest;
-        public RealEstate.TypeOfRealEstate ? TypeOfRealEstate
+        public RealEstate.TypeOfRealEstate? TypeOfRealEstate
         {
             set
             {

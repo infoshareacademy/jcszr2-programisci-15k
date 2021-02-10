@@ -21,7 +21,7 @@ namespace RealEstateOffice
                 while ((line = reader.ReadLine()) != null)
                 {
                     //RealEstateList.Add(new RealEstate(ID, TypeOfRealEstate, Price, Area, OwnerName, OwnerSurname, City, Street, EstateAddress));
-                    RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), ParseTextLine(line, 4), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8)));
+                    RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), Convert.ToInt32(ParseTextLine(line, 4)), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8), ParseTextLine(line, 9)));
                   
                 }
             }
@@ -38,18 +38,19 @@ namespace RealEstateOffice
                         
             foreach (var realEstate in from realEstate in allRealEstateList
                                        where ((filter.PriceLowest != null && filter.PriceHighest != null) && (realEstate.Price > filter.PriceLowest && realEstate.Price < filter.PriceHighest))
-                                         &&  ((filter.AreaSmallest != null   && filter.AreaBiggest != null)  && realEstate.Area > filter.AreaSmallest && realEstate.Area < filter.AreaBiggest ) 
+                                         &&  ((filter.AreaSmallest != null   && filter.AreaBiggest != null)  && realEstate.Area > filter.AreaSmallest && realEstate.Area < filter.AreaBiggest )
+                                         &&  ((filter.RoomAmountSmallest != null && filter.RoomAmountBiggest != null) && realEstate.RoomsAmount > filter.RoomAmountSmallest && realEstate.RoomsAmount < filter.RoomAmountBiggest)
                                          &&  (!string.IsNullOrEmpty(filter.City) &&  realEstate.City == filter.City  )
                                          &&  (!string.IsNullOrEmpty(filter.OwnerSurname) &&  realEstate.OwnerSurname == filter.OwnerSurname  )
                                          &&  (!string.IsNullOrEmpty(filter.Street) &&  realEstate.Street == filter.Street )
                                          &&  (!string.IsNullOrEmpty(filter.OwnerName) && realEstate.OwnerName == filter.OwnerName )
                                          &&  filter.TypeOfRealEstate != null && realEstate.typeOfRealEstate == filter.TypeOfRealEstate
 
-                                       select new { realEstate.Id, realEstate.typeOfRealEstate, realEstate.Price, realEstate.Area, realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress })
+                                       select new { realEstate.Id, realEstate.typeOfRealEstate, realEstate.Price, realEstate.Area, realEstate.RoomsAmount, realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress })
 
             {
-                filteredRealEstateList.Add(new RealEstate(Convert.ToInt32(realEstate.Id), Convert.ToInt32(realEstate.typeOfRealEstate), System.Convert.ToDecimal(realEstate.Price), Convert.ToInt32(realEstate.Area), realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress));
-                Console.WriteLine($"{realEstate.Id} {realEstate.typeOfRealEstate} {realEstate.Price} {realEstate.Area} {realEstate.OwnerName} {realEstate.OwnerSurname} {realEstate.City} {realEstate.Street} {realEstate.EstateAddress} ");
+                filteredRealEstateList.Add(new RealEstate(Convert.ToInt32(realEstate.Id), Convert.ToInt32(realEstate.typeOfRealEstate), System.Convert.ToDecimal(realEstate.Price), Convert.ToInt32(realEstate.Area), Convert.ToInt32(realEstate.RoomsAmount), realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress));
+                Console.WriteLine($"{realEstate.Id} {realEstate.typeOfRealEstate} {realEstate.Price} {realEstate.Area} {realEstate.RoomsAmount} {realEstate.OwnerName} {realEstate.OwnerSurname} {realEstate.City} {realEstate.Street} {realEstate.EstateAddress} ");
             }
 
             Console.ReadLine();
@@ -75,6 +76,11 @@ namespace RealEstateOffice
             //Data stworzenia wpisu zostaje ustalona automatycznie
             //funkcja przyjmuje obiekt RealEstate
 
+            realEstate.CreationDate = DateTime.Today;
+            realEstate.ModificationDate = DateTime.Today;
+            string creationDateString;
+            string modificationDateString;
+
 
             String path = "..\\Files\\RealEstates.csv";
             string realativePath = DatabaseContext.bingPathToAppDir(path);
@@ -92,6 +98,8 @@ namespace RealEstateOffice
             sb.Append(";");
             sb.Append(realEstate.Area);
             sb.Append(";");
+            sb.Append(realEstate.RoomsAmount);
+            sb.Append(";");
             sb.Append(realEstate.OwnerName);
             sb.Append(";");
             sb.Append(realEstate.OwnerSurname);
@@ -101,8 +109,13 @@ namespace RealEstateOffice
             sb.Append(realEstate.Street);
             sb.Append(";");
             sb.Append(realEstate.EstateAddress);
-            
-                       
+            sb.Append(";");
+            sb.Append(creationDateString = realEstate.CreationDate.ToShortDateString());
+            sb.Append(";");
+            sb.Append(modificationDateString = realEstate.ModificationDate.ToShortDateString());
+            sb.Append(";");
+
+
 
             using (StreamWriter sw = File.AppendText(realativePath))
             {
