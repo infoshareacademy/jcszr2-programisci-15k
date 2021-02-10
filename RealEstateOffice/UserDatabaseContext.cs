@@ -195,11 +195,13 @@ namespace RealEstateOffice
             List<User> userList = new List<User>();
             userList = UserDatabaseContext.ListOfUser();
 
-            int count = (from x in userList where x.Login ==login && x.Password ==password select x).Count();
+            var userToLog = (from x in userList where x.Login ==login && x.Password ==password select x).Single<User>();
+            int typUser = (int)userToLog.TypeOfUserType;
+
            
-            if (count == 1 )
+            if (typUser > 0 )
             {
-              return 1; //Login user
+              return typUser; //Login user
             }
             else
             {
