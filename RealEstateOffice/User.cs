@@ -73,9 +73,9 @@ namespace RealEstateOffice
 
         public enum UserType
         {
-            Administrator,    // 0
-            PracownikBiuraNieruchomości,   // 1
-            Klient,      // 2
+            Administrator =1 ,    // 1
+            PracownikBiuraNieruchomości =2,   // 2
+            Klient=3,      // 3
         }
 
 
