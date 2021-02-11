@@ -7,10 +7,6 @@ namespace RealEstateOffice
 {
     class EditUserMenu
     {//pyta użytkownika o pola, które chce edytować, wywołuje z UserDataBaseContext metodę EditUser
-
-      
-
-
         public static void EditionOperationMenu()
         {
             Console.WriteLine("Podaj numer ID wpisu który chcesz edytować:");
@@ -45,8 +41,6 @@ namespace RealEstateOffice
                         user.Login = ReadString("login");
                         FinishEdition(user);
                         break;
-                        
-
                     case 2:
                         user.Password = ReadString("hasło");
                         FinishEdition(user);
@@ -67,9 +61,7 @@ namespace RealEstateOffice
                 }
 
             }
-
-
-        }
+         }
 
         public static void FinishEdition(User user)
         {
