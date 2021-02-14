@@ -6,6 +6,8 @@ namespace RealEstateOffice
     {
         public static void RemoveOperationMenu()
         {
+            Console.Title = "RealEstate - Remove Menu";
+
             var isRemoveMenuRunning = true;
             Console.WriteLine("Podaj numer ID wpisu który chcesz usunąć lub wpisz '0' aby wyjść z menu:");
             while (isRemoveMenuRunning)

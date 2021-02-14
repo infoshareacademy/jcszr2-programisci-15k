@@ -241,29 +241,34 @@ namespace RealEstateOffice
                         columnsToChange[3] = realEstate.Area.ToString();
                     }
 
-                    if (!String.IsNullOrEmpty(realEstate.OwnerName))
+                    if (realEstate.RoomsAmount != 0)
                     {
-                        columnsToChange[4] = realEstate.OwnerName;
+                        columnsToChange[4] = realEstate.RoomsAmount.ToString();
+                    }
+
+                if (!String.IsNullOrEmpty(realEstate.OwnerName))
+                    {
+                        columnsToChange[5] = realEstate.OwnerName;
                     }
 
                     if (!String.IsNullOrEmpty(realEstate.OwnerSurname))
                     {
-                        columnsToChange[5] = realEstate.OwnerSurname;
+                        columnsToChange[6] = realEstate.OwnerSurname;
                     }
 
                     if (!String.IsNullOrEmpty(realEstate.City))
                     {
-                        columnsToChange[6] = realEstate.City;
+                        columnsToChange[7] = realEstate.City;
                     }
 
                     if (!String.IsNullOrEmpty(realEstate.Street))
                     {
-                        columnsToChange[7] = realEstate.Street;
+                        columnsToChange[8] = realEstate.Street;
                     }
 
                     if (!String.IsNullOrEmpty(realEstate.EstateAddress))
                     {
-                        columnsToChange[8] = realEstate.EstateAddress;
+                        columnsToChange[9] = realEstate.EstateAddress;
                     }
 
                     s1 = string.Join(";", columnsToChange);

@@ -6,8 +6,13 @@ namespace RealEstateOffice
 {
     class AdminMenu
     {
-        void AdminMainMenu()
+        public static void AdminMainMenu()
         {
+            Console.Title = "Admin Menu";
+
+            Console.WriteLine("TODO Admin Menu");
+            Console.ReadLine();
+
             //opcje zarządzania użytkownikami
             //tylko ADMIN
 

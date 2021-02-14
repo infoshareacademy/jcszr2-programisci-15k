@@ -10,19 +10,27 @@ namespace RealEstateOffice
         {
             Console.Title = "Login Menu!";
             Console.WriteLine("Podaj login");
+
             string login = Console.ReadLine();
             Console.WriteLine("Podaj hasło");
             string password = Console.ReadLine();
             Console.Clear();
             int output = UserDatabaseContext.Login(login, password);
 
-            if (output == 1)
+            switch (output)
             {
-                Menu.MainMenu();
-            }
-            else
-            {
-                Console.WriteLine("Podałeś błędny login lub hasło");
+                case 1:
+                    AdminMenu.AdminMainMenu();
+                    break;
+                case 2:
+                    Menu.MainMenu();
+                    break;
+                case 3:
+                    FilterMenu.FilterOperationMenu();
+                    break;
+                default:
+                    Console.WriteLine("Podałeś błędny login lub hasło");
+                    break;
             }
 
 

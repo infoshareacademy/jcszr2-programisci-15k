@@ -9,6 +9,8 @@ namespace RealEstateOffice
         {
             var isEditionMenuRunning = true;
 
+            Console.Title = "RealEstate - Edit Menu";
+
             Console.WriteLine("Podaj numer ID wpisu który chcesz edytować:");
             while (isEditionMenuRunning)
             {
