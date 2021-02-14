@@ -114,7 +114,7 @@ namespace RealEstateOffice
         public static string EditUser(User user, int id)
         {
             
-            String path = "..\\Files\\User.csv";
+            String path = "..\\Files\\Users.csv";
             string fullPath = DatabaseContext.bingPathToAppDir(path);
             string line;
             string lineToChange = "";
@@ -174,7 +174,7 @@ namespace RealEstateOffice
                 if ((int)user.TypeOfUserType != 0)
                 {
                     int type = (int)user.TypeOfUserType;
-                    columnsToChange[1] = type.ToString();
+                    columnsToChange[6] = type.ToString();
                 }
 
 
@@ -244,6 +244,46 @@ namespace RealEstateOffice
                 Path.GetFullPath(Path.Combine(currentDir, @"..\..\" + localPath)));
             return directory.ToString();
         }
+
+        public static void saveLine(int idOfLineToChange, string lineToSave)
+        {
+            String path = "..\\Files\\Users.csv";
+            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            StreamReader sr = new StreamReader(fullPath);
+
+            string line;
+
+
+            using (StreamReader reader = new StreamReader(fullPath))
+            {
+                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(";");
+                        if (idOfLineToChange == Convert.ToInt32(columns[0]))
+                        {
+                            writer.WriteLine(lineToSave);
+                        }
+                        else
+                        {
+                            writer.WriteLine(line);
+                        }
+                    }
+
+                }
+            }
+
+            sr.Close();
+            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath, true);
+            Console.Clear();
+            Console.WriteLine("Edited record have been saved.");
+            System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
+            Console.ReadLine();
+        }
+
+
+
 
 
     }

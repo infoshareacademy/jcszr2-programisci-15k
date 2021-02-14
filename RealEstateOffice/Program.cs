@@ -16,7 +16,8 @@ namespace RealEstateOffice
             //Console.WriteLine(test);
             //Console.ReadLine();
             //Menu.MainMenu(); 
-            LoginMenu.LoginUser();
+            //LoginMenu.LoginUser();
+            EditUserMenu.EditionOperationMenu();
             //DatabaseContext.RemoveFromDatabase(15);
             
         }
