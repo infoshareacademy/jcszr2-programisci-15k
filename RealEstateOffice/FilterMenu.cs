@@ -10,6 +10,8 @@ namespace RealEstateOffice
             var isFilterMenuRunning = true;
             var isFilterBeingMade = false;
 
+            Console.Title = "RealEstate - Filter Menu";
+
             Filter filter = new Filter();
 
             while (isFilterMenuRunning)

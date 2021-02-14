@@ -35,6 +35,8 @@ namespace RealEstateOffice
 
             //wyloguj się
             //powrót do start menu
+            Console.Title = "Main Menu";
+
             Console.WriteLine("Podaj numer operacji, którą chcesz wykonać");
             Console.WriteLine("1. Filtrowanie listy nieruchomości");
             Console.WriteLine("2. Dodawanie nowej nieruchomości");

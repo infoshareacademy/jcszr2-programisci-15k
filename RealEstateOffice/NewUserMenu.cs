@@ -12,10 +12,14 @@ namespace RealEstateOffice
 
             public static void AddUser()
             {
+                Console.Title = "User - Add Menu";
+
                 User user = new User();
                 Console.WriteLine("Aby dodać nowego użytkownika wypełnij wszystkie pola:");
                 Console.WriteLine();
                 SetUserAcountEnum(user);
+
+                
 
                 Console.WriteLine("1. Podaj login użytkownika");
                 user.Login = SetStringFromConsole();
@@ -37,9 +41,9 @@ namespace RealEstateOffice
 
                 Console.WriteLine("Podaj typ konta:");
                 Console.WriteLine();
-                Console.WriteLine("0 - Administrator,");
-                Console.WriteLine("1 - Pracownik biura nieruchomści,");
-                Console.WriteLine("2 - Klient");
+                Console.WriteLine("1 - Administrator,");
+                Console.WriteLine("2 - Pracownik biura nieruchomści,");
+                Console.WriteLine("3 - Klient");
                 Console.WriteLine();
 
                 while (!providedValidAccountType)

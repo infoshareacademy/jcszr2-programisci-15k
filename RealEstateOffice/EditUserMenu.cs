@@ -9,6 +9,7 @@ namespace RealEstateOffice
     {//pyta użytkownika o pola, które chce edytować, wywołuje z UserDataBaseContext metodę EditUser
         public static void EditionOperationMenu()
         {
+            Console.Title = "User - Edit Menu";
             Console.WriteLine("Podaj numer ID wpisu który chcesz edytować:");
             int id = GetChoice(0, 10000000);
 

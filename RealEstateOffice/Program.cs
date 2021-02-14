@@ -11,13 +11,15 @@ namespace RealEstateOffice
             //AddMenu.AddOperationMenu(); 
             //NewUserMenu.AddUser();
 
+            StartMenu.BeginStartMenu();
+
             //test metody  Login
             //int test =UserDatabaseContext.Login("m.ruszczyk", "haslo");
             //Console.WriteLine(test);
             //Console.ReadLine();
             //Menu.MainMenu(); 
             //LoginMenu.LoginUser();
-            EditUserMenu.EditionOperationMenu();
+            //EditUserMenu.EditionOperationMenu();
             //DatabaseContext.RemoveFromDatabase(15);
             
         }

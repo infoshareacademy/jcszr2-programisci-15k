@@ -6,6 +6,8 @@ namespace RealEstateOffice
     {
         public static void AddOperationMenu()
         {
+            Console.Title = "RealEstate - Add Menu";
+
             RealEstate realEstate = new RealEstate();
 
             Console.WriteLine("Aby dodać nowy wpis do bazy danych, wypełnij wszystkie pola.");
