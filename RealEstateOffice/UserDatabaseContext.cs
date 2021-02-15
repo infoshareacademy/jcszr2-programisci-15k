@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace RealEstateOffice
@@ -46,9 +47,9 @@ namespace RealEstateOffice
             sb.AppendLine("");
             sb.Append(lastId + 1); //Id = lastId + 1
             sb.Append(";");
-            sb.Append(user.Login);
+            sb.Append(user.Login); 
             sb.Append(";");
-            sb.Append(user.Password);
+            sb.Append(codePassword(user.Password)); 
             sb.Append(";");
             sb.Append(user.Name);
             sb.Append(";");
@@ -194,8 +195,8 @@ namespace RealEstateOffice
 
             List<User> userList = new List<User>();
             userList = UserDatabaseContext.ListOfUser();
-
-            var userToLog = (from x in userList where x.Login ==login && x.Password ==password select x).Single<User>();
+            
+            var userToLog = (from x in userList where x.Login ==login && x.Password == codePassword(password) select x).Single<User>();
             int typUser = (int)userToLog.TypeOfUserType;
 
            
@@ -283,7 +284,19 @@ namespace RealEstateOffice
         }
 
 
+        public static string  codePassword(string pass)
+        {
 
+            string hash;
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                //From String to byte array
+                byte[] sourceBytes = Encoding.UTF8.GetBytes(pass);
+                byte[] hashBytes = sha256Hash.ComputeHash(sourceBytes);
+                hash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+            }
+            return hash;
+        }
 
 
     }
