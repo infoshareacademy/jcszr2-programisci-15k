@@ -21,7 +21,7 @@ namespace RealEstateOffice
                 while ((line = reader.ReadLine()) != null)
                 {
                     //RealEstateList.Add(new RealEstate(ID, TypeOfRealEstate, Price, Area, OwnerName, OwnerSurname, City, Street, EstateAddress));
-                    RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), Convert.ToInt32(ParseTextLine(line, 4)), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8), ParseTextLine(line, 9)));
+                    RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), Convert.ToInt32(ParseTextLine(line, 4)), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8), ParseTextLine(line, 9), DateTime.Parse(ParseTextLine(line, 10)), DateTime.Parse(ParseTextLine(line, 11))));
                   
                 }
             }
@@ -31,27 +31,67 @@ namespace RealEstateOffice
 
         public static List<RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
         {
-            Filter emptyFilter = new Filter();
-            List<RealEstate> allRealEstateList = new List<RealEstate>();
+            List<RealEstate> realEstateList;
             List<RealEstate> filteredRealEstateList = new List<RealEstate>();
-            allRealEstateList = DatabaseContext.RealEstatesFilter(emptyFilter);  //gets hole list of Real Estates
-                        
-            foreach (var realEstate in from realEstate in allRealEstateList
-                                       where ((filter.PriceLowest != null && filter.PriceHighest != null) && (realEstate.Price > filter.PriceLowest && realEstate.Price < filter.PriceHighest))
-                                         &&  ((filter.AreaSmallest != null   && filter.AreaBiggest != null)  && realEstate.Area > filter.AreaSmallest && realEstate.Area < filter.AreaBiggest )
-                                         &&  ((filter.RoomAmountSmallest != null && filter.RoomAmountBiggest != null) && realEstate.RoomsAmount > filter.RoomAmountSmallest && realEstate.RoomsAmount < filter.RoomAmountBiggest)
-                                         &&  (!string.IsNullOrEmpty(filter.City) &&  realEstate.City == filter.City  )
-                                         &&  (!string.IsNullOrEmpty(filter.OwnerSurname) &&  realEstate.OwnerSurname == filter.OwnerSurname  )
-                                         &&  (!string.IsNullOrEmpty(filter.Street) &&  realEstate.Street == filter.Street )
-                                         &&  (!string.IsNullOrEmpty(filter.OwnerName) && realEstate.OwnerName == filter.OwnerName )
-                                         &&  filter.TypeOfRealEstate != null && realEstate.typeOfRealEstate == filter.TypeOfRealEstate
+            realEstateList = DatabaseContext.RealEstatesFilter(filter);  //gets hole list of Real Estates
 
-                                       select new { realEstate.Id, realEstate.typeOfRealEstate, realEstate.Price, realEstate.Area, realEstate.RoomsAmount, realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress })
-
+            for (var i = 0; i < realEstateList.Count; i++)
             {
-                filteredRealEstateList.Add(new RealEstate(Convert.ToInt32(realEstate.Id), Convert.ToInt32(realEstate.typeOfRealEstate), System.Convert.ToDecimal(realEstate.Price), Convert.ToInt32(realEstate.Area), Convert.ToInt32(realEstate.RoomsAmount), realEstate.OwnerName, realEstate.OwnerSurname, realEstate.City, realEstate.Street, realEstate.EstateAddress));
-                Console.WriteLine($"{realEstate.Id} {realEstate.typeOfRealEstate} {realEstate.Price} {realEstate.Area} {realEstate.RoomsAmount} {realEstate.OwnerName} {realEstate.OwnerSurname} {realEstate.City} {realEstate.Street} {realEstate.EstateAddress} ");
+                if (filter.TypeOfRealEstate != null && 
+                    realEstateList[i].typeOfRealEstate != filter.TypeOfRealEstate)
+                {
+                    continue;
+                }
+
+                if (filter.PriceLowest != null && filter.PriceHighest != null &&
+                    realEstateList[i].Price < filter.PriceLowest &&
+                    realEstateList[i].Price > filter.PriceHighest)
+                {
+                    continue;
+                }
+
+                if (filter.AreaSmallest != null && filter.AreaBiggest != null && 
+                    realEstateList[i].Area < filter.AreaSmallest && 
+                    realEstateList[i].Area > filter.AreaBiggest)
+                {
+                    continue;
+                }
+
+                if (filter.RoomAmountSmallest != null && filter.RoomAmountBiggest != null && 
+                    realEstateList[i].RoomsAmount < filter.RoomAmountSmallest && 
+                    realEstateList[i].RoomsAmount > filter.RoomAmountBiggest)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(filter.OwnerName) && !string.IsNullOrEmpty(filter.OwnerSurname) && 
+                    realEstateList[i].OwnerName != filter.OwnerName && 
+                    realEstateList[i].OwnerSurname != filter.OwnerSurname)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(filter.City) && 
+                    realEstateList[i].City != filter.City)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(filter.Street) && 
+                    realEstateList[i].Street != filter.Street)
+                {
+                    continue;
+                }
+
+                if (filter.CreationDateEarliest != null && filter.CreationDateLatest != null && 
+                    (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateEarliest) < 0) && 
+                    (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateLatest) > 0))
+                {
+                    continue;
+                }
+                filteredRealEstateList.Add(realEstateList[i]);
             }
+
 
             Console.ReadLine();
             return filteredRealEstateList;
@@ -76,10 +116,8 @@ namespace RealEstateOffice
             //Data stworzenia wpisu zostaje ustalona automatycznie
             //funkcja przyjmuje obiekt RealEstate
 
-            realEstate.CreationDate = DateTime.Today;
-            realEstate.ModificationDate = DateTime.Today;
-            string creationDateString;
-            string modificationDateString;
+            realEstate.CreationDate = DateTime.Now;
+            realEstate.ModificationDate = DateTime.Now;
 
 
             String path = "..\\Files\\RealEstates.csv";
@@ -110,9 +148,9 @@ namespace RealEstateOffice
             sb.Append(";");
             sb.Append(realEstate.EstateAddress);
             sb.Append(";");
-            sb.Append(creationDateString = realEstate.CreationDate.ToShortDateString());
+            sb.Append(realEstate.CreationDate);
             sb.Append(";");
-            sb.Append(modificationDateString = realEstate.ModificationDate.ToShortDateString());
+            sb.Append(realEstate.ModificationDate);
             sb.Append(";");
 
 

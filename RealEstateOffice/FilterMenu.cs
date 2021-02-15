@@ -108,7 +108,7 @@ namespace RealEstateOffice
                         case 11:
                             if (isFilterBeingMade)
                             {
-                                RealEstatesView.Display(DatabaseContext.RealEstatesFilter(filter));
+                                RealEstatesView.Display(DatabaseContext.RealEstateChoice(filter));
                                 //przekazujemy istniejący filtr do backendu jako argument funkcji
                                 //pola nie wypełnione przez użytkownika (null) w obiekcie filter nie mają być brane pod uwagę
                                 //backend zwraca właściwie dobraną listę obiektów RealEstate które Display() formatuje i tu wyświetla
