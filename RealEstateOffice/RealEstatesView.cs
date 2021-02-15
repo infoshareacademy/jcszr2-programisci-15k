@@ -20,7 +20,7 @@ namespace RealEstateOffice
                 Console.WriteLine($"|ID#{realEstate.Id,-3} | {realEstate.typeOfRealEstate,-10} | {realEstate.Price,10:#,##} PLN | {realEstate.Area,5} m^2 | " +
                                   $"{realEstate.Area,5} m^2 | {realEstate.RoomsAmount,3} | {realEstate.OwnerName,-12} | {realEstate.OwnerSurname,-12} | " +
                                   $"{realEstate.City,-10} | {realEstate.Street,-16} | {realEstate.EstateAddress,-5} | " +
-                                  $"{realEstate.CreationDate.Date:dd/MM/yyyy} | {realEstate.ModificationDate.Date:dd/MM/yyyy}|" );
+                                  $"{realEstate.CreationDate} | {realEstate.ModificationDate}|" );
                 Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
             Console.ReadLine();

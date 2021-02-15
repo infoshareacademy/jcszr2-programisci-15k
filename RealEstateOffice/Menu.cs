@@ -35,38 +35,49 @@ namespace RealEstateOffice
 
             //wyloguj się
             //powrót do start menu
-            Console.Title = "Main Menu";
 
-            Console.WriteLine("Podaj numer operacji, którą chcesz wykonać");
-            Console.WriteLine("1. Filtrowanie listy nieruchomości");
-            Console.WriteLine("2. Dodawanie nowej nieruchomości");
-            Console.WriteLine("3. Usuwanie nieruchomości z listy");
-            Console.WriteLine("4. Edytowanie listy nieruchomości");
-            Console.WriteLine("5. Wyloguj się");
+            bool menuRuns = true;
+
             
-            int choice;
-            int.TryParse(Console.ReadLine(), out choice);
-            switch (choice)
+            while (menuRuns)
             {
-                case 1:
-                    FilterMenu.FilterOperationMenu();
-                    break;
-                case 2:
-                    AddMenu.AddOperationMenu();
-                    break;
-                case 3:
-                    RemoveMenu.RemoveOperationMenu();
-                    break;
-                case 4:
-                    EditionMenu.EditionOperationMenu();
-                    
-                    break;
-                case 5:
-                    StartMenu.BeginStartMenu();
-                    break;
-                default:
-                    break;
+                Console.Clear();
+                Console.Title = "Main Menu";
+
+                Console.WriteLine("Podaj numer operacji, którą chcesz wykonać");
+                Console.WriteLine("1. Filtrowanie listy nieruchomości");
+                Console.WriteLine("2. Dodawanie nowej nieruchomości");
+                Console.WriteLine("3. Usuwanie nieruchomości z listy");
+                Console.WriteLine("4. Edytowanie listy nieruchomości");
+                Console.WriteLine("5. Wyloguj się");
+
+                int choice;
+
+                int.TryParse(Console.ReadLine(), out choice);
+
+                switch (choice)
+                {
+                    case 1:
+                        FilterMenu.FilterOperationMenu();
+                        break;
+                    case 2:
+                        AddMenu.AddOperationMenu();
+                        break;
+                    case 3:
+                        RemoveMenu.RemoveOperationMenu();
+                        break;
+                    case 4:
+                        EditionMenu.EditionOperationMenu();
+                        break;
+                    case 5:
+                        menuRuns = false;
+                        break;
+                    default:
+                        Console.WriteLine("Wpisz poprawną wartość.");
+                        break;
+                }
             }
+
 
 
 

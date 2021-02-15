@@ -14,7 +14,7 @@ namespace RealEstateOffice
         }
 
 
-        public RealEstate(int ID,int TypeOfRealEstate,decimal Price,int Area,int RoomsAmount,string OwnerName,string OwnerSurname, string City,string Street, string EstateAddress)
+        public RealEstate(int ID,int TypeOfRealEstate,decimal Price,int Area,int RoomsAmount,string OwnerName,string OwnerSurname, string City,string Street, string EstateAddress, DateTime CreationDate, DateTime ModificationDate)
         {
             this._id = ID;
             this._typeOfRealEstate = (TypeOfRealEstate)TypeOfRealEstate;
@@ -26,6 +26,8 @@ namespace RealEstateOffice
             this._city = City;
             this._street = Street;
             this._estateAddress = EstateAddress;
+            this._creationDate = CreationDate;
+            this._modificationDate = ModificationDate;
 
 
 
