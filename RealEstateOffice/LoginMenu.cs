@@ -12,8 +12,9 @@ namespace RealEstateOffice
             Console.WriteLine("Podaj login");
 
             string login = Console.ReadLine();
-            Console.WriteLine("Podaj hasło");
-            string password = Console.ReadLine();
+            //Console.WriteLine("Podaj hasło");
+            //string password = Console.ReadLine();
+            string password = asteriskPass();
             Console.Clear();
             int output = UserDatabaseContext.Login(login, password);
 
@@ -35,5 +36,30 @@ namespace RealEstateOffice
 
 
         }
+
+        public static string asteriskPass()
+        {
+
+            ConsoleKeyInfo key;
+            Console.Write("Podaj hasło: ");
+            StringBuilder sb = new StringBuilder();
+            do
+            {
+                key = Console.ReadKey(true);
+                sb.Append(key.KeyChar);
+                Console.Write("*");
+
+            } while (key.Key != ConsoleKey.Enter);
+            Console.WriteLine();
+
+            string pass= sb.ToString().Remove(sb.Length - 1, 1);
+
+            return pass;
+
+        }
+
+
+
+
     }
 }

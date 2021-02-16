@@ -195,8 +195,9 @@ namespace RealEstateOffice
 
             List<User> userList = new List<User>();
             userList = UserDatabaseContext.ListOfUser();
-            
-            var userToLog = (from x in userList where x.Login ==login && x.Password == codePassword(password) select x).Single<User>();
+
+            password = codePassword(password);
+            var userToLog = (from x in userList where x.Login ==login && x.Password == password select x).Single<User>(); //codePassword(password)
             int typUser = (int)userToLog.TypeOfUserType;
 
            
