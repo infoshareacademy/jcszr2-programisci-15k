@@ -5,18 +5,25 @@ namespace RealEstateOffice
 {
     class FilterMenu
     {
-        public static void FilterOperationMenu()
+        public static void FilterOperationMenu(UserSession userSession)
         {
             var isFilterMenuRunning = true;
             var isFilterBeingMade = false;
-
-            Console.Title = "RealEstate - Filter Menu";
 
             Filter filter = new Filter();
 
             while (isFilterMenuRunning)
             {
                 Console.Clear();
+                if (userSession.UserType == 3)
+                {
+                    Console.Title = "RealEstate - Filter Menu | " + UserSession.DisplayCurrentUser(userSession);
+                }
+                else
+                {
+                    Console.Title = "RealEstate - Filter Menu";
+                }
+
                 Console.WriteLine("Jakie nieruchomości chcesz wyświetlić?");
                 Console.WriteLine();
                 Console.WriteLine("1. Wyświetl wszystkie nieruchomości.");

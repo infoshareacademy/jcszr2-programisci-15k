@@ -40,7 +40,7 @@ namespace RealEstateOffice
                             NewUserMenu.AddUser();
                             break;
                         case 3:
-                            //ProgramRuns = false;
+                            ProgramRuns = false;
                             break;
                     }
                 }

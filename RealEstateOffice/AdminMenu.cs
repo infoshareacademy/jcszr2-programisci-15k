@@ -6,7 +6,7 @@ namespace RealEstateOffice
 {
     class AdminMenu
     {
-        public static void AdminMainMenu()
+        public static void AdminMainMenu(UserSession userSession)
         {
             //opcje zarządzania użytkownikami
             //tylko ADMIN
@@ -26,7 +26,7 @@ namespace RealEstateOffice
                 while (menuRuns)
                 {
                     Console.Clear();
-                    Console.Title = "Menu administratora";
+                    Console.Title = "Menu administratora | " + UserSession.DisplayCurrentUser(userSession);
                     Console.WriteLine("Menu administracji użytkownikami");
                     Console.WriteLine("1. Pokaz wszystkich użytkownikow");
                     Console.WriteLine("2. Dodawanie użytkownika");
