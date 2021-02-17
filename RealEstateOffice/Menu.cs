@@ -6,7 +6,7 @@ namespace RealEstateOffice
 {
     public class Menu
     {
-        public static void MainMenu()
+        public static void MainMenu(UserSession userSession)
         {
             //Zależnie od typu zalogowanego użytkownika zmienia się ilość opcji
 
@@ -42,9 +42,10 @@ namespace RealEstateOffice
             while (menuRuns)
             {
                 Console.Clear();
-                Console.Title = "Main Menu";
 
+                Console.Title = "Main Menu | " + UserSession.DisplayCurrentUser(userSession);
                 Console.WriteLine("Podaj numer operacji, którą chcesz wykonać");
+                Console.WriteLine();
                 Console.WriteLine("1. Filtrowanie listy nieruchomości");
                 Console.WriteLine("2. Dodawanie nowej nieruchomości");
                 Console.WriteLine("3. Usuwanie nieruchomości z listy");
@@ -58,7 +59,7 @@ namespace RealEstateOffice
                 switch (choice)
                 {
                     case 1:
-                        FilterMenu.FilterOperationMenu();
+                        FilterMenu.FilterOperationMenu(userSession);
                         break;
                     case 2:
                         AddMenu.AddOperationMenu();

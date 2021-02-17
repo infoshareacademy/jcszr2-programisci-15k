@@ -284,7 +284,7 @@ namespace RealEstateOffice
                         columnsToChange[4] = realEstate.RoomsAmount.ToString();
                     }
 
-                if (!String.IsNullOrEmpty(realEstate.OwnerName))
+                    if (!String.IsNullOrEmpty(realEstate.OwnerName))
                     {
                         columnsToChange[5] = realEstate.OwnerName;
                     }
@@ -308,6 +308,9 @@ namespace RealEstateOffice
                     {
                         columnsToChange[9] = realEstate.EstateAddress;
                     }
+
+                    
+                    columnsToChange[11] = DateTime.Now.ToString();
 
                     s1 = string.Join(";", columnsToChange);
                 
