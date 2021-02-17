@@ -17,17 +17,21 @@ namespace RealEstateOffice
             string password = asteriskPass();
             Console.Clear();
             int output = UserDatabaseContext.Login(login, password);
+            
 
             switch (output)
             {
                 case 1:
-                    AdminMenu.AdminMainMenu();
+                    var userSession = new UserSession(output, login);
+                    AdminMenu.AdminMainMenu(userSession);
                     break;
                 case 2:
-                    Menu.MainMenu();
+                    var userSession2 = new UserSession(output, login);
+                    Menu.MainMenu(userSession2);
                     break;
                 case 3:
-                    FilterMenu.FilterOperationMenu();
+                    var userSession3 = new UserSession(output, login);
+                    FilterMenu.FilterOperationMenu(userSession3);
                     break;
                 default:
                     Console.WriteLine("Podałeś błędny login lub hasło");
