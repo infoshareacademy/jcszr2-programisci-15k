@@ -31,6 +31,7 @@ namespace RealEstateOffice
                     break;
                 default:
                     Console.WriteLine("Podałeś błędny login lub hasło");
+                    Console.ReadLine();
                     break;
             }
 

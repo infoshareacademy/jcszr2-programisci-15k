@@ -164,6 +164,8 @@ namespace RealEstateOffice
             Console.Clear();
             Console.WriteLine("Record added to database.Press any key");
             Console.ReadLine();
+            Log insertLog = new Log(0,DateTime.Now, "Insert of Real Estate: " + realEstate.typeOfRealEstate, "worker");
+            Logger.AddLineToLog(insertLog);
         }
 
         static int GetLastLineId(String lastLine)
@@ -212,6 +214,9 @@ namespace RealEstateOffice
                 }
             }
             sr.Close();
+
+            Log insertLog = new Log(0, DateTime.Now, "Removed record of Real Estate with id: " + LineToDelete, "worker");
+            Logger.AddLineToLog(insertLog);
 
             Console.WriteLine("Records deleted" +" : "+ linesDeleted);
             File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath,true);

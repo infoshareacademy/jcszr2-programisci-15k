@@ -80,6 +80,11 @@ namespace RealEstateOffice
                                     { 
                                         DatabaseContext.saveLine(choice, changedLine);
                                     }
+
+                                    Log insertLog = new Log(0, DateTime.Now, "Edited record of Real Estate", "worker");
+                                    Logger.AddLineToLog(insertLog);
+
+
                                     isEditionMenuRunning = false;
                                     break;
                                 case 0:
