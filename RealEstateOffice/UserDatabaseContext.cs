@@ -197,18 +197,28 @@ namespace RealEstateOffice
             userList = UserDatabaseContext.ListOfUser();
 
             password = codePassword(password);
-            var userToLog = (from x in userList where x.Login ==login && x.Password == password select x).Single<User>(); //codePassword(password)
-            int typUser = (int)userToLog.TypeOfUserType;
+            var userToLog = (from x in userList where x.Login ==login && x.Password == password select x).SingleOrDefault<User>(); //codePassword(password)
+
+            
+            if (userToLog ==null)
+            {
+                return 0;
+            } else
+            {
+                int typUser = (int)userToLog.TypeOfUserType;
+                return typUser;
+            }
+            
 
            
-            if (typUser > 0 )
-            {
-              return typUser; //Login user
-            }
-            else
-            {
-                return 0;  //No such user in database
-            }
+            //if (typUser > 0 )
+            //{
+            //  return typUser; //Login user
+            //}
+            //else
+            //{
+            //    return 0;  //No such user in database
+            //}
                    
         }
       

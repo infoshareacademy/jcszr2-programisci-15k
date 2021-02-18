@@ -38,18 +38,26 @@ namespace RealEstateOffice
             string relativePath = UserDatabaseContext.bingPathToAppDir(path);
 
             // pobieram ID z ostatniej linijki w users.csv
-            var lastLine = File.ReadLines(relativePath).Last();
-            string[] columns = lastLine.Split(";");
-            var lastId = Convert.ToInt32(columns[0]);
-
-            DateTime logDate = DateTime.Today;
-
+            var info = new FileInfo(relativePath);
+            //var lastLine = '0';
+            var lastId = 1;
+            if (info.Length < 10)  // zabezp. przed pustym plikiem
+            {
+               lastId = 0;
+            }
+            else
+            {
+                var lastLine = File.ReadLines(relativePath).Last();
+                string[] columns = lastLine.Split(";");
+                lastId = Convert.ToInt32(columns[0]);
+            }
+                     
             //ID; LogDate; TypeOfCRUDOperation; UserName;
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("");
             sb.Append(lastId + 1); //Id = lastId + 1
             sb.Append(";");
-            sb.Append(logDate);
+            sb.Append(DateTime.Now);
             sb.Append(";");
             sb.Append(log.TypeOfCRUDOperation);
             sb.Append(";");
@@ -61,8 +69,7 @@ namespace RealEstateOffice
             }
 
             Console.Clear();
-            Console.WriteLine("Log record added to database. Press any key.");
-            Console.ReadLine();
+           
         }
 
         static string ParseTextLine(string Line, int column)
