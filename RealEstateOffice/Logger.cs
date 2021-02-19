@@ -61,7 +61,7 @@ namespace RealEstateOffice
             sb.Append(";");
             sb.Append(log.TypeOfCRUDOperation);
             sb.Append(";");
-            sb.Append(log.UserName);
+            sb.Append(MyIdentity.GetLogin());
 
             using (StreamWriter sw = File.AppendText(relativePath))
             {
