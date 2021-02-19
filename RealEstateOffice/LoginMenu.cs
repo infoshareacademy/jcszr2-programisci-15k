@@ -17,7 +17,7 @@ namespace RealEstateOffice
             string password = asteriskPass();
             Console.Clear();
             int output = UserDatabaseContext.Login(login, password);
-            
+            MyIdentity.SetLogin(login);
 
             switch (output)
             {
