@@ -25,7 +25,10 @@
 </style>
 
 
-
+@using (Html.BeginForm("Index", "Register"))
+{
+    <input type="submit" class="btn btn-info" value="Dodaj użytkownika" />
+}
 
 <table>
     <tr>
@@ -36,6 +39,8 @@
         <th>Hasło</th>
         <th>Rola</th>
         <th>E-mail</th>
+        <th></th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -48,7 +53,8 @@
             <td>@item.Password</td>
             <td>@item.TypeOfUserType</td>
             <td>@item.EmailAddress</td>
-            
+            <td><button type="button" class="btn btn-info">Edytuj</button></td>
+            <td><button type="button" class="btn btn-info">Usuń</button></td>
         </tr>
 
     }

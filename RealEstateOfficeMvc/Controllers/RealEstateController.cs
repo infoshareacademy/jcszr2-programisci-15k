@@ -29,19 +29,17 @@ namespace RealEstateOfficeMvc.Controllers
 
         }
 
-        [HttpGet]
+       
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
         public IActionResult Search()
         {
             return View();
         }
-
-
+        
 
         [HttpPost]
         public IActionResult VSearch()
@@ -59,6 +57,13 @@ namespace RealEstateOfficeMvc.Controllers
             return View(model);
 
         }
+
+        [HttpGet]
+        public IActionResult Liked()
+        {
+            return View();
+        }
+
 
 
     }

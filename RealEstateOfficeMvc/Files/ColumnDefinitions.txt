@@ -4,3 +4,5 @@ realestate columns:
 ID; TypeOfRealEstate; Price; Area; RoomAmount; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
 users columns:
 ID; Login; Password; Name; Surname; EmailAddress; UserType;
+FavouriteRealEstate
+ID; UserID,RealEstateID

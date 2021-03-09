@@ -28,5 +28,16 @@ namespace RealEstateOfficeMvc.Controllers
             return RedirectToAction("Index", "Users");
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult RegisterClient()
+        {
+            return View();
+        }
+
+
     }
 }

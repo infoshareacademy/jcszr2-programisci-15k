@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RealEstateOfficeTeam</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Programiści15K</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,17 +24,36 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="RealEstate" asp-action="Liked">Ulubione</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RealEstate" asp-action="Index">Dodaj nieruchomość</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Raports" asp-action="Index">Raporty</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logi systemowe</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="RegisterClient">Register</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Login">Log In</a>
+                        </li>
+
+                        @*<li class="nav-item">
+                          <a class="nav-link text-dark" asp-area="" asp-controller="RealEstate" asp-action="Index">Dodaj nieruchomość</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RealEstate" asp-action="Search">Wyszukaj</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Sign In</a>
-                        </li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="RealEstate" asp-action="Search">Wyszukaj</a>
+                        </li>*@
+
                     </ul>
                 </div>
             </div>
@@ -48,7 +67,7 @@
     
     <footer class="border-top footer text-muted">
         <div class="container">
-            2021 - RealEstateOfficeTeam
+            @DateTime.Now.ToString("MM/dd/yyyy") - Programiści15K
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
