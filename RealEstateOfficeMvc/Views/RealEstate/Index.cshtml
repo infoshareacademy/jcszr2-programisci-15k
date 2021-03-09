@@ -1,0 +1,62 @@
+﻿
+<script>
+        
+    var dropdown = $('#realestateType');
+    Console.log(dropdown);
+   
+    dropdown.on('change', function () {
+        var selected = $('option:selected', dropdown).val();
+       
+</script> 
+
+
+
+
+<form method="post" action="/RealEstate/AddRealEstate" >
+    <div class="text-secondary" >
+      <H2 class="col-8" > Nowa nieruchomość</H2 >
+    </div >
+    <div class="col-8" >
+       @Html.DropDownList("realestateType", new List<SelectListItem>
+        {new SelectListItem { Text = "Dom", Value = "0" },
+         new SelectListItem { Text = "Mieszkanie", Value = "1" },
+         new SelectListItem { Text = "Działka", Value = "2" },
+         new SelectListItem { Text = "Garaż", Value = "3" },
+         new SelectListItem { Text = "Lokal usługowy", Value = "4" }
+        }, new { style = "width: 180px;" })
+    </div >
+    <br />
+    <div id="rooms" class="col-8">
+        <label>Liczba pokoi:  <input  style = "width: 85px;" type="text" name="RoomsAmount" ></label>  
+    </div>
+
+
+    <div class="input-group col-8" >
+    <div class="input-group-prepend" >
+    <span class="input-group-text" id="" > Cena i powierzchnia</span >
+    </div >
+    <input name="Price" type="text" class="form-control" >
+    <input name="Area" type="text" class="form-control" >
+    </div >
+    <div class="input-group col-8" >
+    <div class="input-group-prepend" >
+    <span class="input-group-text" id="" > Imię i nazwisko właściciela</span >
+    </div >
+    <input name="OwnerName" type="text" class="form-control" >
+    <input name="OwnerSurname" type="text" class="form-control" >
+    </div >
+
+
+    <div class="input-group col-8" >
+    <div class="input-group-prepend" >
+    <span class="input-group-text" id="" > Miejscowość, ulica i numer posesji</span >
+    </div >
+    <input name="City" type="text" class="form-control" >
+    <input name="Street" type="text" class="form-control" >
+    <input name="EstateAddress" type="text" class="form-control" >
+    </div >
+    <br/>
+     <div class="col-8" >
+    <button type="submit" class="btn btn-info" > Zapisz</button >
+    </div >
+    </form >

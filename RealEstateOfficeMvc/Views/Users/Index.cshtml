@@ -1,0 +1,61 @@
+﻿@model IEnumerable<RealEstateOfficeMvc.Models.User>
+
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        height: 70px;
+        background-color: lightblue;
+        color: white;
+        text-align: left;
+    }
+
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+
+@using (Html.BeginForm("Index", "Register"))
+{
+    <input type="submit" class="btn btn-info" value="Dodaj użytkownika" />
+}
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Login</th>
+        <th>Hasło</th>
+        <th>Rola</th>
+        <th>E-mail</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Surname</td>
+            <td>@item.Login</td>
+            <td>@item.Password</td>
+            <td>@item.TypeOfUserType</td>
+            <td>@item.EmailAddress</td>
+            <td><button type="button" class="btn btn-info">Edytuj</button></td>
+            <td><button type="button" class="btn btn-info">Usuń</button></td>
+        </tr>
+
+    }
+</table>

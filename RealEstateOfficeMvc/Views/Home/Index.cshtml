@@ -1,8 +1,81 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<RealEstateOfficeMvc.Models.RealEstate>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        height: 70px;
+        background-color: lightblue;
+        color: white;
+        text-align: left;
+    }
+
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<table>
+    <tr>
+        @using (Html.BeginForm("Index", "RealEstate"))
+        {
+            <input type="submit" class="btn btn-info" value="Dodaj nieruchomość" />
+        }
+
+        &nbsp
+
+        @using (Html.BeginForm("Search", "RealEstate"))
+        {
+            <input type="submit" class="btn btn-info" value="Wyszukaj nieruchomość" />
+        }
+    </tr>
+</table>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nieruchomość</th>
+            <th>Cena</th>
+            <th> Powierzchnia </th>
+            <th> Pokoje </th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Miejscowość</th>
+            <th>Ulica</th>
+            <th>Numer posesji</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.typeOfRealEstate</td>
+        <td>@item.Price</td>
+        <td>@item.Area</td>
+        <td>@item.RoomsAmount</td>
+        <td>@item.OwnerName</td>
+        <td>@item.OwnerSurname</td>
+        <td>@item.City</td>
+        <td>@item.Street</td>
+        <td>@item.EstateAddress</td>
+        <td><button type="button" class="btn btn-danger">Like</button></td>
+        <td><button type="button" class="btn btn-info">Edytuj</button></td>
+        <td><button type="button" class="btn btn-info">Usuń</button></td>
+    </tr>
+
+
+        }
+    </table>
+
