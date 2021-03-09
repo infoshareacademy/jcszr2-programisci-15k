@@ -20,14 +20,16 @@ namespace RealEstateOfficeMvc.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Filter emptyFilter = new Filter();
+            var model = DatabaseContext.RealEstatesFilter(emptyFilter);
+            return View(model);
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
-
+                
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
