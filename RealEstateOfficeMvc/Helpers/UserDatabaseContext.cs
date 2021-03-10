@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace RealEstateOfficeMvc
 {
@@ -69,43 +70,10 @@ namespace RealEstateOfficeMvc
             {
                 sw.Write(sb);
             }
-         }
+        }
                 
         //metoda do uswania 
-        public static void RemoveUser(int LineToDelete)
-        {
-            String path = "..\\Files\\Users.csv";
-            string fullPath = DatabaseContext.bingPathToAppDir(path);
-            StreamReader sr = new StreamReader(fullPath);
-            string line;
-            int linesDeleted = 0;
-
-            using (StreamReader reader = new StreamReader(fullPath))
-            {
-                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
-                {
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] columns = line.Split(";");
-                        if (LineToDelete != Convert.ToInt32(columns[0]))
-                        {
-                            writer.WriteLine(line);
-                        }
-                        else
-                        {
-                            linesDeleted++;
-                        }
-
-                    }
-
-                }
-            }
-            sr.Close();
-
-            Console.WriteLine("Records deleted" + " : " + linesDeleted);
-            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath, true);
-            System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
-        }
+       
 
 
 

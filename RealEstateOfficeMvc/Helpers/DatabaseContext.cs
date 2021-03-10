@@ -176,56 +176,9 @@ namespace RealEstateOfficeMvc
             lastId = lastId + 1;
             return lastId;
         }
-
-
         
-        public static void RemoveFromDatabase(int LineToDelete)
-            {
-            //funkcja przyjmuje realEstate.ID
-            //
-            //sprawdzenie czy wpis z takim ID istnieje, jeśli tak to
-            //przekazanie do frontendu potwierdzenia że wpis został usunięty
-            //task 3
-
-            String path = "..\\Files\\RealEstates.csv";
-            string fullPath = DatabaseContext.bingPathToAppDir(path);
-            StreamReader sr = new StreamReader(fullPath);
-            string line;
-            int linesDeleted = 0;
-            
-
-            using (StreamReader reader = new StreamReader(fullPath))
-            {
-                using (StreamWriter writer = new StreamWriter(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv")))
-                {
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] columns = line.Split(";");
-                        if (LineToDelete != Convert.ToInt32(columns[0]))
-                        {
-                          writer.WriteLine(line);
-                        } 
-                        else
-                        {
-                            linesDeleted++;
-                        }
-
-                    }
-                                    
-                }
-            }
-            sr.Close();
-
-            Log insertLog = new Log(0, DateTime.Now, "Removed record of Real Estate with id: " + LineToDelete, "worker");
-           // Logger.AddLineToLog(insertLog);
-
-            Console.WriteLine("Records deleted" +" : "+ linesDeleted);
-            File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath,true);
-            System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
-
-        }
-
-                
+        
+        
 
         public static string EditRecordInDatabase(RealEstateOfficeMvc.Models.RealEstate realEstate,int id)
         {

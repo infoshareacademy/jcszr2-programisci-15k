@@ -95,8 +95,14 @@
         </td>
         
         <td><button type="button" class="btn btn-info">Edytuj</button></td>
-        <td><button type="button" class="btn btn-info">Usuń</button></td>
-
+        <td>
+            @using (Html.BeginForm("RemoveFromDatabase", "RealEstate", FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-danger">Usuń</button>
+                <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+            }
+        </td>
+       
     </tr>
 
 
