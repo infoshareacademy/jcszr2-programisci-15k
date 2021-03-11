@@ -62,6 +62,12 @@ namespace RealEstateOfficeMvc.Controllers
             return RedirectToAction("Index", "Users");
         }
 
+        public IActionResult EditUser()
+        {
+            return View();
+        }
+
+
 
     }
 }

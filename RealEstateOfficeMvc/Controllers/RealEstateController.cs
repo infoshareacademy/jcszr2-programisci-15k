@@ -36,6 +36,13 @@ namespace RealEstateOfficeMvc.Controllers
             return View();
         }
 
+
+        public IActionResult EditEstate()
+        {
+            return View();
+        }
+
+
         public IActionResult Search()
         {
             return View();

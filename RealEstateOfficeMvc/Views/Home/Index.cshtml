@@ -94,7 +94,13 @@
             </button>
         </td>
         
-        <td><button type="button" class="btn btn-info">Edytuj</button></td>
+        <td>
+            @using (Html.BeginForm("EditEstate", "RealEstate", FormMethod.Post))
+            {
+            <button type="submit" class="btn btn-info">Edytuj</button>
+                <input type="hidden" id="realedit" name="realedit" value=@item.Id>
+            }
+        </td>
         <td>
             @using (Html.BeginForm("RemoveFromDatabase", "RealEstate", FormMethod.Post))
             {
