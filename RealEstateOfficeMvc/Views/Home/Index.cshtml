@@ -55,16 +55,17 @@
 
     <table>
         <tr>
-            <th>Id</th>
+
             <th>Nieruchomość</th>
-            <th>Cena</th>
-            <th> Powierzchnia </th>
+            <th>Cena(pln)</th>
+            <th>Powierzchnia(m2)</th>
             <th> Pokoje </th>
             <th>Imię</th>
             <th>Nazwisko</th>
             <th>Miejscowość</th>
             <th>Ulica</th>
             <th>Numer posesji</th>
+            <th>Cena/m2</th>
             <th></th>
             <th></th>
             <th></th>
@@ -74,7 +75,7 @@
         @foreach (var item in Model)
         {
     <tr>
-        <td>@item.Id</td>
+
         <td>@item.typeOfRealEstate</td>
         <td>@item.Price</td>
         <td>@item.Area</td>
@@ -84,7 +85,9 @@
         <td>@item.City</td>
         <td>@item.Street</td>
         <td>@item.EstateAddress</td>
-        
+        <td>     </td>
+
+
         <td>
             <button type="button" id="like-button" class="btn btn-danger">
                 Like
@@ -93,11 +96,11 @@
                 </svg>
             </button>
         </td>
-        
+
         <td>
             @using (Html.BeginForm("EditEstate", "RealEstate", FormMethod.Post))
             {
-            <button type="submit" class="btn btn-info">Edytuj</button>
+                <button type="submit" class="btn btn-info">Edytuj</button>
                 <input type="hidden" id="realedit" name="realedit" value=@item.Id>
             }
         </td>
@@ -108,7 +111,7 @@
                 <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
             }
         </td>
-       
+
     </tr>
 
 

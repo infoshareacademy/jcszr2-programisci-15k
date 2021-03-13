@@ -32,11 +32,10 @@
 
 <table>
     <tr>
-        <th>Id</th>
+        
         <th>Imię</th>
         <th>Nazwisko</th>
         <th>Login</th>
-        <th>Hasło</th>
         <th>Rola</th>
         <th>E-mail</th>
         <th></th>
@@ -46,11 +45,9 @@
     @foreach (var item in Model)
     {
 <tr>
-    <td>@item.Id</td>
     <td>@item.Name</td>
     <td>@item.Surname</td>
     <td>@item.Login</td>
-    <td>@item.Password</td>
     <td>@item.TypeOfUserType</td>
     <td>@item.EmailAddress</td>
     
