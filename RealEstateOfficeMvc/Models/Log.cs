@@ -5,7 +5,7 @@ using System.Text;
 namespace RealEstateOfficeMvc
 {
     //ID; LogDate; TypeOfCRUDOperation; UserName;
-    class Log
+    public class Log
     {
         public Log(int ID, DateTime LogDate,string TypeOfCRUDOperation,string UserName)
         {
