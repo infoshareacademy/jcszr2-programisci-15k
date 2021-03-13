@@ -1,7 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<Log>
 
-To do : tutaj będą wyświetlane logi systemowe (ze wszystkich operacji crud)  \views\Logs\Index
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        height: 70px;
+        background-color: lightblue;
+        color: white;
+        text-align: left;
+    }
+
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #like-button {
+        width: 100px;
+        height: 40px;
+    }
+
+        #like-button svg {
+            width: 25px;
+            height: 25px;
+        }
+</style>
+
+
+<table>
+    <tr>
+
+        <th>Id</th>
+        <th>Typ operacji</th>
+        <th>Data loga</th>
+        <th>Nazwa użytkownika</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.Id</td>
+            <td>@item.TypeOfCRUDOperation</td>
+            <td>@item.LogDate</td>
+            <td>@item.UserName</td>
+        </tr>
+
+
+    }
+</table>
+
+
+
+
