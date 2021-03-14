@@ -1,7 +1,39 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<form method="post" action="/Register/AddUser">
+    <div class="col-8">
+        <H2 class="text-secondary">Rejestracja konta użytkownika</H2>
+    </div>
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="">Imię i nazwisko</span>
+        </div>
+        <input name="Name" type="text" class="form-control">
+        <input name="Surname" type="text" class="form-control">
+    </div>
 
-To do : Formatka rejestracji uzytkownika   \Views\Register\RegisterClient
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="">Login i hasło</span>
+        </div>
+        <input name="Login" type="text" class="form-control">
+        <input name="Password" type="password" class="form-control">
+    </div>
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="">E-mail</span>
+        </div>
+        <input name="email" type="text" class="form-control">
+    </div>
+    <br />
+    <div class="col-8">
+        @Html.DropDownList("userTyp", new List<SelectListItem>
+        {new SelectListItem { Text = "Administrator", Value = "1" },
+            new SelectListItem { Text = "Pracownik", Value = "2" },
+            new SelectListItem { Text = "Klient", Value = "3" }
+        }, new { style = "width: 180px;" })
+    </div>
+    <br />
+    <div class="col-8">
+        <button type="submit" class="btn btn-info">Zapisz</button>
+        <button type="submit" class="btn btn-info">Anuluj</button>
+    </div>
+</form>

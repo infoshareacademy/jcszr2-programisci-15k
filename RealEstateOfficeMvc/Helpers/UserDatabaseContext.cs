@@ -174,18 +174,7 @@ namespace RealEstateOfficeMvc
                 int typUser = (int)userToLog.TypeOfUserType;
                 return typUser;
             }
-            
-
-           
-            //if (typUser > 0 )
-            //{
-            //  return typUser; //Login user
-            //}
-            //else
-            //{
-            //    return 0;  //No such user in database
-            //}
-                   
+          
         }
       
 
