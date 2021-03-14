@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.WebEncoders.Testing;
+using Microsoft.VisualBasic;
+using RealEstateOfficeMvc.Helpers;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -30,8 +34,32 @@ namespace RealEstateOfficeMvc.Controllers
 
         public IActionResult Login()
         {
-            return View();
+           return View();
         }
+
+
+        [HttpPost]
+        public IActionResult LoginUser()
+        {
+
+            
+           string login = HttpContext.Request.Form["Login"];
+           string password = HttpContext.Request.Form["Password"];
+           string SessionName = login;
+           var typUser = 0;
+
+           typUser = UserDatabaseContext.Login(login,password);
+            
+           HttpContext.Session.SetString(Appsettings.SESSIONLOGIN, login);
+           HttpContext.Session.SetString(Appsettings.SESSIONTYPUSER, Convert.ToString(typUser));
+
+
+           return RedirectToAction("Index", "Home");
+
+        }
+
+
+
 
         public IActionResult RegisterClient()
         {

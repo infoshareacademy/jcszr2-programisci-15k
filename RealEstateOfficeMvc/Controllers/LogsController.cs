@@ -34,7 +34,7 @@ namespace RealEstateOfficeMvc.Controllers
                 while ((line = reader.ReadLine()) != null)
                 {
 
-                    logList.Add(new Log(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToDateTime(ParseTextLine(line, 1)), ParseTextLine(line, 2), ParseTextLine(line, 2)));
+                    logList.Add(new Log(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToDateTime(ParseTextLine(line, 1)), ParseTextLine(line, 2), ParseTextLine(line, 3)));
 
                 }
             }
