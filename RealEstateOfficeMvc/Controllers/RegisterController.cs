@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.WebEncoders.Testing;
+using Microsoft.VisualBasic;
+using RealEstateOfficeMvc.Helpers;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -47,11 +49,10 @@ namespace RealEstateOfficeMvc.Controllers
            var typUser = 0;
 
            typUser = UserDatabaseContext.Login(login,password);
-           
-           //const string Sessionlogin = "login";
-           //const string Sessiontypuser = "0";
-           //HttpContext.Session.SetString(Sessionlogin, login);
-           //HttpContext.Session.SetString(Sessiontypuser, Convert.ToString(typUser));
+            
+           HttpContext.Session.SetString(Appsettings.SESSIONLOGIN, login);
+           HttpContext.Session.SetString(Appsettings.SESSIONTYPUSER, Convert.ToString(typUser));
+
 
            return RedirectToAction("Index", "Home");
 

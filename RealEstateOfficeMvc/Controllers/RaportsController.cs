@@ -12,7 +12,7 @@ namespace RealEstateOfficeMvc.Controllers
     {
         public IActionResult Index()
         {
-            
+          
             return View();
         }
     }

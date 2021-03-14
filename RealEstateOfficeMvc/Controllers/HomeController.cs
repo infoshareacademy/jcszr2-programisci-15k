@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -17,6 +18,11 @@ namespace RealEstateOfficeMvc.Controllers
         {
             Filter emptyFilter = new Filter();
             var model = DatabaseContext.RealEstatesFilter(emptyFilter);
+
+            ViewBag.login = HttpContext.Session.GetString("Sessionlogin");
+            ViewBag.typuser = HttpContext.Session.GetString("Sessiontypuser");
+
+
             return View(model);
         }
 
