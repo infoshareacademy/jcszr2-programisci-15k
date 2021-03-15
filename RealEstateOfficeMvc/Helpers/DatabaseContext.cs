@@ -46,29 +46,49 @@ namespace RealEstateOfficeMvc
                     continue;
                 }
 
-                if (filter.PriceLowest != null && filter.PriceHighest != null &&
-                    realEstateList[i].Price < filter.PriceLowest &&
-                    realEstateList[i].Price > filter.PriceHighest)
+                if (filter.PriceLowest != null &&
+                    (realEstateList[i].Price < filter.PriceLowest))
                 {
                     continue;
                 }
 
-                if (filter.AreaSmallest != null && filter.AreaBiggest != null &&
-                    realEstateList[i].Area < filter.AreaSmallest &&
-                    realEstateList[i].Area > filter.AreaBiggest)
+                if (filter.PriceHighest != null &&
+                    (realEstateList[i].Price > filter.PriceHighest))
                 {
                     continue;
                 }
 
-                if (filter.RoomAmountSmallest != null && filter.RoomAmountBiggest != null &&
-                    realEstateList[i].RoomsAmount < filter.RoomAmountSmallest &&
-                    realEstateList[i].RoomsAmount > filter.RoomAmountBiggest)
+                if (filter.AreaSmallest != null &&
+                    (realEstateList[i].Area < filter.AreaSmallest))
                 {
                     continue;
                 }
 
-                if (!string.IsNullOrEmpty(filter.OwnerName) && !string.IsNullOrEmpty(filter.OwnerSurname) &&
-                    realEstateList[i].OwnerName != filter.OwnerName &&
+                if (filter.AreaBiggest != null &&
+                    (realEstateList[i].Area > filter.AreaBiggest))
+                {
+                    continue;
+                }
+
+                if (filter.RoomAmountSmallest != null &&
+                    (realEstateList[i].RoomsAmount < filter.RoomAmountSmallest))
+                {
+                    continue;
+                }
+
+                if (filter.RoomAmountBiggest != null &&
+                    (realEstateList[i].RoomsAmount > filter.RoomAmountBiggest))
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(filter.OwnerName) &&
+                    realEstateList[i].OwnerName != filter.OwnerName)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(filter.OwnerSurname) &&
                     realEstateList[i].OwnerSurname != filter.OwnerSurname)
                 {
                     continue;
@@ -86,12 +106,18 @@ namespace RealEstateOfficeMvc
                     continue;
                 }
 
-                if (filter.CreationDateEarliest != null && filter.CreationDateLatest != null &&
-                    (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateEarliest) < 0) &&
+                if (filter.CreationDateEarliest != null &&
+                    (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateEarliest) < 0))
+                {
+                    continue;
+                }
+
+                if (filter.CreationDateLatest != null &&
                     (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateLatest) > 0))
                 {
                     continue;
                 }
+
                 filteredRealEstateList.Add(realEstateList[i]);
             }
                        
