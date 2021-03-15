@@ -37,12 +37,18 @@ namespace RealEstateOfficeMvc.Controllers
            return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Register");
+        }
+
+
 
         [HttpPost]
         public IActionResult LoginUser()
         {
-
-            
+          
            string login = HttpContext.Request.Form["Login"];
            string password = HttpContext.Request.Form["Password"];
            string SessionName = login;
@@ -58,9 +64,7 @@ namespace RealEstateOfficeMvc.Controllers
 
         }
 
-
-
-
+        
         public IActionResult RegisterClient()
         {
             return View();
