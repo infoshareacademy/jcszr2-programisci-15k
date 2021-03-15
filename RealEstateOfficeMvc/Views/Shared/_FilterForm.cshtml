@@ -4,22 +4,26 @@
 @{
 }
 
-<form method="post" action="/RealEstate/VSearch">
+
+<form method="post" action="/">
     <div class="text-secondary">
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
     <div class="col-8">
         @Html.DropDownList("realestateType", new List<SelectListItem>
-         {new SelectListItem { Text = "Dom", Value = "0" },
-          new SelectListItem { Text = "Mieszkanie", Value = "1" },
-          new SelectListItem { Text = "Działka", Value = "2" },
-          new SelectListItem { Text = "Garaż", Value = "3" },
-          new SelectListItem { Text = "Lokal usługowy", Value = "4" }
+         {new SelectListItem { Text = "---", Value = "-1" }, 
+              new SelectListItem { Text = "Dom", Value = "0" },
+              new SelectListItem { Text = "Mieszkanie", Value = "1" },
+              new SelectListItem { Text = "Działka", Value = "2" },
+              new SelectListItem { Text = "Garaż", Value = "3" },
+              new SelectListItem { Text = "Lokal usługowy", Value = "4" }
          }, new { style = "width: 180px;" })
     </div>
     <br />
     <div class="col-8">
-        <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmount"></label>
+        <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmountSmallest">-
+            <input style="width: 85px;" type="text" name="RoomsAmountBiggest"></label>
+        
     </div>
 
 
@@ -50,19 +54,18 @@
 
     <div class="input-group col-8">
         <div class="input-group-prepend">
-            <span class="input-group-text" id=""> Miejscowość, ulica i numer posesji</span>
+            <span class="input-group-text" id=""> Miejscowość, ulica</span>
         </div>
         <input name="City" type="text" class="form-control">
         <input name="Street" type="text" class="form-control">
-        <input name="EstateAddress" type="text" class="form-control">
     </div>
     <br />
     <div class="col-8">
         <button type="submit" class="btn btn-info"> Wyszukaj</button>
         <button class="btn btn-info"> Resetuj filtry</button>
     </div>
-    
-        
-   
+
+
+
 </form>
 

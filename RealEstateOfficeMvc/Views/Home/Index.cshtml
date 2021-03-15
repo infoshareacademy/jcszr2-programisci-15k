@@ -42,22 +42,25 @@
 
 <table>
     <tr>
-                @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
-                {
-                    @using (Html.BeginForm("Index", "RealEstate"))
-                    {
-                        <input type="submit" class="btn btn-info" value="Dodaj nieruchomość"/>
-                    }
-                }      
-        
-     
-                &nbsp
+        <button class="btn btn-info " type="button" data-toggle="collapse" data-target="#FilterForm">
+            Wyszukaj nieruchomość
+        </button>
 
-                @using (Html.BeginForm("Search", "RealEstate"))
-                {
-                    <input type="submit" class="btn btn-info" value="Wyszukaj nieruchomość" />
-                }
-        </tr>
+        &nbsp;
+
+        @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
+        {
+            @using (Html.BeginForm("Index", "RealEstate"))
+            {
+                <input type="submit" class="btn btn-info" value="Dodaj nieruchomość" />
+            }
+        }
+    </tr>
+
+    <div class="collapse show" id="FilterForm">
+        <partial name="_FilterForm" />
+    </div>
+
 </table>
 
 <table>
