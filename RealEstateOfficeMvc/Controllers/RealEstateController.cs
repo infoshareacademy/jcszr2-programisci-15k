@@ -73,6 +73,14 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
         [HttpPost]
+        public IActionResult Details()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
         public IActionResult  RemoveFromDatabase()
         {
             string realestateid = HttpContext.Request.Form["realestateid"];
