@@ -60,7 +60,6 @@
     <div class="collapse show" id="FilterForm">
         <partial name="_FilterForm" />
     </div>
-
 </table>
 
 <table>
@@ -77,9 +76,15 @@
         <th>Numer posesji</th>
         <th>Cena/m2</th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        @if (usertype == 3) //dla admina i pracownika widoczne
+        {
+         <th></th>
+        }
+        @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
+        {
+         <th></th>
+         <th></th>
+        }
     </tr>
 
     @foreach (var item in Model)
@@ -109,6 +114,15 @@
                 </td>
             }
            
+            
+            
+            <td>
+                @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-info">Podgląd</button>
+                    <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+                }
+            </td>
 
             @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
             {
@@ -129,7 +143,7 @@
                     }
                 </td>
             }
-
+          
         </tr>
 
 

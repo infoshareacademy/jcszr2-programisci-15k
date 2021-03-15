@@ -49,13 +49,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logi systemowe</a>
                        </li>
                     }
+                    @if  (usertype  == 0 ) //jeszcze nie zalogowany user 
+                    {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="RegisterClient">Register</a>
                         </li>
-
+                   
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Login">Log In</a>
                         </li>
+                    } 
+
+                    @if  (usertype  > 0 ) //zalogowani mogą się wylogować 
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Logout">Log out</a>
+                        </li>
+                    }
                       
                     </ul>
                 </div>

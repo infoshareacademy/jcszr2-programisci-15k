@@ -164,8 +164,7 @@ namespace RealEstateOfficeMvc
 
             password = codePassword(password);
             var userToLog = (from x in userList where x.Login ==login && x.Password == password select x).SingleOrDefault<RealEstateOfficeMvc.Models.User>(); //codePassword(password)
-
-            
+        
             if (userToLog ==null)
             {
                 return 0;
