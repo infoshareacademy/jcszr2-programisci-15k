@@ -57,8 +57,32 @@ namespace RealEstateOfficeMvc.Controllers
             //filter.TypeOfRealEstate = (int)HttpContext.Request.Form["realestateType"];
             //filter.PriceLowest = Convert.ToInt32(HttpContext.Request.Form["PriceLowest"]);
             //filter.PriceHighest = Convert.ToInt32(HttpContext.Request.Form["PriceHighest"]);
-            filter.AreaSmallest = Convert.ToInt32(HttpContext.Request.Form["AreaSmallest"]);
-            filter.AreaBiggest = Convert.ToInt32(HttpContext.Request.Form["AreaBiggest"]);
+
+            {
+                filter.PriceLowest = int.TryParse(HttpContext.Request.Form["PriceLowest"], out int number)
+                    ? number
+                    : null;
+            }
+
+            {
+                filter.PriceHighest = int.TryParse(HttpContext.Request.Form["PriceHighest"], out int number)
+                    ? number
+                    : null;
+            }
+
+            {
+                filter.AreaSmallest = int.TryParse(HttpContext.Request.Form["AreaSmallest"], out int number)
+                ? number
+                : null;
+
+            }
+
+            {
+                filter.AreaBiggest = int.TryParse(HttpContext.Request.Form["AreaBiggest"], out int number)
+                ? number
+                : null;
+
+            }
             
 
             var model = DatabaseContext.RealEstateChoice(filter);
