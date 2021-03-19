@@ -100,7 +100,8 @@
             <td>@item.City</td>
             <td>@item.Street</td>
             <td>@item.EstateAddress</td>
-            <td>     </td>
+            <td>@(Math.Round(item.Price / item.Area,2).ToString("N2")) pln</td>
+            
 
             @if (usertype == 3) //dla admina i pracownika widoczne
             {
