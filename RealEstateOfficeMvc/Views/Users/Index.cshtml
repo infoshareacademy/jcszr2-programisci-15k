@@ -61,7 +61,7 @@
     <td>
         @using (Html.BeginForm("RemoveUser", "Users", FormMethod.Post))
         {
-            <button type="submit" class="btn btn-danger">Usuń</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika?')">Usuń</button>
             <input type="hidden" id="userid" name="userid" value=@item.Id>
         }
     </td>
