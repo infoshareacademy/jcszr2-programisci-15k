@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -39,6 +40,9 @@ namespace RealEstateOfficeMvc.Controllers
 
         public IActionResult EditEstate()
         {
+             
+            string realeditID = HttpContext.Request.Form["realedit"];
+            ViewBag.realedit = realeditID;
             return View();
         }
 
@@ -101,6 +105,56 @@ namespace RealEstateOfficeMvc.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult UploadFile(IFormFile file)
+        {
+            if (file != null || file.Length != 0)
+            {
+                var number = Convert.ToInt32(HttpContext.Request.Form["realedit"]);
+                NewImageFolder(number);
+                
+                var path = Path.Combine(
+                    Directory.GetCurrentDirectory(), "wwwroot\\Images" + "\\"+ number,
+                    file.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
+
+        public static void NewImageFolder(int number)
+        {
+            // Specify the directory you want to manipulate.
+            string path = Directory.GetCurrentDirectory() + "\\wwwroot\\Images\\" + number;
+
+            try
+            {
+                // Determine whether the directory exists.
+                if (Directory.Exists(path))
+                {
+                  return;
+                }
+
+                // Try to create the directory.
+                DirectoryInfo di = Directory.CreateDirectory(path);
+            }
+            catch (Exception e)
+            {
+               
+            }
+            finally { }
+
+            
+        }
+
+
 
 
 

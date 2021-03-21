@@ -8,14 +8,14 @@
         var selected = $('option:selected', dropdown).val();
 
 </script>
-
-
-
+<H2 class="col-8"> Edycja nieruchomości</H2>
 
 <form method="post" action="/RealEstate/EditEstate">
     <div class="text-secondary">
-        <H2 class="col-8"> Edycja nieruchomości</H2>
+
     </div>
+    
+
     <div class="col-8">
         @Html.DropDownList("realestateType", new List<SelectListItem>
          {new SelectListItem { Text = "Dom", Value = "0" },
