@@ -19,6 +19,7 @@ namespace RealEstateOfficeMvc.Controllers
 
         public void GetFavouriteRealEstates()
         {
+           
             //input : lista obiektów typu Favourite 
             //output :  listę już konkretnych nieruchomosci
         }
@@ -28,7 +29,9 @@ namespace RealEstateOfficeMvc.Controllers
         {
             //input : lista obiektów typu realEstate
             //return view
-            return View();
+            Filter filter = new Filter();
+            var model = DatabaseContext.RealEstateChoice(filter);
+            return View(model);
         }
 
         public  void  Like()
