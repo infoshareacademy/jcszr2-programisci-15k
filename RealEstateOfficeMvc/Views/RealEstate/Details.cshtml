@@ -5,8 +5,18 @@
 }
 
 
-@*<img src="~/Images/4/wlkp1.png" alt="Company Logo" asp-append-version="true" />*@ 
+@*<img src="~/Images/4/wlkp1.png" alt="Company Logo" asp-append-version="true" />*@
 @*<img src="~/Images/22/zielona.png" alt="Company Logo" asp-append-version="true" />*@
+
+@model RealEstateOfficeMvc.Models.RealEstate
+
+
+
+<h3 style="color:#000080">Typ nieruchomości: @Model.typeOfRealEstate, Miasto: @Model.City</h3>
+<h6 style="color:#808080">Powierzchnia: @Model.Area m2</h6>
+<h6 style="color:#808080">Cena: @Model.Price pln</h6>
+<h6 style="color:#808080">Cena za metr2: @(Math.Round(Model.Price / Model.Area,2).ToString("N2")) pln</h6>
+<h6 style="color:#808080">Data utworzenia: @Model.CreationDate</h6>
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">

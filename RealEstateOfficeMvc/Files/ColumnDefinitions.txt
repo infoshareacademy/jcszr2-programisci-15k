@@ -6,3 +6,5 @@ users columns:
 ID; Login; Password; Name; Surname; EmailAddress; UserType;
 FavouriteRealEstate
 ID; UserID,RealEstateID
+Images
+ID; RealEstateID; NazwaPliku

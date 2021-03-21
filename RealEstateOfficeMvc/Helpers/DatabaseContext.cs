@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using RealEstateOfficeMvc.Models;
 
 namespace RealEstateOfficeMvc
 {
@@ -30,7 +31,29 @@ namespace RealEstateOfficeMvc
             }
             return RealEstateList;
         }
+        public static RealEstate Get(int id)
+        {
+            String path = "\\Files\\RealEstates.csv";
+            string testpath = Directory.GetCurrentDirectory();
+            string relativePath = testpath + path;  // fullpath
+            RealEstate realEstate = null;
 
+            using (StreamReader reader = new StreamReader(relativePath))
+            {
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (Convert.ToInt32(ParseTextLine(line, 0)) == id)
+                    {
+
+                        realEstate = new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), System.Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), Convert.ToInt32(ParseTextLine(line, 4)), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8), ParseTextLine(line, 9), DateTime.Parse(ParseTextLine(line, 10)), DateTime.Parse(ParseTextLine(line, 11)));
+                    }
+
+                }
+            }
+            return realEstate;
+        }
 
         public static List<RealEstateOfficeMvc.Models.RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
         {
