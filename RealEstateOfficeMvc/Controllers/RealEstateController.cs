@@ -103,7 +103,9 @@ namespace RealEstateOfficeMvc.Controllers
         [HttpPost]
         public IActionResult Details()
         {
-            return View();
+            var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
+            var viewModel = DatabaseContext.Get(number);
+            return View(viewModel);
         }
 
         [HttpPost]

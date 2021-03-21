@@ -101,7 +101,7 @@
     <td>@item.City</td>
     <td>@item.Street</td>
     <td>@item.EstateAddress</td>
-    <td>     </td>
+    <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
     @if (usertype == 3) //dla admina i pracownika widoczne
     {
         <td>
@@ -121,6 +121,11 @@
             <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
         }
     </td>
+        
+@*<td>
+    <button type="submit" class="btn btn-info">Podgląd</button>
+    @Html.ActionLink("Podgląd", "Details", "RealEstate", new { id = item.Id }, null)
+</td>*@
 
     @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
     {
