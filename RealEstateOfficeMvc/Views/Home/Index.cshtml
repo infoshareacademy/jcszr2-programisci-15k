@@ -115,7 +115,7 @@
             <td>
                 @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
                 {
-                    <button type="submit" class="btn btn-info"><i class="bi bi-eye"></i></button>
+                    <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Podgląd"><i class="bi bi-eye"></i></button>
                     <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
                 }
             </td>
@@ -127,7 +127,7 @@
                 <td>
                     @using (Html.BeginForm("EditEstate", "RealEstate", FormMethod.Post))
                     {
-                        <button type="submit" class="btn btn-info"><i class="bi bi-wrench"></i></button>
+                        <button type="submit" class="btn btn-info"  data-toggle="tooltip" data-placement="bottom" title="Edytuj"><i class="bi bi-wrench"></i></button>
                         <input type="hidden" id="realedit" name="realedit" value=@item.Id>
                     }
                 </td>
@@ -135,7 +135,7 @@
                 <td>
                     @using (Html.BeginForm("RemoveFromDatabase", "RealEstate", FormMethod.Post))
                     {
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
                         <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
                     }
                 </td>

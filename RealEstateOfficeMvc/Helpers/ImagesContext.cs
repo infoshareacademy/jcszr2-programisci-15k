@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace RealEstateOfficeMvc.Helpers
@@ -61,9 +62,31 @@ namespace RealEstateOfficeMvc.Helpers
             return imageList;
         }
 
+        public static void AddToDatabase(RealEstateOfficeMvc.Models.Image image)
+        {
+            String path = "\\Files\\Images.csv";
+            // pobieram ID z ostatniej linijki w users.csv
+            string testpath = Directory.GetCurrentDirectory();
+            string relativePath = testpath + path;  // fullpath
+            var lastLine = File.ReadLines(relativePath).Last();
 
+            string[] columns = lastLine.Split(";");
+            var lastId = Convert.ToInt32(columns[0]);
 
-
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("");
+            sb.Append(lastId + 1); //Id = lastId + 1
+            sb.Append(";");
+            sb.Append(image.RealEstateID);
+            sb.Append(";");
+            sb.Append(image.FileName);
+            sb.Append(";");
+            
+            using (StreamWriter sw = File.AppendText(relativePath))
+            {
+                sw.Write(sb);
+            }
+        }
 
 
         static string ParseTextLine(string Line, int column)

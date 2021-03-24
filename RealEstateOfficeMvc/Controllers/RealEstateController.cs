@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Connections;
 using RealEstateOfficeMvc.Helpers;
 using RealEstateOfficeMvc.Models;
 
@@ -140,8 +141,11 @@ namespace RealEstateOfficeMvc.Controllers
                 {
                     file.CopyTo(stream);
                 }
-            }
+                
+                Image img = new Image(0,number, file.FileName);
+                ImagesContext.AddToDatabase(img);
 
+            }
             return RedirectToAction("Index", "Home");
 
         }
@@ -168,8 +172,7 @@ namespace RealEstateOfficeMvc.Controllers
                
             }
             finally { }
-
-            
+       
         }
 
 
