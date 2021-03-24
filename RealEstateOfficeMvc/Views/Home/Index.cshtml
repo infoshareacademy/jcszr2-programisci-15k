@@ -115,7 +115,7 @@
             <td>
                 @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
                 {
-                    <button type="submit" class="btn btn-info">Podgląd</button>
+                    <button type="submit" class="btn btn-info"><i class="bi bi-eye"></i></button>
                     <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
                 }
             </td>
@@ -131,7 +131,7 @@
                 <td>
                     @using (Html.BeginForm("EditEstate", "RealEstate", FormMethod.Post))
                     {
-                        <button type="submit" class="btn btn-info">Edytuj</button>
+                        <button type="submit" class="btn btn-info"><i class="bi bi-wrench"></i></button>
                         <input type="hidden" id="realedit" name="realedit" value=@item.Id>
                     }
                 </td>
@@ -139,7 +139,7 @@
                 <td>
                     @using (Html.BeginForm("RemoveFromDatabase", "RealEstate", FormMethod.Post))
                     {
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')">Usuń</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
                         <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
                     }
                 </td>
