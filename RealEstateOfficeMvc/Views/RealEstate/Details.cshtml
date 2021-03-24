@@ -1,24 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@*@model RealEstateOfficeMvc.Models.RealEstate*@
+@model IEnumerable<Image>
+
+<style>
+    table#estates {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table#estates td, table#estates th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table#estates tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table#estates th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: black;
+            color: white;
+        }
+
+        table#estates tr:hover {
+            background-color: #ddd;
+        }
+</style>
 
 
-@*<img src="~/Images/4/wlkp1.png" alt="Company Logo" asp-append-version="true" />*@
-@*<img src="~/Images/22/zielona.png" alt="Company Logo" asp-append-version="true" />*@
 
-@model RealEstateOfficeMvc.Models.RealEstate
+<table id="estates">
+    <tr>
+        <th>Typ nieruchomości</th>
+        <th>Miasto</th>
+        <th>Powierzchnia</th>
+        <th>Cena</th>
+        <th>Cena za metr2</th>
+        <th>Data utworzenia</th>
+    </tr>
+    <tr>
+        <td>@ViewData["typeOfRealEstate"]</td>
+        <td>@ViewData["City"]</td>
+        <td>@ViewData["Area"]</td>
+        <td>@ViewData["Price"] pln</td>
+        <td>@ViewData["Pricem2"]</td>
+        <td>@ViewData["CreationDate"]</td>
+    </tr>
+
+</table>
 
 
 
-<h3 style="color:#000080">Typ nieruchomości: @Model.typeOfRealEstate, Miasto: @Model.City</h3>
-<h6 style="color:#808080">Powierzchnia: @Model.Area m2</h6>
-<h6 style="color:#808080">Cena: @Model.Price pln</h6>
-<h6 style="color:#808080">Cena za metr2: @(Math.Round(Model.Price / Model.Area,2).ToString("N2")) pln</h6>
-<h6 style="color:#808080">Data utworzenia: @Model.CreationDate</h6>
-
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+@*<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img class="d-block w-100" src="~/Images/1/evening.png" alt="First slide">
@@ -47,4 +83,36 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
+</div>*@
+
+
+
+
+
+
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        
+        @foreach (var img in @Model)
+        {
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="~/Images/@img.RealEstateID/@img.FileName" >
+            </div>
+            
+        }
+    
+
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
+
+
+

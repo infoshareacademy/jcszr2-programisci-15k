@@ -1,4 +1,5 @@
-﻿
+﻿@using System.Diagnostics.Eventing.Reader
+
 @{
     var usertypeString = Context.Session.GetString(Appsettings.SESSIONTYPUSER);
     var usertype = String.IsNullOrEmpty(usertypeString) ? 0 : int.Parse(usertypeString);
@@ -18,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Programiści15K</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Programiści15k&trade;</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,44 +31,44 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Lista nieruchomości</a>
                         </li>
 
-                        
-                    @if  (usertype  == 3 ) //dla zalogowanego klienta 
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Favourite" asp-action="Index">Ulubione</a>
-                        </li>
-                    }
-                        
-                    @if  (usertype  == 1 ) //dla admina 
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Raports" asp-action="Index">Raporty</a>
-                       </li>
-                       <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logi systemowe</a>
-                       </li>
-                    }
-                    @if  (usertype  == 0 ) //jeszcze nie zalogowany user 
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="RegisterClient">Register</a>
-                        </li>
-                   
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Login">Log In</a>
-                        </li>
-                    } 
 
-                    @if  (usertype  > 0 ) //zalogowani mogą się wylogować 
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Logout">Log out</a>
-                        </li>
-                    }
-                      
+                        @if (usertype == 3) //dla zalogowanego klienta
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Favourite" asp-action="Index">Ulubione</a>
+                            </li>
+                        }
+
+                        @if (usertype == 1) //dla admina
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Raports" asp-action="Index">Raporty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logi systemowe</a>
+                            </li>
+                        }
+                        @if (usertype == 0) //jeszcze nie zalogowany user
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="RegisterClient">Register</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Login">Log In</a>
+                            </li>
+                        }
+
+                        @if (usertype > 0) //zalogowani mogą się wylogować
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Logout">Log out</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -80,8 +81,25 @@
     </div>
     
     <footer class="border-top footer text-muted">
+        
         <div class="container">
-            @DateTime.Now.ToString("dd/MM/yyyy") - Programiści15K
+
+            @if (usertype == 1)
+            {
+                <p>Typ użytkownika : Administrator</p>
+            }
+            else if (usertype == 2)
+            {
+                <p>Typ użytkownika : Pracownik biura nieruchomości</p>
+            }
+            else if (usertype == 3)
+            {
+                <p>Typ użytkownika : Klient zalogowany</p>
+            }
+            else
+            {
+                <p>Typ użytkownika : Klient niezalogowany</p>
+            }
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
