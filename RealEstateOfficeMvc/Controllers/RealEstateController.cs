@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Connections;
+using RealEstateOfficeMvc.Helpers;
+using RealEstateOfficeMvc.Models;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -103,9 +106,23 @@ namespace RealEstateOfficeMvc.Controllers
         [HttpPost]
         public IActionResult Details()
         {
+           
+
             var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
+            var images = ImagesContext.GetImages(number);
+            
             var viewModel = DatabaseContext.Get(number);
-            return View(viewModel);
+
+            ViewData["typeOfRealEstate"] = viewModel.typeOfRealEstate;
+            ViewData["Area"] = viewModel.Area;
+            ViewData["City"] = viewModel.City;
+            ViewData["CreationDate"] = viewModel.CreationDate;
+            ViewData["Price"] = viewModel.Price;
+            ViewData["Pricem2"] = Convert.ToInt32(viewModel.Price / viewModel.Area);
+            ViewData["RoomsAmount"] = viewModel.RoomsAmount;
+
+
+            return View(images);
         }
 
         [HttpPost]
@@ -124,8 +141,11 @@ namespace RealEstateOfficeMvc.Controllers
                 {
                     file.CopyTo(stream);
                 }
-            }
+                
+                Image img = new Image(0,number, file.FileName);
+                ImagesContext.AddToDatabase(img);
 
+            }
             return RedirectToAction("Index", "Home");
 
         }
@@ -152,8 +172,7 @@ namespace RealEstateOfficeMvc.Controllers
                
             }
             finally { }
-
-            
+       
         }
 
 
