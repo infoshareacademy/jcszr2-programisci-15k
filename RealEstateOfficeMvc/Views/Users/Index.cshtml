@@ -54,14 +54,14 @@
     <td>
         @using (Html.BeginForm("EditUser", "Users", FormMethod.Post))
         {
-            <button type="submit" class="btn btn-info">Edycja</button>
+            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edytuj"><i class="bi bi-wrench"></i></button>
             <input type="hidden" id="useredit" name="useredit" value=@item.Id>
         }
     </td>
     <td>
         @using (Html.BeginForm("RemoveUser", "Users", FormMethod.Post))
         {
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika?')">Usuń</button>
+            <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń"  onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika?')"><i class="bi bi-trash"></i></button>
             <input type="hidden" id="userid" name="userid" value=@item.Id>
         }
     </td>

@@ -97,11 +97,7 @@ namespace RealEstateOfficeMvc.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult Liked()
-        {
-            return View();
-        }
+        
 
         [HttpPost]
         public IActionResult Details()
@@ -169,15 +165,11 @@ namespace RealEstateOfficeMvc.Controllers
             }
             catch (Exception e)
             {
-               
             }
             finally { }
        
         }
-
-
-
-
+        
 
         [HttpPost]
         public IActionResult  RemoveFromDatabase()
@@ -226,6 +218,9 @@ namespace RealEstateOfficeMvc.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        
+
 
     }
 }
