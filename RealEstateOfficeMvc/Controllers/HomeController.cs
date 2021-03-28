@@ -75,8 +75,7 @@ namespace RealEstateOfficeMvc.Controllers
 
             ViewBag.login = HttpContext.Session.GetString("Sessionlogin");
             ViewBag.typuser = HttpContext.Session.GetString("Sessiontypuser");
-
-
+            
             return View(model);
         }
 

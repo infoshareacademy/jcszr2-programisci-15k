@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using RealEstateOfficeMvc.Helpers;
 
 namespace RealEstateOfficeMvc
 {
@@ -156,7 +158,7 @@ namespace RealEstateOfficeMvc
 
 
         //login
-        public static int Login(string login,string password)
+        public static int Login(string login,string password,int usertypeorid)
         {
 
             List<RealEstateOfficeMvc.Models.User> userList = new List<RealEstateOfficeMvc.Models.User>();
@@ -164,16 +166,33 @@ namespace RealEstateOfficeMvc
 
             password = codePassword(password);
             var userToLog = (from x in userList where x.Login ==login && x.Password == password select x).SingleOrDefault<RealEstateOfficeMvc.Models.User>(); //codePassword(password)
-        
-            if (userToLog ==null)
+            int userid = userToLog.Id;
+            int output = 0;
+
+            switch (usertypeorid)
             {
-                return 0;
-            } else
-            {
-                int typUser = (int)userToLog.TypeOfUserType;
-                return typUser;
+                case 1:
+                    if (userToLog == null)
+                    {
+                        output = 0;
+                    }
+                    else
+                    {
+                        int typUser = (int)userToLog.TypeOfUserType;
+                        output = typUser;
+                    };
+                    break;
+                    
+                case 2:
+                    output = userid;
+                    break;
+                default:
+                    
+                 break;
             }
-          
+
+            return output;
+
         }
       
 

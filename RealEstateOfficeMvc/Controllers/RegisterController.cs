@@ -53,12 +53,14 @@ namespace RealEstateOfficeMvc.Controllers
            string password = HttpContext.Request.Form["Password"];
            string SessionName = login;
            var typUser = 0;
+           var userid = 0;
 
-           typUser = UserDatabaseContext.Login(login,password);
-            
+           typUser = UserDatabaseContext.Login(login,password,1);
+           userid = UserDatabaseContext.Login(login, password, 2);
+
            HttpContext.Session.SetString(Appsettings.SESSIONLOGIN, login);
            HttpContext.Session.SetString(Appsettings.SESSIONTYPUSER, Convert.ToString(typUser));
-
+           HttpContext.Session.SetString(Appsettings.SESSIONLOGINID, Convert.ToString(userid));
 
            return RedirectToAction("Index", "Home");
 

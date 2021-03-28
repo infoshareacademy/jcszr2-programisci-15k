@@ -7,6 +7,7 @@ namespace RealEstateOfficeMvc.Helpers
 {
     public static class Appsettings
     {
+        public const string SESSIONLOGINID = "SESSIONLOGINID";
         public const string SESSIONLOGIN = "SESSIONLOGIN";
         public const string SESSIONTYPUSER = "SESSIONTYPUSER";
 

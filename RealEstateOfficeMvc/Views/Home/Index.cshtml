@@ -29,22 +29,16 @@
         background-color: #f2f2f2;
     }
 
-    #like-button {
-        width: 100px;
-        height: 40px;
-    }
-
-        #like-button svg {
-            width: 25px;
-            height: 25px;
-        }
+    
 </style>
 
 <table>
     <tr>
-        <button class="btn btn-info " type="button" data-toggle="collapse" data-target="#FilterForm"  onclick="changeLabel(this)">
-            Pokaż filtry
-        </button>
+        
+            <button type="button" class="btn btn-info " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">
+                Pokaż filtry
+            </button>
+       
 
         &nbsp;
 
@@ -52,7 +46,7 @@
         {
             @using (Html.BeginForm("Index", "RealEstate"))
             {
-                <input type="submit" class="btn btn-info" value="Dodaj nieruchomość" />
+                <input type="submit" class="btn btn-info" value="Dodaj nieruchomość"/>
             }
         }
     </tr>
@@ -64,7 +58,6 @@
 
 <table>
     <tr>
-
         <th>Nieruchomość</th>
         <th>Cena(pln)</th>
         <th>Powierzchnia(m2)</th>
@@ -75,14 +68,16 @@
         <th>Ulica</th>
         <th>Numer posesji</th>
         <th>Cena/m2</th>
-        <th></th>
-        @if (usertype == 3) //dla admina i pracownika widoczne
+        
+        @if (usertype == 3) //dla zalogowanego klienta
         {
-            <th></th>
+         <th></th>   //polub
         }
+        <th></th>  @*podgląd*@
+
         @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
         {
-            <th>Operacje</th>
+            <th></th>  
             <th></th>
             <th>Załącz zdjęcie</th>
         }
@@ -90,36 +85,43 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+    <tr>
 
-            <td>@item.typeOfRealEstate</td>
-            <td>@item.Price</td>
-            <td>@item.Area</td>
-            <td>@item.RoomsAmount</td>
-            <td>@item.OwnerName</td>
-            <td>@item.OwnerSurname</td>
-            <td>@item.City</td>
-            <td>@item.Street</td>
-            <td>@item.EstateAddress</td>
-            <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
-            @if (usertype == 3) //dla admina i pracownika widoczne
+    <td>@item.typeOfRealEstate</td>
+    <td>@item.Price</td>
+    <td>@item.Area</td>
+    <td>@item.RoomsAmount</td>
+    <td>@item.OwnerName</td>
+    <td>@item.OwnerSurname</td>
+    <td>@item.City</td>
+    <td>@item.Street</td>
+    <td>@item.EstateAddress</td>
+    <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
+
+            @if (usertype == 3) //dla zalogowanego klienta
+            {
+                
+                 @using (Html.BeginForm("Like", "Favourite", FormMethod.Post))
+                 {
+                    <td>
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Dodaj na listę ulubionych"><i class="bi bi-hand-thumbs-up"></i></button>
+                        <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+                    </td>         
+                 }
+                 
+             }
+
+
+            @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
             {
                 <td>
-                    <button type="button" id="like-button" class="btn btn-danger">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                        Like
-                    </button>
-                </td>
-            }
-    
-            <td>
-                @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
-                {
                     <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Podgląd"><i class="bi bi-eye"></i></button>
                     <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-                }
-            </td>
-        
+                </td>
+
+            }
+
+
 
             @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
             {
@@ -127,7 +129,7 @@
                 <td>
                     @using (Html.BeginForm("EditEstate", "RealEstate", FormMethod.Post))
                     {
-                        <button type="submit" class="btn btn-info"  data-toggle="tooltip" data-placement="bottom" title="Edytuj"><i class="bi bi-wrench"></i></button>
+                        <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edytuj"><i class="bi bi-wrench"></i></button>
                         <input type="hidden" id="realedit" name="realedit" value=@item.Id>
                     }
                 </td>
@@ -142,7 +144,7 @@
 
                 <td>
                     <form asp-controller="RealEstate" asp-action="UploadFile" method="post" enctype="multipart/form-data">
-                        <p><input class="btn btn-info" type="file" name="file"/> <button class="btn btn-info" type="submit">Wyślij</button></p>
+                        <p><input class="btn btn-info" type="file" name="file"/> <button class="btn btn-info" type="submit"><i class="bi bi-save"></i></button></p>
                         <input type="hidden" id="realedit" name="realedit" value=@item.Id>
                     </form>
                 </td>
