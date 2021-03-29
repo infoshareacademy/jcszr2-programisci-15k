@@ -26,6 +26,10 @@ namespace RealEstateOfficeMvc.Controllers
             string street = HttpContext.Request.Form["Street"];
             string estateAddress = HttpContext.Request.Form["EstateAddress"];
 
+            if (String.IsNullOrEmpty(roomsAmount))
+            {
+                roomsAmount = "0"; }
+            
             DateTime dt = new DateTime();
             dt.ToShortDateString();
             RealEstateOfficeMvc.Models.RealEstate realEstate = new RealEstateOfficeMvc.Models.RealEstate(1, Convert.ToInt32(realestateType), Convert.ToDecimal(price), Convert.ToInt32(area), Convert.ToInt32(roomsAmount), ownerName, ownerSurname, city, street, estateAddress, dt, dt);

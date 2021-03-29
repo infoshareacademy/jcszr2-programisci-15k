@@ -86,11 +86,11 @@
     @foreach (var item in Model)
     {
     <tr>
-
+      
     <td>@item.typeOfRealEstate</td>
     <td>@item.Price</td>
-    <td>@item.Area</td>
-    <td>@item.RoomsAmount</td>
+    <td>@item.Area</td>  
+    <td>@(item.RoomsAmount > 0 ? item.RoomsAmount : "-")</td>
     <td>@item.OwnerName</td>
     <td>@item.OwnerSurname</td>
     <td>@item.City</td>
