@@ -1,13 +1,5 @@
 ﻿
-<script>
 
-    var dropdown = $('#realestateType');
-    Console.log(dropdown);
-
-    dropdown.on('change', function () {
-        var selected = $('option:selected', dropdown).val();
-
-</script>
 <H2 class="col-8"> Edycja nieruchomości</H2>
 
 <form method="post" action="/RealEstate/EditEstate">
@@ -18,12 +10,12 @@
 
     <div class="col-8">
         @Html.DropDownList("realestateType", new List<SelectListItem>
-         {new SelectListItem { Text = "Dom", Value = "0" },
-          new SelectListItem { Text = "Mieszkanie", Value = "1" },
-          new SelectListItem { Text = "Działka", Value = "2" },
-          new SelectListItem { Text = "Garaż", Value = "3" },
-          new SelectListItem { Text = "Lokal usługowy", Value = "4" }
-         }, new { style = "width: 180px;" })
+        {new SelectListItem { Text = "Dom", Value = "0" },
+            new SelectListItem { Text = "Mieszkanie", Value = "1" },
+            new SelectListItem { Text = "Działka", Value = "2" },
+            new SelectListItem { Text = "Garaż", Value = "3" },
+            new SelectListItem { Text = "Lokal usługowy", Value = "4" }
+        }, new { style = "width: 180px;" })
     </div>
     <br />
     <div id="rooms" class="col-8">
@@ -61,3 +53,12 @@
         <button class="btn btn-info"> Anuluj</button>
     </div>
 </form>
+<script>
+
+    var dropdown = $('#realestateType');
+    Console.log(dropdown);
+
+    dropdown.on('change', function () {
+        var selected = $('option:selected', dropdown).val();
+
+</script>

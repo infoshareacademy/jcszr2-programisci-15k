@@ -44,7 +44,7 @@ namespace RealEstateOfficeMvc.Controllers
             return View();
         }
 
-
+        
         public IActionResult EditEstate()
         {
              
@@ -54,61 +54,12 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
 
-        public IActionResult Search()
+        [HttpGet("details/{id:int}")]
+        public IActionResult Details(int id)
         {
-            return View();
-        }
-        
 
-        [HttpPost]
-        public IActionResult VSearch()
-        {
-            var filter = new Filter();
 
-            //filter.TypeOfRealEstate = (int)HttpContext.Request.Form["realestateType"];
-            //filter.PriceLowest = Convert.ToInt32(HttpContext.Request.Form["PriceLowest"]);
-            //filter.PriceHighest = Convert.ToInt32(HttpContext.Request.Form["PriceHighest"]);
-
-            {
-                filter.PriceLowest = int.TryParse(HttpContext.Request.Form["PriceLowest"], out int number)
-                    ? number
-                    : null;
-            }
-
-            {
-                filter.PriceHighest = int.TryParse(HttpContext.Request.Form["PriceHighest"], out int number)
-                    ? number
-                    : null;
-            }
-
-            {
-                filter.AreaSmallest = int.TryParse(HttpContext.Request.Form["AreaSmallest"], out int number)
-                ? number
-                : null;
-
-            }
-
-            {
-                filter.AreaBiggest = int.TryParse(HttpContext.Request.Form["AreaBiggest"], out int number)
-                ? number
-                : null;
-
-            }
-            
-
-            var model = DatabaseContext.RealEstateChoice(filter);
-            return View(model);
-
-        }
-
-        
-
-        [HttpPost]
-        public IActionResult Details()
-        {
-           
-
-            var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
+            var number = id;
             var images = ImagesContext.GetImages(number);
             
             var viewModel = DatabaseContext.Get(number);

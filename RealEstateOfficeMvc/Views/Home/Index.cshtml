@@ -111,15 +111,12 @@
                  
              }
 
-
-            @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
-            {
+            
                 <td>
-                    <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Podgląd"><i class="bi bi-eye"></i></button>
-                    <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+                    <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
+                       asp-action="Details" 
+                       asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
                 </td>
-
-            }
 
 
 
