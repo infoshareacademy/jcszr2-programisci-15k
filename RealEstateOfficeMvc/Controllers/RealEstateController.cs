@@ -44,25 +44,31 @@ namespace RealEstateOfficeMvc.Controllers
             return View();
         }
 
-        
-        public IActionResult EditEstate()
+        [HttpGet("edit/{id:int}")]
+        public IActionResult EditEstate(int id)
         {
-             
-            string realeditID = HttpContext.Request.Form["realedit"];
-            ViewBag.realedit = realeditID;
-            return View();
+
+            var viewModel = DatabaseContext.Get(id);
+
+
+            return View(viewModel);
         }
+
+        //[HttpPost]
+        //public IActionResult SaveEditedEstate()
+        //{
+            
+            
+        //    return RedirectToAction("Index", "Home");
+        //}
 
 
         [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
-
-
-            var number = id;
-            var images = ImagesContext.GetImages(number);
+            var images = ImagesContext.GetImages(id);
             
-            var viewModel = DatabaseContext.Get(number);
+            var viewModel = DatabaseContext.Get(id);
 
             ViewData["typeOfRealEstate"] = viewModel.typeOfRealEstate;
             ViewData["Area"] = viewModel.Area;

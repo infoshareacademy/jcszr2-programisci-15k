@@ -112,11 +112,13 @@
              }
 
             
-                <td>
-                    <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
-                       asp-action="Details" 
-                       asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
-                </td>
+            <td>
+                <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
+                   asp-action="Details" 
+                   asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
+            </td>
+            
+
 
 
 
@@ -124,11 +126,9 @@
             {
 
                 <td>
-                    @using (Html.BeginForm("EditEstate", "RealEstate", FormMethod.Post))
-                    {
-                        <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edytuj"><i class="bi bi-wrench"></i></button>
-                        <input type="hidden" id="realedit" name="realedit" value=@item.Id>
-                    }
+                    <a class="btn btn-info" title="Edytuj" asp-controller="RealEstate"
+                       asp-action="EditEstate" 
+                       asp-route-id="@item.Id"><i class="bi bi-wrench"></i></a>
                 </td>
 
                 <td>
@@ -137,13 +137,6 @@
                         <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
                         <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
                     }
-                </td>
-
-                <td>
-                    <form asp-controller="RealEstate" asp-action="UploadFile" method="post" enctype="multipart/form-data">
-                        <p><input class="btn btn-info" type="file" name="file"/> <button class="btn btn-info" type="submit"><i class="bi bi-save"></i></button></p>
-                        <input type="hidden" id="realedit" name="realedit" value=@item.Id>
-                    </form>
                 </td>
 
             }

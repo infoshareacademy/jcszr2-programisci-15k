@@ -7,7 +7,7 @@ using Microsoft.VisualBasic;
 
 namespace RealEstateOfficeMvc
 {
-    class Filter
+    public class Filter
     {
         public Filter()
         {
