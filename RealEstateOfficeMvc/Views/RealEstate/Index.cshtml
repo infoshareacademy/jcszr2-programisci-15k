@@ -1,29 +1,41 @@
 ﻿
 <script>
-        
-    var dropdown = $('#realestateType');
-    Console.log(dropdown);
-   
-    dropdown.on('change', function () {
-        var selected = $('option:selected', dropdown).val();
+
+    function changeRealEstateType() {
+
+        var z = document.getElementById("realestateType");
+        var x = document.getElementById("rooms");
+        var result = z.options[z.selectedIndex].value;
        
+        if (result === "0" || result === "1"){
+            x.style.display = "block";
+        } else {
+           
+            x.style.display = "none";
+            x.value = "0";
+
+        }
+     } 
+
 </script> 
 
 
 
 
-<form method="post" action="/RealEstate/AddRealEstate" >
-    <div class="text-secondary" >
-      <H2 class="col-8" > Nowa nieruchomość</H2 >
+<form method="post" action="/RealEstate/AddRealEstate">
+    <div class="text-secondary">
+        <H2 class="col-8"> Nowa nieruchomość</H2 >
     </div >
-    <div class="col-8" >
-       @Html.DropDownList("realestateType", new List<SelectListItem>
+    <div class="col-8">
+        @Html.DropDownList("realestateType",
+         new List<SelectListItem>
         {new SelectListItem { Text = "Dom", Value = "0" },
          new SelectListItem { Text = "Mieszkanie", Value = "1" },
          new SelectListItem { Text = "Działka", Value = "2" },
          new SelectListItem { Text = "Garaż", Value = "3" },
          new SelectListItem { Text = "Lokal usługowy", Value = "4" }
-        }, new { style = "width: 180px;" })
+        }, new { @onchange= "changeRealEstateType()"   //new ,{ style = "width: 180px;" }
+        } )
     </div >
     <br />
     <div id="rooms" class="col-8">
