@@ -44,74 +44,31 @@ namespace RealEstateOfficeMvc.Controllers
             return View();
         }
 
-
-        public IActionResult EditEstate()
+        [HttpGet("edit/{id:int}")]
+        public IActionResult EditEstate(int id)
         {
-             
-            string realeditID = HttpContext.Request.Form["realedit"];
-            ViewBag.realedit = realeditID;
-            return View();
+
+            var viewModel = DatabaseContext.Get(id);
+
+
+            return View(viewModel);
         }
 
-
-        public IActionResult Search()
-        {
-            return View();
-        }
-        
-
-        [HttpPost]
-        public IActionResult VSearch()
-        {
-            var filter = new Filter();
-
-            //filter.TypeOfRealEstate = (int)HttpContext.Request.Form["realestateType"];
-            //filter.PriceLowest = Convert.ToInt32(HttpContext.Request.Form["PriceLowest"]);
-            //filter.PriceHighest = Convert.ToInt32(HttpContext.Request.Form["PriceHighest"]);
-
-            {
-                filter.PriceLowest = int.TryParse(HttpContext.Request.Form["PriceLowest"], out int number)
-                    ? number
-                    : null;
-            }
-
-            {
-                filter.PriceHighest = int.TryParse(HttpContext.Request.Form["PriceHighest"], out int number)
-                    ? number
-                    : null;
-            }
-
-            {
-                filter.AreaSmallest = int.TryParse(HttpContext.Request.Form["AreaSmallest"], out int number)
-                ? number
-                : null;
-
-            }
-
-            {
-                filter.AreaBiggest = int.TryParse(HttpContext.Request.Form["AreaBiggest"], out int number)
-                ? number
-                : null;
-
-            }
+        //[HttpPost]
+        //public IActionResult SaveEditedEstate()
+        //{
             
-
-            var model = DatabaseContext.RealEstateChoice(filter);
-            return View(model);
-
-        }
-
-        
-
-        [HttpPost]
-        public IActionResult Details()
-        {
-           
-
-            var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
-            var images = ImagesContext.GetImages(number);
             
-            var viewModel = DatabaseContext.Get(number);
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+
+        [HttpGet("details/{id:int}")]
+        public IActionResult Details(int id)
+        {
+            var images = ImagesContext.GetImages(id);
+            
+            var viewModel = DatabaseContext.Get(id);
 
             ViewData["typeOfRealEstate"] = viewModel.typeOfRealEstate;
             ViewData["Area"] = viewModel.Area;
