@@ -15,17 +15,21 @@
 
     <div class="input-group col-8">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="">Login i hasło</span>
+            <span class="input-group-text" id="">Login</span>
         </div>
         <input name="Login" type="text" class="form-control" value=@Model.Login>
-        <input name="Password" type="password" class="form-control">
+        
     </div>
     <div class="input-group col-8">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="" >E-mail</span>
+            <span class="input-group-text" id="">E-mail</span>
         </div>
-        <input name="email" type="text" class="form-control" value=@Model.EmailAddress>
+        <input name="EmailAddress" type="text" class="form-control" value=@Model.EmailAddress>
+      
     </div>
+    <div><input type="hidden" name="userid" type="text" class="form-control" value=@Model.Id></div>
+    <input type="hidden" name="Password" type="password" class="form-control">
+
     <br />
     <div class="col-8">
         @Html.DropDownList("userTyp", new List<SelectListItem>
