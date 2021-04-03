@@ -73,89 +73,10 @@ namespace RealEstateOfficeMvc
                 sw.Write(sb);
             }
         }
-                
-        //metoda do uswania 
-       
 
-
-
+        
         //metoda do edycji uzytkowników
-        public static string EditUser(RealEstateOfficeMvc.Models.User user, int id)
-        {
-            
-            String path = "..\\Files\\Users.csv";
-            string fullPath = DatabaseContext.bingPathToAppDir(path);
-            string line;
-            string lineToChange = "";
-            string s1 = String.Empty;
-
-            using (StreamReader reader = new StreamReader(fullPath))
-            {
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] columns = line.Split(";");
-                    if (Convert.ToInt32(columns[0]) == id)
-                    {
-                        lineToChange = line; // this is  line to modify
-                    }
-                }
-            }
-
-
-
-            if (String.IsNullOrEmpty(lineToChange))
-            {
-                Console.WriteLine("No User record in our database with this ID !");
-                Console.ReadLine();
-
-            }
-            else
-            {
-                string[] columnsToChange = lineToChange.Split(";");
-                //ID; Login; Password; Name; Surname; EmailAddress; UserType;
-
-                if (!String.IsNullOrEmpty(user.Login) )
-                {
-                    columnsToChange[1] = user.Login;
-                }
-
-                if (!String.IsNullOrEmpty(user.Password))
-                {
-                    columnsToChange[2] = user.Password;
-                }
-
-                if (!String.IsNullOrEmpty(user.Name))
-                {
-                    columnsToChange[3] = user.Name;
-                }
-
-                if (!String.IsNullOrEmpty(user.Surname))
-                {
-                    columnsToChange[4] = user.Surname;
-                }
-
-                if (!String.IsNullOrEmpty(user.EmailAddress))
-                {
-                    columnsToChange[5] = user.EmailAddress;
-                }
-
-                if ((int)user.TypeOfUserType != 0)
-                {
-                    int type = (int)user.TypeOfUserType;
-                    columnsToChange[6] = type.ToString();
-                }
-
-
-                s1 = string.Join(";", columnsToChange);
-
-            }
-
-
-            return s1;
-
-        }
-
+       
 
         //login
         public static int Login(string login,string password,int usertypeorid)
@@ -232,8 +153,10 @@ namespace RealEstateOfficeMvc
 
         public static void saveLine(int idOfLineToChange, string lineToSave)
         {
-            String path = "..\\Files\\Users.csv";
-            string fullPath = DatabaseContext.bingPathToAppDir(path);
+            String path = "\\Files\\Users.csv";
+            string testpath = Directory.GetCurrentDirectory();
+            string fullPath = testpath + path;  // fullpath
+
             StreamReader sr = new StreamReader(fullPath);
 
             string line;
@@ -261,10 +184,8 @@ namespace RealEstateOfficeMvc
 
             sr.Close();
             File.Copy(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), fullPath, true);
-            Console.Clear();
-            Console.WriteLine("Edited record have been saved.");
             System.IO.File.WriteAllText(DatabaseContext.bingPathToAppDir("..\\Files\\Temp.csv"), string.Empty); //temp is clean
-            Console.ReadLine();
+            
         }
 
 
@@ -281,6 +202,10 @@ namespace RealEstateOfficeMvc
             }
             return hash;
         }
+
+
+         
+
 
 
     }

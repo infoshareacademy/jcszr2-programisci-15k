@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -66,7 +67,90 @@ namespace RealEstateOfficeMvc.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult EditUser(RealEstateOfficeMvc.Models.User user)
+        {
+
+            int id = Convert.ToInt32((HttpContext.Request.Form["userid"]));
+            String path = "\\Files\\Users.csv";
+            string testpath = Directory.GetCurrentDirectory();
+            string relativePath = testpath + path;  // fullpath
+            string line;
+            string lineToChange = "";
+            string s1 = String.Empty;
+
+    
+            using (StreamReader reader = new StreamReader(relativePath))
+            {
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] columns = line.Split(";");
+                    if (Convert.ToInt32(columns[0]) == id)
+                    {
+                        lineToChange = line; // this is  line to be modified
+                    }
+                }
+            }
+
+
+
+            if (String.IsNullOrEmpty(lineToChange))
+            {
+                Console.WriteLine("No User record in our database with this ID !");
+                Console.ReadLine();
+
+            }
+            else
+            {
+                string[] columnsToChange = lineToChange.Split(";");
+                //ID; Login; Password; Name; Surname; EmailAddress; UserType;
+
+                if (!String.IsNullOrEmpty(user.Login))
+                {
+                    columnsToChange[1] = user.Login;
+                }
+
+                if (!String.IsNullOrEmpty(user.Password))
+                {
+                    columnsToChange[2] = user.Password;
+                }
+
+                if (!String.IsNullOrEmpty(user.Name))
+                {
+                    columnsToChange[3] = user.Name;
+                }
+
+                if (!String.IsNullOrEmpty(user.Surname))
+                {
+                    columnsToChange[4] = user.Surname;
+                }
+
+                if (!String.IsNullOrEmpty(user.EmailAddress))
+                {
+                    columnsToChange[5] = user.EmailAddress;
+                }
+
+                if ((int)user.TypeOfUserType != 0)
+                {
+                    int type = (int)user.TypeOfUserType;
+                    columnsToChange[6] = type.ToString();
+                }
+
+
+                s1 = string.Join(";", columnsToChange);
+
+            }
+
+            UserDatabaseContext.saveLine(id, s1);
+
+            return RedirectToAction("Index", "Users");
+            // return s1;
+
+        }
+
         
+
         public IActionResult RegisterClient()
         {
             return View();

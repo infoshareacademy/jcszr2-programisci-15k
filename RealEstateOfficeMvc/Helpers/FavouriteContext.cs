@@ -31,7 +31,7 @@ namespace RealEstateOfficeMvc.Helpers
             StringBuilder sb = new StringBuilder();
             if (Convert.ToInt16(lastId) > 0)
             {
-                sb.AppendLine("");
+               sb.AppendLine();
             }
             sb.Append(lastId + 1); //Id = lastId + 1
             sb.Append(";");

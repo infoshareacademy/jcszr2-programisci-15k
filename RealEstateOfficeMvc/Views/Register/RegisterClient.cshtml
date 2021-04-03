@@ -28,8 +28,8 @@
         @Html.DropDownList("userTyp", new List<SelectListItem>
         {new SelectListItem { Text = "Administrator", Value = "1" },
             new SelectListItem { Text = "Pracownik", Value = "2" },
-            new SelectListItem { Text = "Klient", Value = "3" }
-        }, new { style = "width: 180px;" })
+            new SelectListItem { Text = "Klient", Value = "3",Selected=true }
+        },  new { disabled = "disabled" })
     </div>
     <br />
     <div class="col-8">

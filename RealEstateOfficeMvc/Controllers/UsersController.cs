@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using RealEstateOfficeMvc.Models;
 
 
 namespace RealEstateOfficeMvc.Controllers
@@ -64,10 +65,48 @@ namespace RealEstateOfficeMvc.Controllers
 
         public IActionResult EditUser()
         {
-            return View();
+            string userid = HttpContext.Request.Form["useredit"];
+
+            var model = GetUser(Convert.ToInt32(userid));
+            return View(model);
         }
 
+        
 
+        public static User GetUser(int id)
+        {
+           // int ID, string Login, string Password, string Name, string Surname, string EmailAddress, int UserType
+
+
+            String path = "\\Files\\Users.csv";
+            string testpath = Directory.GetCurrentDirectory();
+            string relativePath = testpath + path;  // fullpath
+            User user = null;
+
+            using (StreamReader reader = new StreamReader(relativePath))
+            {
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (Convert.ToInt32(ParseTextLine(line, 0)) == id)
+                    {
+                     user = new User(Convert.ToInt32(ParseTextLine(line, 0)), ParseTextLine(line, 1),
+                            ParseTextLine(line, 2), ParseTextLine(line, 3), ParseTextLine(line, 4),
+                            ParseTextLine(line, 5), Convert.ToInt32(ParseTextLine(line, 0)));
+                    }
+
+                }
+            }
+            return user;
+        }
+
+        static string ParseTextLine(string Line, int column)
+        {
+            string[] columns = Line.Split(";");
+            string output = columns[column];
+            return output;
+        }
 
     }
 }
