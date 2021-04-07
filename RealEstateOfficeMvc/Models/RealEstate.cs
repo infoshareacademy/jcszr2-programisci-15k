@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Security.Policy;
 using System.Text;
 
 namespace RealEstateOfficeMvc.Models
@@ -99,25 +102,62 @@ namespace RealEstateOfficeMvc.Models
         }
 
         public decimal Price { get => _price; set => _price = value; }
+
         public int Area { get => _area; set => _area = value; }
+
         public int RoomsAmount { get => _roomsAmount; set => _roomsAmount = value; }
+
         public string OwnerName { get => _ownerName; set => _ownerName = value; }
+
         public string OwnerSurname { get => _ownerSurname; set => _ownerSurname = value; }
+
         public string City { get => _city; set => _city = value; }
+
         public string Street { get => _street; set => _street = value; }
+
         public string EstateAddress { get => _estateAddress; set => _estateAddress = value; }
         
 
 
         public enum TypeOfRealEstate
         {
-            Dom,    // 0
-            Mieszkanie,   // 1
-            Działka,      // 2
-            Garaż,      // 3
-            Lokal_usługowy, // 4
-            None
+            None = -1,
+            Dom = 0,
+            Mieszkanie = 1,
+            Działka = 2,
+            Garaż = 3,
+            Lokal_usługowy = 4,
+            
         }
+
+        //public bool ValidateIntInput(List<string> numericInputs)
+        //{
+        //    bool isValid;
+
+        //    foreach (string s in numericInputs)
+        //    {
+        //        if (s.All(char.IsDigit))
+        //            return isValid = false;
+        //    }
+
+        //    isValid = numericInputs.All(s => s.All(char.IsDigit));
+
+        //    return isValid = true;
+        //}
+
+        //public bool RealEstateValidate(List<string> numericInputs, string decimalInput, List<string> stringInputs)
+        //{
+        //    bool isValid;
+
+            
+
+        //    if (decimal.TryParse(priceInput, out decimal price) || (price < 0))
+        //    {
+
+        //    }
+
+        //    return isValid;
+        //}
 
 
     }
