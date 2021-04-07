@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
 using RealEstateOfficeMvc.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace RealEstateOfficeMvc.Controllers
@@ -18,7 +14,7 @@ namespace RealEstateOfficeMvc.Controllers
         {
             Filter filter = new Filter();
 
-            if (HttpContext.Request.Method == "POST")
+            if (HttpContext.Request.Method == HttpMethod.Post.Method)
             {
                 {
                     filter.PriceLowest = int.TryParse(HttpContext.Request.Form["PriceLowest"], out int number)
@@ -47,16 +43,24 @@ namespace RealEstateOfficeMvc.Controllers
                 }
 
                 {
-                    filter.RoomAmountSmallest = int.TryParse(HttpContext.Request.Form["RoomsAmount"], out int number)
+                    filter.RoomAmountSmallest = int.TryParse(HttpContext.Request.Form["RoomsAmountSmallest"], out int number)
                         ? number
                         : null;
 
                 }
 
                 {
-                    filter.TypeOfRealEstate = (int.TryParse(HttpContext.Request.Form["realestateType"], out int number) && number <= 4 && number >= 0)
+                    filter.RoomAmountBiggest = int.TryParse(HttpContext.Request.Form["RoomsAmountBiggest"], out int number)
+                        ? number
+                        : null;
+
+                }
+
+                {
+                    filter.TypeOfRealEstate = (int.TryParse(HttpContext.Request.Form["filter.TypeOfRealEstate"], out int number) && number <= 4 && number >= 0)
                         ? (RealEstate.TypeOfRealEstate)number
                         : null;
+
 
                 }
 
@@ -70,8 +74,8 @@ namespace RealEstateOfficeMvc.Controllers
 
             }
 
-
-            var model = DatabaseContext.RealEstateChoice(filter);
+            var model = new HomeViewModel()
+                {realEstateList = DatabaseContext.RealEstateChoice(filter), filter = filter, filtersShow = true};
 
             ViewBag.login = HttpContext.Session.GetString("Sessionlogin");
             ViewBag.typuser = HttpContext.Session.GetString("Sessiontypuser");

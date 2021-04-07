@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RealEstateOfficeMvc.Models.RealEstate>
+﻿@model HomeViewModel
 
 @{
     var usertypeString = Context.Session.GetString(Appsettings.SESSIONTYPUSER);
@@ -28,32 +28,31 @@
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
-
-    
 </style>
 
 <table>
     <tr>
-        
-            <button type="button" class="btn btn-info " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">
-                Pokaż filtry
-            </button>
-       
+
+
+        <button type="button" class="btn btn-info " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">
+            Pokaż filtry
+        </button>
 
         &nbsp;
 
         @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
         {
-            @using (Html.BeginForm("Index", "RealEstate"))
-            {
-                <input type="submit" class="btn btn-info" value="Dodaj nieruchomość"/>
-            }
+            <form asp-controller="RealEstate" asp-action="Index" method="post">
+                <input type="submit" class="btn btn-info" value="Dodaj nieruchomość" />
+            </form>
         }
     </tr>
 
     <div class="collapse" id="FilterForm">
-        <partial name="_FilterForm" />
+        <partial name="_FilterForm" model="(Model.filter, Model.realEstateTypeList)" />
     </div>
+
+
 </table>
 
 <table>
@@ -68,56 +67,55 @@
         <th>Ulica</th>
         <th>Numer posesji</th>
         <th>Cena/m2</th>
-        
+
         @if (usertype == 3) //dla zalogowanego klienta
         {
-         <th></th>   //polub
+            <th></th>
+            //polub
         }
         <th></th>  @*podgląd*@
 
         @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
         {
-            <th></th>  
             <th></th>
-            <th>Załącz zdjęcie</th>
+
+            <th></th>
         }
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.realEstateList)
     {
-    <tr>
-      
-    <td>@item.typeOfRealEstate</td>
-    <td>@item.Price</td>
-    <td>@item.Area</td>  
-    <td>@(item.RoomsAmount > 0 ? item.RoomsAmount : "-")</td>
-    <td>@item.OwnerName</td>
-    <td>@item.OwnerSurname</td>
-    <td>@item.City</td>
-    <td>@item.Street</td>
-    <td>@item.EstateAddress</td>
-    <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
+        <tr>
+
+            <td>@item.typeOfRealEstate</td>
+            <td>@item.Price</td>
+            <td>@item.Area</td>
+            <td>@(item.RoomsAmount > 0 ? item.RoomsAmount : "-")</td>
+            <td>@item.OwnerName</td>
+            <td>@item.OwnerSurname</td>
+            <td>@item.City</td>
+            <td>@item.Street</td>
+            <td>@item.EstateAddress</td>
+            <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
 
             @if (usertype == 3) //dla zalogowanego klienta
             {
-                
-                 @using (Html.BeginForm("Like", "Favourite", FormMethod.Post))
-                 {
-                    <td>
+                <td>
+                    <form asp-controller="Favourite" asp-action="Like" method="post">
                         <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Dodaj na listę ulubionych"><i class="bi bi-hand-thumbs-up"></i></button>
                         <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-                    </td>         
-                 }
-                 
-             }
+                    </form>
+                </td>
 
-            
+            }
+
+
             <td>
                 <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
-                   asp-action="Details" 
+                   asp-action="Details"
                    asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
             </td>
-            
+
 
 
 
@@ -127,16 +125,15 @@
 
                 <td>
                     <a class="btn btn-info" title="Edytuj" asp-controller="RealEstate"
-                       asp-action="EditEstate" 
+                       asp-action="EditEstate"
                        asp-route-id="@item.Id"><i class="bi bi-wrench"></i></a>
                 </td>
 
                 <td>
-                    @using (Html.BeginForm("RemoveFromDatabase", "RealEstate", FormMethod.Post))
-                    {
+                    <form asp-controller="RealEstate" asp-action="RemoveRealEstate" method="post">
                         <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
                         <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-                    }
+                    </form>
                 </td>
 
             }
@@ -147,12 +144,13 @@
     }
 </table>
 
+
 <script>
     function changeLabel(el) {
-        if ( el.innerHTML === "Schowaj filtry" )
+        if (el.innerHTML === "Schowaj filtry")
             el.innerHTML = "Pokaż filtry";
-        else
-            el.innerHTML = "Schowaj filtry";
+        else el.innerHTML = "Schowaj filtry";
     }
 </script>
+
 
