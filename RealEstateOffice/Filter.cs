@@ -47,6 +47,7 @@ namespace RealEstateOffice
             ModificationDateLatest = null;
         }
 
+
         public void ShowActiveFilters()
         {
             if(_typeOfRealEstate != null) {

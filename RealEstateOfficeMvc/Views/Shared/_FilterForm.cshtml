@@ -4,26 +4,36 @@
 @{
 }
 
+@model ValueTuple<Filter, List<SelectListItem>>
+
+@{
+    var filter = Model.Item1;
+    var realEstateTypeList = Model.Item2;
+}
 
 <form method="post" action="/">
     <div class="text-secondary">
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
     <div class="col-8">
-        @Html.DropDownList("realestateType", new List<SelectListItem>
-         {new SelectListItem { Text = "---", Value = "-1" }, 
-              new SelectListItem { Text = "Dom", Value = "0" },
-              new SelectListItem { Text = "Mieszkanie", Value = "1" },
-              new SelectListItem { Text = "Działka", Value = "2" },
-              new SelectListItem { Text = "Garaż", Value = "3" },
-              new SelectListItem { Text = "Lokal usługowy", Value = "4" }
-         }, new { style = "width: 180px;" })
+        <select asp-for="@filter.TypeOfRealEstate" asp-items="realEstateTypeList"></select>
+        @*@Html.DropDownList("realestateType", new List<SelectListItem>
+        {
+            new SelectListItem {Text = "---", Value = "-1"},
+            new SelectListItem {Text = "Dom", Value = "0"},
+            new SelectListItem {Text = "Mieszkanie", Value = "1"},
+            new SelectListItem {Text = "Działka", Value = "2"},
+            new SelectListItem {Text = "Garaż", Value = "3"},
+            new SelectListItem {Text = "Lokal usługowy", Value = "4"}
+        }, new { style = "width: 180px;" })*@
     </div>
     <br />
     <div class="col-8">
-        <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmountSmallest">-
-            <input style="width: 85px;" type="text" name="RoomsAmountBiggest"></label>
-        
+        <label>
+            Liczba pokoi:  <input style="width: 85px;" type="text" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest">-
+            <input style="width: 85px;" type="text" value="@filter.RoomAmountBiggest" name="RoomsAmountBiggest">
+        </label>
+
     </div>
 
 
@@ -31,24 +41,24 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id=""> Cena od - do</span>
         </div>
-        <input name="PriceLowest" type="text" class="form-control">
-        <input name="PriceHighest" type="text" class="form-control">
+        <input name="PriceLowest" type="text" value="@filter.PriceLowest" class="form-control">
+        <input name="PriceHighest" type="text" value="@filter.PriceHighest" class="form-control">
     </div>
 
     <div class="input-group col-8">
         <div class="input-group-prepend">
             <span class="input-group-text" id="">Powierzchnia od - do</span>
         </div>
-        <input name="AreaSmallest" type="text" class="form-control">
-        <input name="AreaBiggest" type="text" class="form-control">
+        <input name="AreaSmallest" type="text" value="@filter.AreaSmallest" class="form-control">
+        <input name="AreaBiggest" type="text" value="@filter.AreaBiggest" class="form-control">
     </div>
 
     <div class="input-group col-8">
         <div class="input-group-prepend">
             <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
         </div>
-        <input name="OwnerName" type="text" class="form-control">
-        <input name="OwnerSurname" type="text" class="form-control">
+        <input name="OwnerName" type="text" value="@filter.OwnerName" class="form-control">
+        <input name="OwnerSurname" type="text" value="@filter.OwnerSurname" class="form-control">
     </div>
 
 
@@ -56,16 +66,13 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id=""> Miejscowość, ulica</span>
         </div>
-        <input name="City" type="text" class="form-control">
-        <input name="Street" type="text" class="form-control">
+        <input name="City" type="text" value="@filter.City" class="form-control">
+        <input name="Street" type="text" value="@filter.Street" class="form-control">
     </div>
     <br />
     <div class="col-8">
         <button type="submit" class="btn btn-info"> Wyszukaj</button>
-        <button class="btn btn-info"> Resetuj filtry</button>
+        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Resetuj filtry</a>
     </div>
-
-
-
 </form>
 

@@ -2,8 +2,7 @@
 
 <H2 class="col-8"> Edycja nieruchomości</H2>
 
-<form>
-    @*asp-controller="RealEstate" asp-action="EditEstate" method="post"*@
+<form asp-controller="RealEstate" asp-action="SaveEditedEstate" method="post">
     <div class="text-secondary">
 
     </div>
@@ -43,10 +42,11 @@
         <input name="Street" type="text" class="form-control" value="@Model.Street">
         <input name="EstateAddress" type="text" class="form-control" value="@Model.EstateAddress">
     </div>
+    <input type="hidden" name="id" value=@Model.Id>
     <br />
     <div class="col-8">
         <button type="submit" class="btn btn-info"> Zapisz</button>
-        <button class="btn btn-info"> Anuluj</button>
+        <a class="btn btn-info" asp-controller="Home" asp-action="Index">Anuluj</a>
     </div>
 </form>
 
