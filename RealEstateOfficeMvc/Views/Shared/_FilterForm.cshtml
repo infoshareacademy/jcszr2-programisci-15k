@@ -11,12 +11,12 @@
     var realEstateTypeList = Model.Item2;
 }
 
-<form method="post" action="/">
-    <div class="text-secondary">
+<form method="post" action="/Home/Index">
+    <div class="text-info">
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
     <div class="col-8">
-        <select asp-for="@filter.TypeOfRealEstate" asp-items="realEstateTypeList"></select>
+        Typ nieruchomości: <select asp-for="@filter.TypeOfRealEstate" asp-items="realEstateTypeList"></select>
         @*@Html.DropDownList("realestateType", new List<SelectListItem>
         {
             new SelectListItem {Text = "---", Value = "-1"},

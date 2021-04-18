@@ -8,8 +8,20 @@ namespace RealEstateOfficeMvc.Controllers
 {
     public class HomeController : Controller
     {
-      
-        
+        [Route("/")]
+        public IActionResult Main()
+        {
+            Filter filter = new Filter();
+            var model = new HomeViewModel()
+            { realEstateList = DatabaseContext.RealEstateChoice(filter), filter = filter, filtersShow = true };
+
+            ViewBag.login = HttpContext.Session.GetString("Sessionlogin");
+            ViewBag.typuser = HttpContext.Session.GetString("Sessiontypuser");
+
+            return View(model);
+        }
+
+
         public IActionResult Index()
         {
             Filter filter = new Filter();
@@ -65,7 +77,7 @@ namespace RealEstateOfficeMvc.Controllers
                 }
 
                 filter.OwnerName = HttpContext.Request.Form["OwnerName"];
-                
+
                 filter.OwnerSurname = HttpContext.Request.Form["OwnerSurname"];
 
                 filter.City = HttpContext.Request.Form["City"];
@@ -75,11 +87,11 @@ namespace RealEstateOfficeMvc.Controllers
             }
 
             var model = new HomeViewModel()
-                {realEstateList = DatabaseContext.RealEstateChoice(filter), filter = filter, filtersShow = true};
+            { realEstateList = DatabaseContext.RealEstateChoice(filter), filter = filter, filtersShow = true };
 
             ViewBag.login = HttpContext.Session.GetString("Sessionlogin");
             ViewBag.typuser = HttpContext.Session.GetString("Sessiontypuser");
-            
+
             return View(model);
         }
 
@@ -87,6 +99,6 @@ namespace RealEstateOfficeMvc.Controllers
         {
             return View();
         }
-                
+
     }
 }

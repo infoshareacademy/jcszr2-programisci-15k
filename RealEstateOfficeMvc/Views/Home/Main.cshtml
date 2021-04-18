@@ -1,0 +1,42 @@
+﻿
+@model HomeViewModel
+
+
+
+<style>
+    .startpage {
+        /*  background-repeat: no-repeat;
+        background-size: cover;
+        background: url("/img/estate.jpg");
+
+        background-position: center;*/
+        /* background: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0) 70%) 0% 0% / cover, url(https://www.pexels.com/pl-pl/zdjecie/nowoczesny-budynek-na-tle-nieba-323780/image;s=1500x552;q=90);
+        background-size: cover;*/
+        background-image: url("/img/estate.jpg");
+        background-color: #cccccc;
+        height: 500px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+    #FilterForm {
+        /*text-align: center;
+        position: absolute;*/
+        top: 50%;
+        left: 50%;
+        transform: translate(15%, 21%);
+        color: white;
+    }
+    
+</style>
+
+<div class="startpage">
+    <div id="FilterForm">
+        <partial name="_FilterForm" model="(Model.filter, Model.realEstateTypeList)" />
+    </div>
+</div>
+
+
+
+
