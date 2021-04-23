@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RealEstateOfficeMvc.Controllers
 {
     public class LogsController : Controller
     {
+
+        [Authorize(Roles = "Administrator")]
         public IActionResult Index()
         {
             var model = DisplayLog();

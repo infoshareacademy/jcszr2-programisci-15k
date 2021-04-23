@@ -22,6 +22,7 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
 
+        [Route("/Home/Index")]
         public IActionResult Index()
         {
             Filter filter = new Filter();

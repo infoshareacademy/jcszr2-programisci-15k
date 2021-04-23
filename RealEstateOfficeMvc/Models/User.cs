@@ -74,9 +74,9 @@ namespace RealEstateOfficeMvc.Models
 
         public enum UserType
         {
-            Administrator =1 ,    // 1
-            PracownikBiuraNieruchomości =2,   // 2
-            Klient=3,      // 3
+            Administrator = 1,    // 1
+            Worker = 2,   // 2
+            Client = 3,      // 3
         }
 
 

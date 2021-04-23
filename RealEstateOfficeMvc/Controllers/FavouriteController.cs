@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using RealEstateOfficeMvc.Helpers;
 using RealEstateOfficeMvc.Models;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,8 @@ namespace RealEstateOfficeMvc.Controllers
             return fav;
         }
 
-       
+
+        [Authorize(Roles = "Client")]
         public IActionResult Index()
         {
             
@@ -63,7 +65,7 @@ namespace RealEstateOfficeMvc.Controllers
          return View(model);
         }
 
-
+        [Authorize(Roles = "Client")]
         public IActionResult Like()
         {
             var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
@@ -74,7 +76,7 @@ namespace RealEstateOfficeMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
+        [Authorize(Roles = "Client")]
         [HttpPost]
         public IActionResult Unlike()
         {

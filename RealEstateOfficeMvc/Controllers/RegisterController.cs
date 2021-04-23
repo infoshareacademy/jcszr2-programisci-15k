@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.WebEncoders.Testing;
 using Microsoft.VisualBasic;
@@ -38,16 +41,20 @@ namespace RealEstateOfficeMvc.Controllers
            return View();
         }
 
-        public IActionResult Logout()
+
+        [Authorize(Roles = "Administrator,Worker,Client")]
+        public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
+
             return RedirectToAction("Login", "Register");
         }
 
 
 
         [HttpPost]
-        public IActionResult LoginUser()
+        public async Task<IActionResult> LoginUser()
         {
           
            string login = HttpContext.Request.Form["Login"];
@@ -63,7 +70,18 @@ namespace RealEstateOfficeMvc.Controllers
            HttpContext.Session.SetString(Appsettings.SESSIONTYPUSER, Convert.ToString(typUser));
            HttpContext.Session.SetString(Appsettings.SESSIONLOGINID, Convert.ToString(userid));
 
-           return RedirectToAction("Index", "Home");
+           var claims = new List<Claim>()
+           {
+               new Claim(ClaimTypes.Role, ((Models.User.UserType)typUser).ToString()),
+           };
+
+           var identity = new ClaimsIdentity(claims, "identity");
+
+           var userPrincipal = new ClaimsPrincipal(new[] { identity });
+           //-----------------------------------------------------------
+           await HttpContext.SignInAsync(userPrincipal);
+
+            return RedirectToAction("Index", "Home");
 
         }
 

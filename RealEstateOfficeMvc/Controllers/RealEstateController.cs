@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using RealEstateOfficeMvc.Helpers;
 using RealEstateOfficeMvc.Models;
@@ -11,7 +12,7 @@ namespace RealEstateOfficeMvc.Controllers
     public class RealEstateController : Controller
     {
 
-
+        [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
         public IActionResult AddRealEstate()
         {
@@ -59,12 +60,13 @@ namespace RealEstateOfficeMvc.Controllers
 
         }
 
-
+        [Authorize(Roles = "Administrator,Worker")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrator,Worker")]
         [HttpGet("edit/{id:int}")]
         public IActionResult EditEstate(int id)
         {
@@ -75,6 +77,7 @@ namespace RealEstateOfficeMvc.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
         public IActionResult SaveEditedEstate()
         {
@@ -97,7 +100,6 @@ namespace RealEstateOfficeMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
         [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
         {
@@ -117,6 +119,7 @@ namespace RealEstateOfficeMvc.Controllers
             return View(images);
         }
 
+        [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
         public IActionResult UploadFile(IFormFile file)
         {
@@ -166,7 +169,7 @@ namespace RealEstateOfficeMvc.Controllers
 
         }
 
-
+        [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
         public IActionResult RemoveRealEstate()
         {

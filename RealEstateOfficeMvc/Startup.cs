@@ -27,6 +27,13 @@ namespace RealEstateOfficeMvc
         {
             services.AddDistributedMemoryCache();
 
+            services.AddAuthentication("Cookie")
+                .AddCookie("Cookie", config =>
+                {
+                    config.Cookie.Name = "user";
+                    config.LoginPath = "/Register/Login";
+                });
+
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images")));
@@ -58,6 +65,8 @@ namespace RealEstateOfficeMvc
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
