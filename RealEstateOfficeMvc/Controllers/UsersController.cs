@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using RealEstateOfficeMvc.Models;
 
 
@@ -11,6 +12,8 @@ namespace RealEstateOfficeMvc.Controllers
 {
     public class UsersController : Controller
     {
+
+        [Authorize(Roles = "Administrator")]
         public IActionResult Index()
         {
             var model = UserDatabaseContext.ListOfUser();
