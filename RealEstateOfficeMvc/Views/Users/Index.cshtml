@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RealEstateOfficeMvc.Models.User>
+﻿@model IEnumerable<RealEstateOfficeMvc.Domain.User>
 
 
 <style>
@@ -9,7 +9,7 @@
 
     th {
         height: 70px;
-        background-color: lightblue;
+        background-color: black;
         color: white;
         text-align: left;
     }
@@ -27,12 +27,12 @@
 
 @using (Html.BeginForm("Index", "Register"))
 {
-    <input type="submit" class="btn btn-info" value="Dodaj użytkownika" />
+<button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Dodaj użytkownika">Dodaj użytkownika <i class="bi bi-file-earmark-plus-fill"></i></button>
 }
 
 <table>
     <tr>
-        
+
         <th>Imię</th>
         <th>Nazwisko</th>
         <th>Login</th>
@@ -48,9 +48,27 @@
     <td>@item.Name</td>
     <td>@item.Surname</td>
     <td>@item.Login</td>
-    <td>@item.TypeOfUserType</td>
-    <td>@item.EmailAddress</td>
-    
+    <td>
+        @if (@item.UserType == 1)
+        {
+            <p>Administrator</p>
+        }
+        else if (@item.UserType == 2)
+        {
+            <p>Pracownik biura</p>
+        }
+        else if (@item.UserType == 3)
+        {
+            <p>Klient </p>
+        }
+        else
+        {
+            <p></p>
+        }
+     </td>
+
+    <td>@item.Emailaddress</td>
+
     <td>
         @using (Html.BeginForm("EditUser", "Users", FormMethod.Post))
         {
@@ -61,7 +79,7 @@
     <td>
         @using (Html.BeginForm("RemoveUser", "Users", FormMethod.Post))
         {
-            <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń"  onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika?')"><i class="bi bi-trash"></i></button>
+            <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć tego użytkownika?')"><i class="bi bi-trash"></i></button>
             <input type="hidden" id="userid" name="userid" value=@item.Id>
         }
     </td>

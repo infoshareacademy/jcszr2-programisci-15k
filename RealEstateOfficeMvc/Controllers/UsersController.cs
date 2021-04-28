@@ -24,44 +24,13 @@ namespace RealEstateOfficeMvc.Controllers
         public IActionResult RemoveUser()
         {
             string userid = HttpContext.Request.Form["userid"];
-            int LineToDelete = Convert.ToInt32(userid);
-
-            String path = "\\Files\\Users.csv";
-            String pathTemp = "\\Files\\Temp.csv";
-
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            string relativePathTemp = testpath + pathTemp;
-
-            
-            StreamReader sr = new StreamReader(relativePath);
-            string line;
-            int linesDeleted = 0;
-
-            using (StreamReader reader = new StreamReader(relativePath))
+            int userToDelete = Convert.ToInt32(userid);
+          
+            using (var context = new  RealEstateOfficeContext())
             {
-                using (StreamWriter writer = new StreamWriter(relativePathTemp))
-                {
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] columns = line.Split(";");
-                        if (LineToDelete != Convert.ToInt32(columns[0]))
-                        {
-                            writer.WriteLine(line);
-                        }
-                        else
-                        {
-                            linesDeleted++;
-                        }
-
-                    }
-
-                }
+                context.Remove(context.Users.Single(u => u.Id == userToDelete));
+                context.SaveChanges();
             }
-            sr.Close();
-
-            System.IO.File.Copy(relativePathTemp, relativePath, true);
-            System.IO.File.WriteAllText(relativePathTemp, string.Empty); //temp is clean
 
             return RedirectToAction("Index", "Users");
         }
@@ -76,32 +45,14 @@ namespace RealEstateOfficeMvc.Controllers
 
         
 
-        public static User GetUser(int id)
+        public static Domain.User GetUser(int id)
         {
-           // int ID, string Login, string Password, string Name, string Surname, string EmailAddress, int UserType
-
-
-            String path = "\\Files\\Users.csv";
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            User user = null;
-
-            using (StreamReader reader = new StreamReader(relativePath))
+            // int ID, string Login, string Password, string Name, string Surname, string EmailAddress, int UserType
+            using (var context = new RealEstateOfficeContext())
             {
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (Convert.ToInt32(ParseTextLine(line, 0)) == id)
-                    {
-                     user = new User(Convert.ToInt32(ParseTextLine(line, 0)), ParseTextLine(line, 1),
-                            ParseTextLine(line, 2), ParseTextLine(line, 3), ParseTextLine(line, 4),
-                            ParseTextLine(line, 5), Convert.ToInt32(ParseTextLine(line, 0)));
-                    }
-
-                }
+                var user = context.Users.Single(x => x.Id == id);
+                return user;
             }
-            return user;
         }
 
         static string ParseTextLine(string Line, int column)

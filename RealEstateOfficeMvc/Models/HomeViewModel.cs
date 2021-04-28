@@ -8,7 +8,7 @@ namespace RealEstateOfficeMvc.Models
 {
     public class HomeViewModel
     {
-        public List<RealEstate> realEstateList { get; set; }
+        public List<Domain.RealEstate> realEstateList { get; set; }
 
         public Filter filter { get; set; }
 

@@ -1,4 +1,4 @@
-﻿@model RealEstateOfficeMvc.Models.User
+﻿@model RealEstateOfficeMvc.Domain.User
 
 
 <form method="post" action="/Register/EditUser">
@@ -24,7 +24,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="">E-mail</span>
         </div>
-        <input name="EmailAddress" type="text" class="form-control" value=@Model.EmailAddress>
+        <input name="EmailAddress" type="text" class="form-control" value=@Model.Emailaddress>
       
     </div>
     <div><input type="hidden" name="userid" type="text" class="form-control" value=@Model.Id></div>

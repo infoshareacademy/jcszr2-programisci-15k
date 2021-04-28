@@ -10,25 +10,14 @@ using Microsoft.AspNetCore.Authorization;
 using RealEstateOfficeMvc.Helpers;
 using RealEstateOfficeMvc.Models;
 using Microsoft.AspNetCore.Http;
+using RealEstateOfficeMvc.Domain;
 
 namespace RealEstateOfficeMvc.Controllers
 {
     public class FavouriteController : Controller
     {
-
-        public void GetUserFavourites()
+        public List<RealEstateOfficeMvc.Domain.FavouriteRealEstate> GetFavouriteRealEstates()
         {
-            //input : userId 
-            //pobieramy rekordy polubien z  Favourites.csv
-            //output : lista obiektów typu Favourite 
-            
-        }
-
-        public List<RealEstateOfficeMvc.Models.Favourite> GetFavouriteRealEstates()
-        {
-
-            //input : lista obiektów typu Favourite 
-            //output :  listę już konkretnych nieruchomosci
             var userid = HttpContext.Session.GetString("SESSIONLOGINID");
             var fav=FavouriteContext.ListOfFavourites();
             return fav;
@@ -45,32 +34,36 @@ namespace RealEstateOfficeMvc.Controllers
             var favouritemodel = GetFavouriteRealEstates();
 
             var model = from f in favouritemodel
-                                           join r in realmodel
-                                           on f.Realestateid equals r.Id
-                                           where (f.UserID == userid)
-                                           select new RealEstate()
-                                           {   
-                                            Id = r.Id,
-                                            typeOfRealEstate = r.typeOfRealEstate,
-                                            Price = r.Price,
-                                            Area = r.Area,
-                                            RoomsAmount = r.RoomsAmount,
-                                            OwnerName = r.OwnerName,
-                                            OwnerSurname = r.OwnerSurname,
-                                            City = r.City,
-                                            Street = r.Street,
-                                            EstateAddress = r.EstateAddress,
-                                           };
+                        join r in realmodel
+                        on f.RealEstateId equals r.Id
+                        where (f.UserId == userid)
+                        select new Domain.RealEstate()
+                        {   
+                        Id = r.Id,
+                        Typeofrealestate = r.Typeofrealestate,
+                        Price = r.Price,
+                        Area = r.Area,
+                        Roomamount = r.Roomamount,
+                        Ownername = r.Ownername,
+                        Ownersurname = r.Ownersurname,
+                        City = r.City,
+                        Street = r.Street, 
+                        EstateAddress = r.EstateAddress,
+                        };
 
          return View(model);
+
         }
 
         [Authorize(Roles = "Client")]
         public IActionResult Like()
         {
             var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
-            var userid = HttpContext.Session.GetString("SESSIONLOGINID");
-            var favourite = new Favourite(1, Convert.ToInt16(userid), number);
+            var userid = Convert.ToInt32(HttpContext.Session.GetString("SESSIONLOGINID"));
+            
+            var  favourite = new FavouriteRealEstate();
+            favourite.UserId = userid;
+            favourite.RealEstateId = number;
 
             FavouriteContext.AddToDatabase(favourite);
             return RedirectToAction("Index", "Home");
@@ -80,49 +73,17 @@ namespace RealEstateOfficeMvc.Controllers
         [HttpPost]
         public IActionResult Unlike()
         {
-            string realestateid = HttpContext.Request.Form["realestateid"];       
-            var userid = HttpContext.Session.GetString("SESSIONLOGINID");  
-           
-            String path = "\\Files\\FavouriteRealEstate.csv";
-            String pathTemp = "\\Files\\Temp.csv";
+            int  realestateid = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
 
-
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            string relativePathTemp = testpath + pathTemp;
-
-            StreamReader sr = new StreamReader(relativePath);
-
-            string line;
-            int linesDeleted = 0;
-
-
-            using (StreamReader reader = new StreamReader(relativePath))
+            using (var context = new RealEstateOfficeContext())
             {
-                using (StreamWriter writer = new StreamWriter(relativePathTemp))
-                {
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] columns = line.Split(";");
-                        if (Convert.ToInt32(columns[2]) == Convert.ToInt32(realestateid) && Convert.ToInt32(columns[1]) == Convert.ToInt32(userid))
-                        {
-                            linesDeleted++;
-                        }
-                        else
-                        {
-                            writer.WriteLine(line);
-                        }
-
-                    }
-
-                }
+                var unlike = context.FavouriteRealEstates.Single(x => x.RealEstateId == realestateid);
+                context.Remove(unlike);
+                context.SaveChanges();
             }
-            sr.Close();
-
-            System.IO.File.Copy(relativePathTemp, relativePath, true);
-            System.IO.File.WriteAllText(relativePathTemp, string.Empty); //temp is clean
 
             return RedirectToAction("Index", "Favourite");
+           
         }
         
 

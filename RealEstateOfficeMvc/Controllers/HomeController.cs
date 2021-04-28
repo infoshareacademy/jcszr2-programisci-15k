@@ -88,7 +88,9 @@ namespace RealEstateOfficeMvc.Controllers
             }
 
             var model = new HomeViewModel()
-            { realEstateList = DatabaseContext.RealEstateChoice(filter), filter = filter, filtersShow = true };
+            {
+                realEstateList = DatabaseContext.RealEstateChoice(filter), filter = filter, filtersShow = true 
+            };
 
             ViewBag.login = HttpContext.Session.GetString("Sessionlogin");
             ViewBag.typuser = HttpContext.Session.GetString("Sessiontypuser");
