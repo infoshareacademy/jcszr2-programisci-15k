@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using RealEstateOfficeMvc.Helpers;
 using RealEstateOfficeMvc.Models;
+using System.Linq;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -54,8 +55,29 @@ namespace RealEstateOfficeMvc.Controllers
 
             DateTime dt = DateTime.Now;
             dt.ToShortDateString();
-            RealEstate realEstate = new RealEstate(1, realEstateType, price, area, roomsAmount, ownerName, ownerSurname, city, street, estateAddress, dt, dt);
-            DatabaseContext.AddToDatabase(realEstate);
+            
+             using (var context = new RealEstateOfficeContext())
+            {
+                var realest = new Domain.RealEstate();
+
+                realest.Typeofrealestate = realEstateType;
+                realest.Price = price;
+                realest.Area = area;
+                realest.Roomamount = roomsAmount;
+                realest.Ownername = ownerName;
+                realest.Ownersurname = ownerSurname;
+                realest.City = city;
+                realest.Street = street;
+                realest.EstateAddress = estateAddress;
+                realest.Creationdate = dt;
+                realest.Modificationdate = dt;
+
+               
+                context.RealEstates.Add(realest);
+
+                context.SaveChanges();
+          }
+
             return RedirectToAction("Index", "Home");
 
         }
@@ -81,24 +103,30 @@ namespace RealEstateOfficeMvc.Controllers
         [HttpPost]
         public IActionResult SaveEditedEstate()
         {
-
             int id = Convert.ToInt32(HttpContext.Request.Form["id"]);
+           
+            using (var context = new RealEstateOfficeContext())
+            {
+                var realEstate = context.RealEstates.Single(r => r.Id == id);
 
-            var realEstate = DatabaseContext.Get(id);
-            realEstate.Price = Convert.ToDecimal(HttpContext.Request.Form["Price"]);
-            realEstate.Area = Convert.ToInt32(HttpContext.Request.Form["Area"]);
-            realEstate.RoomsAmount = Convert.ToInt32(HttpContext.Request.Form["RoomsAmount"]);
-            realEstate.OwnerName = HttpContext.Request.Form["OwnerName"];
-            realEstate.OwnerSurname = HttpContext.Request.Form["OwnerSurname"];
-            realEstate.City = HttpContext.Request.Form["City"];
-            realEstate.Street = HttpContext.Request.Form["Street"];
-            realEstate.EstateAddress = HttpContext.Request.Form["EstateAddress"];
-            realEstate.ModificationDate = DateTime.Now;
-            realEstate.typeOfRealEstate = (RealEstate.TypeOfRealEstate)Convert.ToInt32(HttpContext.Request.Form["realestateType"]);
+                realEstate.Price = Convert.ToDecimal(HttpContext.Request.Form["Price"]);
+                realEstate.Area = Convert.ToInt32(HttpContext.Request.Form["Area"]);
+                realEstate.Roomamount = Convert.ToInt32(HttpContext.Request.Form["RoomsAmount"]);
+                realEstate.Ownername = HttpContext.Request.Form["OwnerName"];
+                realEstate.Ownersurname = HttpContext.Request.Form["OwnerSurname"];
+                realEstate.City = HttpContext.Request.Form["City"];
+                realEstate.Street = HttpContext.Request.Form["Street"];
+                realEstate.EstateAddress = HttpContext.Request.Form["EstateAddress"];
+                realEstate.Modificationdate = DateTime.Now;
+                realEstate.Typeofrealestate = Convert.ToInt32(HttpContext.Request.Form["realestateType"]);
 
-            DatabaseContext.EditRecordInDatabase(realEstate, id);
+                context.SaveChanges();
+            }
+           
             return RedirectToAction("Index", "Home");
         }
+
+
 
         [HttpGet("details/{id:int}")]
         public IActionResult Details(int id)
@@ -107,13 +135,13 @@ namespace RealEstateOfficeMvc.Controllers
 
             var viewModel = DatabaseContext.Get(id);
 
-            ViewData["typeOfRealEstate"] = viewModel.typeOfRealEstate;
+            ViewData["typeOfRealEstate"] =  (Models.RealEstate.TypeOfRealEstate)viewModel.Typeofrealestate;
             ViewData["Area"] = viewModel.Area;
             ViewData["City"] = viewModel.City;
-            ViewData["CreationDate"] = viewModel.CreationDate;
+            ViewData["CreationDate"] = viewModel.Modificationdate;
             ViewData["Price"] = viewModel.Price;
             ViewData["Pricem2"] = Convert.ToInt32(viewModel.Price / viewModel.Area);
-            ViewData["RoomsAmount"] = viewModel.RoomsAmount;
+            ViewData["RoomsAmount"] = viewModel.Roomamount;
 
 
             return View(images);
@@ -136,8 +164,11 @@ namespace RealEstateOfficeMvc.Controllers
                 {
                     file.CopyTo(stream);
                 }
+                                
+                Domain.Image img = new Domain.Image();
+                img.RealEstateId = number;
+                img.Nazwapliku = file.FileName;
 
-                Image img = new Image(0, number, file.FileName);
                 ImagesContext.AddToDatabase(img);
 
             }
@@ -179,8 +210,11 @@ namespace RealEstateOfficeMvc.Controllers
                 //error
             }
 
-            DatabaseContext.RemoveFromDatabase(id);
-
+            using (var context = new RealEstateOfficeContext())
+            {
+               context.Remove(context.RealEstates.Single(r => r.Id == id));
+               context.SaveChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
 

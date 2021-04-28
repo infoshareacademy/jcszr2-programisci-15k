@@ -130,35 +130,7 @@ namespace RealEstateOfficeMvc.Models
             
         }
 
-        //public bool ValidateIntInput(List<string> numericInputs)
-        //{
-        //    bool isValid;
-
-        //    foreach (string s in numericInputs)
-        //    {
-        //        if (s.All(char.IsDigit))
-        //            return isValid = false;
-        //    }
-
-        //    isValid = numericInputs.All(s => s.All(char.IsDigit));
-
-        //    return isValid = true;
-        //}
-
-        //public bool RealEstateValidate(List<string> numericInputs, string decimalInput, List<string> stringInputs)
-        //{
-        //    bool isValid;
-
-            
-
-        //    if (decimal.TryParse(priceInput, out decimal price) || (price < 0))
-        //    {
-
-        //    }
-
-        //    return isValid;
-        //}
-
+        
 
     }
 }

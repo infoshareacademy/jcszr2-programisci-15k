@@ -9,62 +9,42 @@ namespace RealEstateOfficeMvc
 {
     class DatabaseContext
     {
-        public static List<RealEstate> RealEstatesFilter(Filter filter)
+        public static List<Domain.RealEstate> RealEstatesFilter(Filter filter)
         {
-            //String path = "..\\Files\\RealEstates.csv";
-            //string fullPath = DatabaseContext.bingPathToAppDir(path);
-            String path = "\\Files\\RealEstates.csv";
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            List<RealEstate> RealEstateList = new List<RealEstate>();
+           
+            List<Domain.RealEstate> RealEstateList = new List<Domain.RealEstate>();
 
-            using (StreamReader reader = new StreamReader(relativePath))
+            using(var context = new RealEstateOfficeContext())
             {
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    //RealEstateList.Add(new RealEstate(ID, TypeOfRealEstate, Price, Area, OwnerName, OwnerSurname, City, Street, EstateAddress));
-                    RealEstateList.Add(new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), Convert.ToInt32(ParseTextLine(line, 4)), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8), ParseTextLine(line, 9), DateTime.Parse(ParseTextLine(line, 10)), DateTime.Parse(ParseTextLine(line, 11))));
-
-                }
+                RealEstateList = context.RealEstates.ToList();
             }
+
+
             return RealEstateList;
         }
-        public static RealEstate Get(int id)
+
+
+        public static Domain.RealEstate Get(int id)
         {
-            String path = "\\Files\\RealEstates.csv";
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            RealEstate realEstate = null;
 
-            using (StreamReader reader = new StreamReader(relativePath))
+            using (var context = new RealEstateOfficeContext())
             {
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (Convert.ToInt32(ParseTextLine(line, 0)) == id)
-                    {
-
-                        realEstate = new RealEstate(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), Convert.ToDecimal(ParseTextLine(line, 2)), Convert.ToInt32(ParseTextLine(line, 3)), Convert.ToInt32(ParseTextLine(line, 4)), ParseTextLine(line, 5), ParseTextLine(line, 6), ParseTextLine(line, 7), ParseTextLine(line, 8), ParseTextLine(line, 9), DateTime.Parse(ParseTextLine(line, 10)), DateTime.Parse(ParseTextLine(line, 11)));
-                    }
-
-                }
+                var realEstate = context.RealEstates.Single(x => x.Id == id);
+                return realEstate;
             }
-            return realEstate;
+         
         }
 
-        public static List<RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
+        public static List<Domain.RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
         {
-            List<RealEstate> realEstateList;
-            List<RealEstate> filteredRealEstateList = new List<RealEstate>();
+            List<Domain.RealEstate> realEstateList;
+            List<Domain.RealEstate> filteredRealEstateList = new List<Domain.RealEstate>();
             realEstateList = RealEstatesFilter(filter);  //gets hole list of Real Estates
 
             for (var i = 0; i < realEstateList.Count; i++)
             {
                 if (filter.TypeOfRealEstate != null &&
-                    realEstateList[i].typeOfRealEstate != filter.TypeOfRealEstate)
+                    realEstateList[i].Typeofrealestate != (int)filter.TypeOfRealEstate)
                 {
                     continue;
                 }
@@ -94,25 +74,25 @@ namespace RealEstateOfficeMvc
                 }
 
                 if (filter.RoomAmountSmallest != null &&
-                    (realEstateList[i].RoomsAmount < filter.RoomAmountSmallest))
+                    (realEstateList[i].Roomamount < filter.RoomAmountSmallest))
                 {
                     continue;
                 }
 
                 if (filter.RoomAmountBiggest != null &&
-                    (realEstateList[i].RoomsAmount > filter.RoomAmountBiggest))
+                    (realEstateList[i].Roomamount > filter.RoomAmountBiggest))
                 {
                     continue;
                 }
 
                 if (!string.IsNullOrEmpty(filter.OwnerName) &&
-                    realEstateList[i].OwnerName != filter.OwnerName)
+                    realEstateList[i].Ownername != filter.OwnerName)
                 {
                     continue;
                 }
 
                 if (!string.IsNullOrEmpty(filter.OwnerSurname) &&
-                    realEstateList[i].OwnerSurname != filter.OwnerSurname)
+                    realEstateList[i].Ownersurname != filter.OwnerSurname)
                 {
                     continue;
                 }
@@ -130,13 +110,13 @@ namespace RealEstateOfficeMvc
                 }
 
                 if (filter.CreationDateEarliest != null &&
-                    (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateEarliest) < 0))
+                    (DateTime.Compare(realEstateList[i].Creationdate, (DateTime)filter.CreationDateEarliest) < 0))
                 {
                     continue;
                 }
 
                 if (filter.CreationDateLatest != null &&
-                    (DateTime.Compare(realEstateList[i].CreationDate, (DateTime)filter.CreationDateLatest) > 0))
+                    (DateTime.Compare(realEstateList[i].Creationdate, (DateTime)filter.CreationDateLatest) > 0))
                 {
                     continue;
                 }
@@ -158,54 +138,6 @@ namespace RealEstateOfficeMvc
             return output;
         }
 
-
-        public static void AddToDatabase(RealEstate realEstate)
-        {
-            //ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
-            //ID zostaje ustalony automatycznie
-            //Data stworzenia wpisu zostaje ustalona automatycznie
-            //funkcja przyjmuje obiekt RealEstate
-
-            realEstate.CreationDate = DateTime.Now;
-            realEstate.ModificationDate = DateTime.Now;
-
-
-            String path = "\\Files\\RealEstates.csv";
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            var lastLine = File.ReadLines(relativePath).Last(); // z tego wyciągam  ID 
-
-            var columns = new List<string>
-            {
-                GetLastLineId(lastLine).ToString(),
-                ((int)realEstate.typeOfRealEstate).ToString(),
-                realEstate.Price.ToString(),
-                realEstate.Area.ToString(),
-                realEstate.RoomsAmount.ToString(),
-                realEstate.OwnerName,
-                realEstate.OwnerSurname,
-                realEstate.City,
-                realEstate.Street,
-                realEstate.EstateAddress,
-                realEstate.CreationDate.ToString(),
-                realEstate.ModificationDate.ToString()
-
-            };
-
-
-
-            using (StreamWriter sw = File.AppendText(relativePath))
-            {
-                sw.WriteLine(string.Join(";", columns));
-
-            }
-
-            // Console.Clear();
-            //Console.WriteLine("Record added to database.Press any key");
-            //Console.ReadLine();
-            Log insertLog = new Log(0, DateTime.Now, "Insert of Real Estate: " + realEstate.typeOfRealEstate, "worker");
-            // Logger.AddLineToLog(insertLog);
-        }
 
         static int GetLastLineId(String lastLine)
         {
@@ -315,36 +247,7 @@ namespace RealEstateOfficeMvc
             SaveLine(id, s1);
         }
 
-        public static void RemoveFromDatabase(int id)
-        {
-            string originalPath = Directory.GetCurrentDirectory() + "\\Files\\RealEstates.csv";
-            string tempPath = Directory.GetCurrentDirectory() + "\\Files\\Temp.csv";
-
-            StreamReader sr = new StreamReader(originalPath);
-
-
-            using (StreamReader reader = new StreamReader(originalPath))
-            {
-                using (StreamWriter writer = new StreamWriter(tempPath))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] columns = line.Split(";");
-                        if (id != Convert.ToInt32(columns[0]))
-                        {
-                            writer.WriteLine(line);
-                        }
-
-                    }
-                }
-            }
-            sr.Close();
-
-            File.Move(tempPath, originalPath, true);
-        }
-
-
+      
         public void OpenFile()
         {
 

@@ -31,8 +31,20 @@ namespace RealEstateOfficeMvc.Controllers
             string password = HttpContext.Request.Form["Password"];
             string userTyp = HttpContext.Request.Form["userTyp"];
 
-            RealEstateOfficeMvc.Models.User usr = new RealEstateOfficeMvc.Models.User(1,login,password,name,surname,email, Convert.ToInt32(userTyp));
-            UserDatabaseContext.AddToDatabase(usr);
+            using (var context = new RealEstateOfficeContext())
+            {
+                var usr = new Domain.User();
+                usr.Emailaddress = email;
+                usr.Name = name;
+                usr.Surname = surname;
+                usr.Login = login;
+                usr.Password = UserDatabaseContext.codePassword(password);
+                usr.UserType = Convert.ToInt32(userTyp);
+
+                context.Add(usr);
+                context.SaveChanges();
+            }
+           
             return RedirectToAction("Index", "Users");
         }
 
@@ -86,85 +98,23 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUser(RealEstateOfficeMvc.Models.User user)
+        public IActionResult EditUser(RealEstateOfficeMvc.Domain.User user)
         {
-
             int id = Convert.ToInt32((HttpContext.Request.Form["userid"]));
-            String path = "\\Files\\Users.csv";
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            string line;
-            string lineToChange = "";
-            string s1 = String.Empty;
 
-    
-            using (StreamReader reader = new StreamReader(relativePath))
+            using (var context = new  RealEstateOfficeContext())
             {
+                var usr = context.Users.Single(x => x.Id == id);
+                usr.Login = user.Login;
+                usr.Name = user.Name;
+                usr.Surname = user.Surname;
+                usr.Emailaddress = user.Emailaddress;
+                usr.UserType = user.UserType;
 
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] columns = line.Split(";");
-                    if (Convert.ToInt32(columns[0]) == id)
-                    {
-                        lineToChange = line; // this is  line to be modified
-                    }
-                }
+                context.SaveChanges();
             }
-
-
-
-            if (String.IsNullOrEmpty(lineToChange))
-            {
-                Console.WriteLine("No User record in our database with this ID !");
-                Console.ReadLine();
-
-            }
-            else
-            {
-                string[] columnsToChange = lineToChange.Split(";");
-                //ID; Login; Password; Name; Surname; EmailAddress; UserType;
-
-                if (!String.IsNullOrEmpty(user.Login))
-                {
-                    columnsToChange[1] = user.Login;
-                }
-
-                if (!String.IsNullOrEmpty(user.Password))
-                {
-                    columnsToChange[2] = user.Password;
-                }
-
-                if (!String.IsNullOrEmpty(user.Name))
-                {
-                    columnsToChange[3] = user.Name;
-                }
-
-                if (!String.IsNullOrEmpty(user.Surname))
-                {
-                    columnsToChange[4] = user.Surname;
-                }
-
-                if (!String.IsNullOrEmpty(user.EmailAddress))
-                {
-                    columnsToChange[5] = user.EmailAddress;
-                }
-
-                if ((int)user.TypeOfUserType != 0)
-                {
-                    int type = (int)user.TypeOfUserType;
-                    columnsToChange[6] = type.ToString();
-                }
-
-
-                s1 = string.Join(";", columnsToChange);
-
-            }
-
-            UserDatabaseContext.saveLine(id, s1);
 
             return RedirectToAction("Index", "Users");
-            // return s1;
-
         }
 
         

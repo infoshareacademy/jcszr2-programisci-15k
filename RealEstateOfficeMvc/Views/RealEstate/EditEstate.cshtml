@@ -1,4 +1,4 @@
-﻿@model RealEstateOfficeMvc.Models.RealEstate
+﻿@model RealEstateOfficeMvc.Domain.RealEstate
 
 <H2 class="col-8"> Edycja nieruchomości</H2>
 
@@ -9,12 +9,12 @@
 
 
     <div class="col-8">
-        <select asp-for="@Model.typeOfRealEstate" asp-items="Html.GetEnumSelectList<RealEstate.TypeOfRealEstate>()">
+        <select asp-for="@Model.Typeofrealestate" asp-items="Html.GetEnumSelectList<RealEstate.TypeOfRealEstate>()">
         </select>
     </div>
     <br />
     <div id="rooms" class="col-8">
-        <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmount" value="@Model.RoomsAmount"></label>
+        <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmount" value="@Model.Roomamount"></label>
     </div>
 
 
@@ -29,8 +29,8 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
         </div>
-        <input name="OwnerName" type="text" class="form-control" value="@Model.OwnerName">
-        <input name="OwnerSurname" type="text" class="form-control" value="@Model.OwnerSurname">
+        <input name="OwnerName" type="text" class="form-control" value="@Model.Ownername">
+        <input name="OwnerSurname" type="text" class="form-control" value="@Model.Ownersurname">
     </div>
 
 

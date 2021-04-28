@@ -1,5 +1,4 @@
-﻿@*@model RealEstateOfficeMvc.Models.RealEstate*@
-@model IEnumerable<Image>
+﻿@model IEnumerable<RealEstateOfficeMvc.Domain.Image>
 
 <style>
     table#estates {
@@ -61,7 +60,7 @@
             @foreach (var img in Model)
             {
                 <div class="carousel-item @(img == Model.First() ? "active" : "")">
-                    <img class="d-block w-100" src="~/images/@img.RealEstateID/@img.FileName" alt="@img.FileName">
+                    <img class="d-block w-100" src="~/images/@img.RealEstateId/@img.Nazwapliku" alt="@img.Nazwapliku">
                 </div>
             }
         

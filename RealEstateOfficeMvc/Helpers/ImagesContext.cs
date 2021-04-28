@@ -10,90 +10,27 @@ namespace RealEstateOfficeMvc.Helpers
     public class ImagesContext
     {
 
-
-        public static List<RealEstateOfficeMvc.Models.Image> ListOfImages()
+        public static List<RealEstateOfficeMvc.Domain.Image>  GetImages(int id)
         {
-            String path = "\\Files\\Images.csv";
-            // pobieram ID z ostatniej linijki w users.csv
-            string testpath = System.IO.Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            var lastLine = File.ReadLines(relativePath).Last();
-
-            List<RealEstateOfficeMvc.Models.Image> imageList = new List<RealEstateOfficeMvc.Models.Image>();
-
-            using (StreamReader reader = new StreamReader(relativePath))
+            List<RealEstateOfficeMvc.Domain.Image> imageList = new List<RealEstateOfficeMvc.Domain.Image>();
+            using ( var context = new RealEstateOfficeContext())
             {
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    // ID; Login; Password; Name; Surname; EmailAddress; UserType;
-                    imageList.Add(new RealEstateOfficeMvc.Models.Image(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), ParseTextLine(line, 2)));
-
-                }
+                imageList = context.Images.Where(x => x.RealEstateId == id).ToList();
             }
             return imageList;
+ 
 
         }
 
-
-        public static List<RealEstateOfficeMvc.Models.Image>  GetImages(int id)
+        public static void AddToDatabase(RealEstateOfficeMvc.Domain.Image image)
         {
-            String path = "\\Files\\Images.csv";
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-
-            List<RealEstateOfficeMvc.Models.Image> imageList = new List<RealEstateOfficeMvc.Models.Image>();
-
-            using (StreamReader reader = new StreamReader(relativePath))
+            using (var context = new RealEstateOfficeContext())
             {
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (Convert.ToInt32(ParseTextLine(line, 1)) == id)
-                    {
-
-                        imageList.Add(new RealEstateOfficeMvc.Models.Image(Convert.ToInt32(ParseTextLine(line, 0)), Convert.ToInt32(ParseTextLine(line, 1)), ParseTextLine(line, 2)));
-                    }
-
-                }
+                context.Images.Add(image);
+                context.SaveChanges();
             }
-            return imageList;
+                        
         }
 
-        public static void AddToDatabase(RealEstateOfficeMvc.Models.Image image)
-        {
-            String path = "\\Files\\Images.csv";
-            // pobieram ID z ostatniej linijki w users.csv
-            string testpath = Directory.GetCurrentDirectory();
-            string relativePath = testpath + path;  // fullpath
-            var lastLine = File.ReadLines(relativePath).Last();
-
-            string[] columns = lastLine.Split(";");
-            var lastId = Convert.ToInt32(columns[0]);
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("");
-            sb.Append(lastId + 1); //Id = lastId + 1
-            sb.Append(";");
-            sb.Append(image.RealEstateID);
-            sb.Append(";");
-            sb.Append(image.FileName);
-            sb.Append(";");
-            
-            using (StreamWriter sw = File.AppendText(relativePath))
-            {
-                sw.Write(sb);
-            }
-        }
-
-
-        static string ParseTextLine(string Line, int column)
-        {
-            string[] columns = Line.Split(";");
-            string output = columns[column];
-            return output;
-        }
     }
 }

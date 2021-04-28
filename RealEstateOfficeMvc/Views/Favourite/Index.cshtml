@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<RealEstateOfficeMvc.Models.RealEstate>
+@model IEnumerable<RealEstateOfficeMvc.Domain.RealEstate>
 
 @{
     var usertypeString = Context.Session.GetString(Appsettings.SESSIONTYPUSER);
@@ -16,7 +16,7 @@
 
     th {
         height: 70px;
-        background-color: lightblue;
+        background-color: black;
         color: white;
         text-align: left;
     }
@@ -46,14 +46,11 @@
     <tr>
 
         <th>Nieruchomość</th>
-        <th>Cena(pln)</th>
-        <th>Powierzchnia(m2)</th>
+        <th>Cena (pln)</th>
+        <th>Powierzchnia (m2)</th>
         <th> Pokoje </th>
-        <th>Imię</th>
-        <th>Nazwisko</th>
-        <th>Miejscowość</th>
-        <th>Ulica</th>
-        <th>Numer posesji</th>
+        <th>Właściciel</th>
+        <th>Lokalizacja</th>
         <th>Cena/m2</th>
         <th></th>
         <th></th>
@@ -62,38 +59,55 @@
 
     @foreach (var item in Model)
     {
-    <tr>
+<tr>
+    <td>
+        @if (@item.Typeofrealestate == 0)
+        {
+            <p>Dom</p>
+        }
+        else if (@item.Typeofrealestate == 1)
+        {
+            <p>Mieszkanie</p>
+        }
+        else if (@item.Typeofrealestate == 2)
+        {
+            <p>Działka </p>
+        }
+        else if (@item.Typeofrealestate == 3)
+        {
+            <p>Garaż  </p>
+        }
+        else if (@item.Typeofrealestate == 4)
+        {
+            <p>Lokal_usługowy  </p>
+        }
+        else
+        {
+            <p></p>
+        }
+    <td>@item.Price</td>
+    <td>@item.Area</td>
+    <td>@item.Roomamount</td>
+    <td>@item.Ownername @item.Ownersurname</td>
+    <td>@item.City @item.Street @item.EstateAddress </td>
+    <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
+    @if (usertype == 3)
+    {
+        <td>
+            <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
+               asp-action="Details" method="post"
+               asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
+        </td>
+        <td>
+            @using (Html.BeginForm("Unlike", "Favourite", FormMethod.Post))
+            {
+                <button type="submit" id="dislike-button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń z listy ulubionych"><i class="bi bi-hand-thumbs-down"></i></button>
+                <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+            }
+        </td>
+    }
 
-        <td>@item.typeOfRealEstate</td>
-        <td>@item.Price</td>
-        <td>@item.Area</td>
-        <td>@item.RoomsAmount</td>
-        <td>@item.OwnerName</td>
-        <td>@item.OwnerSurname</td>
-        <td>@item.City</td>
-        <td>@item.Street</td>
-        <td>@item.EstateAddress</td>
-        <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
-                @if (usertype == 3)
-                 { 
-                    <td>
-                        @using (Html.BeginForm("Details", "RealEstate", FormMethod.Post))
-                        {
-                            <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Podgląd"><i class="bi bi-eye"></i></button>
-                            <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-                        }
-                    </td>
-                    
-                    <td>
-                        @using (Html.BeginForm("Unlike", "Favourite", FormMethod.Post))
-                        {
-                            <button type="submit" id="dislike-button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń z listy ulubionych"><i class="bi bi-hand-thumbs-down"></i></button>
-                            <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-                        }
-                    </td>
-                }
-
-    </tr>
+</tr>
 
 
     }
