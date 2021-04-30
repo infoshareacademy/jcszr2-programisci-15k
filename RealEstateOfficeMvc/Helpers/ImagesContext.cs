@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,12 +11,12 @@ namespace RealEstateOfficeMvc.Helpers
     public class ImagesContext
     {
 
-        public static List<RealEstateOfficeMvc.Domain.Image>  GetImages(int id)
+        public static async Task<List<RealEstateOfficeMvc.Domain.Image>>  GetImagesAsync(int id)
         {
             List<RealEstateOfficeMvc.Domain.Image> imageList = new List<RealEstateOfficeMvc.Domain.Image>();
             using ( var context = new RealEstateOfficeContext())
             {
-                imageList = context.Images.Where(x => x.RealEstateId == id).ToList();
+                imageList = await context.Images.Where(x => x.RealEstateId == id).ToListAsync();
             }
             return imageList;
  

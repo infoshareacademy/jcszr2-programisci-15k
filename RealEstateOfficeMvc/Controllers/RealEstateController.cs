@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using RealEstateOfficeMvc.Helpers;
 using RealEstateOfficeMvc.Models;
 using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -15,7 +17,7 @@ namespace RealEstateOfficeMvc.Controllers
 
         [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
-        public IActionResult AddRealEstate()
+        public async Task<IActionResult> AddRealEstate()
         {
             bool isFormCorrect = true;
 
@@ -57,7 +59,7 @@ namespace RealEstateOfficeMvc.Controllers
             dt.ToShortDateString();
             
              using (var context = new RealEstateOfficeContext())
-            {
+             {
                 var realest = new Domain.RealEstate();
 
                 realest.Typeofrealestate = realEstateType;
@@ -74,9 +76,8 @@ namespace RealEstateOfficeMvc.Controllers
 
                
                 context.RealEstates.Add(realest);
-
-                context.SaveChanges();
-          }
+                await context.SaveChangesAsync();
+             }
 
             return RedirectToAction("Index", "Home");
 
@@ -90,18 +91,15 @@ namespace RealEstateOfficeMvc.Controllers
 
         [Authorize(Roles = "Administrator,Worker")]
         [HttpGet("edit/{id:int}")]
-        public IActionResult EditEstate(int id)
+        public async Task<IActionResult> EditEstate(int id)
         {
-
-            var viewModel = DatabaseContext.Get(id);
-
-
+            var viewModel = await DatabaseContext.GetAsync(id);
             return View(viewModel);
         }
 
         [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
-        public IActionResult SaveEditedEstate()
+        public async Task<IActionResult> SaveEditedEstate()
         {
             int id = Convert.ToInt32(HttpContext.Request.Form["id"]);
            
@@ -120,7 +118,7 @@ namespace RealEstateOfficeMvc.Controllers
                 realEstate.Modificationdate = DateTime.Now;
                 realEstate.Typeofrealestate = Convert.ToInt32(HttpContext.Request.Form["realestateType"]);
 
-                context.SaveChanges();
+               await context.SaveChangesAsync();
             }
            
             return RedirectToAction("Index", "Home");
@@ -129,11 +127,10 @@ namespace RealEstateOfficeMvc.Controllers
 
 
         [HttpGet("details/{id:int}")]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var images = ImagesContext.GetImages(id);
-
-            var viewModel = DatabaseContext.Get(id);
+            var images = await ImagesContext.GetImagesAsync(id);
+            var viewModel =await DatabaseContext.GetAsync(id);
 
             ViewData["typeOfRealEstate"] =  (Models.RealEstate.TypeOfRealEstate)viewModel.Typeofrealestate;
             ViewData["Area"] = viewModel.Area;
@@ -142,7 +139,6 @@ namespace RealEstateOfficeMvc.Controllers
             ViewData["Price"] = viewModel.Price;
             ViewData["Pricem2"] = Convert.ToInt32(viewModel.Price / viewModel.Area);
             ViewData["RoomsAmount"] = viewModel.Roomamount;
-
 
             return View(images);
         }
@@ -202,7 +198,7 @@ namespace RealEstateOfficeMvc.Controllers
 
         [Authorize(Roles = "Administrator,Worker")]
         [HttpPost]
-        public IActionResult RemoveRealEstate()
+        public async Task<IActionResult> RemoveRealEstate()
         {
             string realestateid = HttpContext.Request.Form["realestateid"];
             if (!int.TryParse(realestateid, out var id))
@@ -213,7 +209,7 @@ namespace RealEstateOfficeMvc.Controllers
             using (var context = new RealEstateOfficeContext())
             {
                context.Remove(context.RealEstates.Single(r => r.Id == id));
-               context.SaveChanges();
+               await context.SaveChangesAsync();
             }
             return RedirectToAction("Index", "Home");
         }

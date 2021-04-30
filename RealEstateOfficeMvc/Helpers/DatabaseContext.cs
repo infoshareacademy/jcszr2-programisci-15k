@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using RealEstateOfficeMvc.Models;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RealEstateOfficeMvc
 {
@@ -24,12 +26,11 @@ namespace RealEstateOfficeMvc
         }
 
 
-        public static Domain.RealEstate Get(int id)
+        public static async Task<Domain.RealEstate> GetAsync(int id)
         {
-
             using (var context = new RealEstateOfficeContext())
             {
-                var realEstate = context.RealEstates.Single(x => x.Id == id);
+                var realEstate = await context.RealEstates.SingleAsync(x => x.Id == id);
                 return realEstate;
             }
          
@@ -128,144 +129,7 @@ namespace RealEstateOfficeMvc
 
         }
 
-
-
-
-        static string ParseTextLine(string Line, int column)
-        {
-            string[] columns = Line.Split(";");
-            string output = columns[column];
-            return output;
-        }
-
-
-        static int GetLastLineId(String lastLine)
-        {
-            string[] columns = lastLine.Split(";");
-            var lastId = Convert.ToInt32(columns[0]);
-            lastId = lastId + 1;
-            return lastId;
-        }
-
-
-
-
-        public static void EditRecordInDatabase(RealEstate realEstate, int id)
-        {
-
-            //ID; TypeOfRealEstate; Price; Area; OwnerName; OwnerSurname; City; Street; EstateAddress; CreationDate; ModificationDate;
-            //Data modyfikacji wpisu zostaje ustalona/nadpisana automatycznie
-            //funkcja przyjmuje realEstate.ID
-            //funkcja przyjmuje też pola RealEstate które użytkownik chce zmodyfikować
-            //task 3
-
-            string fullPath = Directory.GetCurrentDirectory() + "\\Files\\RealEstates.csv";
-            string line;
-            string lineToChange = "";
-            string s1 = String.Empty;
-
-            using (StreamReader reader = new StreamReader(fullPath))
-            {
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] columns = line.Split(";");
-                    if (Convert.ToInt32(columns[0]) == id)
-                    {
-                        lineToChange = line; // this is  line to modify
-                    }
-                }
-            }
-
-
-
-            if (String.IsNullOrEmpty(lineToChange))
-            {
-                Console.WriteLine("No RealEstate record in our database with this ID !");
-
-            }
-            else
-            {
-                string[] columnsToChange = lineToChange.Split(";");
-
-
-                if ((int)realEstate.typeOfRealEstate != 0)
-                {
-                    int type = (int)realEstate.typeOfRealEstate;
-                    columnsToChange[1] = type.ToString();
-                }
-
-
-                if (realEstate.Price != 0)
-                {
-                    columnsToChange[2] = realEstate.Price.ToString();
-                }
-
-
-                if (realEstate.Area != 0)
-                {
-                    columnsToChange[3] = realEstate.Area.ToString();
-                }
-
-                if (realEstate.RoomsAmount != 0)
-                {
-                    columnsToChange[4] = realEstate.RoomsAmount.ToString();
-                }
-
-                if (!String.IsNullOrEmpty(realEstate.OwnerName))
-                {
-                    columnsToChange[5] = realEstate.OwnerName;
-                }
-
-                if (!String.IsNullOrEmpty(realEstate.OwnerSurname))
-                {
-                    columnsToChange[6] = realEstate.OwnerSurname;
-                }
-
-                if (!String.IsNullOrEmpty(realEstate.City))
-                {
-                    columnsToChange[7] = realEstate.City;
-                }
-
-                if (!String.IsNullOrEmpty(realEstate.Street))
-                {
-                    columnsToChange[8] = realEstate.Street;
-                }
-
-                if (!String.IsNullOrEmpty(realEstate.EstateAddress))
-                {
-                    columnsToChange[9] = realEstate.EstateAddress;
-                }
-
-
-                columnsToChange[11] = DateTime.Now.ToString();
-
-                s1 = string.Join(";", columnsToChange);
-
-            }
-
-            SaveLine(id, s1);
-        }
-
-      
-        public void OpenFile()
-        {
-
-            String path = "..\\Files\\RealEstates.csv";
-            string realativePath = bingPathToAppDir(path);
-
-            using (FileStream fs = File.OpenRead(realativePath))
-            {
-                byte[] b = new byte[1024];
-                UTF8Encoding temp = new UTF8Encoding(true);
-                while (fs.Read(b, 0, b.Length) > 0)
-                {
-                    Console.WriteLine(temp.GetString(b));
-                }
-            }
-        }
-
-
+         
         public static string bingPathToAppDir(string localPath)
         {
             string currentDir = Environment.CurrentDirectory;
@@ -274,36 +138,6 @@ namespace RealEstateOfficeMvc
             return directory.ToString();
         }
 
-
-        public static void SaveLine(int idOfLineToChange, string lineToSave)
-        {
-            string originalPath = Directory.GetCurrentDirectory() + "\\Files\\RealEstates.csv";
-            string tempPath = Directory.GetCurrentDirectory() + "\\Files\\Temp.csv";
-            StreamReader sr = new StreamReader(originalPath);
-
-
-            using (StreamReader reader = new StreamReader(originalPath))
-            {
-                using (StreamWriter writer = new StreamWriter(tempPath))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] columns = line.Split(";");
-                        if (idOfLineToChange == Convert.ToInt32(columns[0]))
-                        {
-                            writer.WriteLine(lineToSave);
-                        }
-                        else
-                        {
-                            writer.WriteLine(line);
-                        }
-                    }
-                }
-            }
-
-            sr.Close();
-            File.Move(tempPath, originalPath, true);
-        }
+      
     }
 }
