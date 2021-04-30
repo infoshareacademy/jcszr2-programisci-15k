@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using RealEstateOfficeMvc.Models;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -45,22 +45,13 @@ namespace RealEstateOfficeMvc.Controllers
 
         
 
-        public static Domain.User GetUser(int id)
+        public static async Task<Domain.User> GetUser(int id)
         {
-            // int ID, string Login, string Password, string Name, string Surname, string EmailAddress, int UserType
             using (var context = new RealEstateOfficeContext())
             {
-                var user = context.Users.Single(x => x.Id == id);
+                var user = await (context.Users.FirstOrDefaultAsync(x => x.Id == id));
                 return user;
             }
         }
-
-        static string ParseTextLine(string Line, int column)
-        {
-            string[] columns = Line.Split(";");
-            string output = columns[column];
-            return output;
-        }
-
     }
 }
