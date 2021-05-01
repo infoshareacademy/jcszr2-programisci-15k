@@ -10,17 +10,6 @@ namespace RealEstateOfficeMvc.Helpers
 {
     public class FavouriteContext
     {
-
-        public static void AddToDatabase(RealEstateOfficeMvc.Domain.FavouriteRealEstate favourite)
-        {
-            using (var context = new RealEstateOfficeContext())
-            {
-                context.FavouriteRealEstates.Add(favourite);
-                context.SaveChanges();
-            }
-                  
-        }
-
         public static async Task<List<RealEstateOfficeMvc.Domain.FavouriteRealEstate>> ListOfFavourites()
         {
             using ( var context = new RealEstateOfficeContext())

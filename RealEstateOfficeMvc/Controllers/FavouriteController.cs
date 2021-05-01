@@ -56,16 +56,20 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
         [Authorize(Roles = "Client")]
-        public IActionResult Like()
+        public async Task<IActionResult> Like()
         {
             var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
             var userid = Convert.ToInt32(HttpContext.Session.GetString("SESSIONLOGINID"));
             
-            var  favourite = new FavouriteRealEstate();
+            var favourite = new FavouriteRealEstate();
             favourite.UserId = userid;
             favourite.RealEstateId = number;
 
-            FavouriteContext.AddToDatabase(favourite);
+            using (var context = new RealEstateOfficeContext())
+            {
+                context.FavouriteRealEstates.Add(favourite);
+                await context.SaveChangesAsync();
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -85,7 +89,6 @@ namespace RealEstateOfficeMvc.Controllers
             return RedirectToAction("Index", "Favourite");
            
         }
-        
-
+     
     }
 }
