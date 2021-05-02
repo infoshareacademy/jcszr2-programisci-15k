@@ -22,7 +22,7 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser()
+        public async Task<IActionResult> AddUser()
         {
             string email = HttpContext.Request.Form["email"];
             string name = HttpContext.Request.Form["Name"];
@@ -42,7 +42,7 @@ namespace RealEstateOfficeMvc.Controllers
                 usr.UserType = Convert.ToInt32(userTyp);
 
                 context.Add(usr);
-                context.SaveChanges();
+                await  context.SaveChangesAsync();
             }
            
             return RedirectToAction("Index", "Users");
@@ -55,9 +55,9 @@ namespace RealEstateOfficeMvc.Controllers
 
 
         [Authorize(Roles = "Administrator,Worker,Client")]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync();
+            HttpContext.SignOutAsync();
             HttpContext.Session.Clear();
 
             return RedirectToAction("Login", "Register");
@@ -66,7 +66,7 @@ namespace RealEstateOfficeMvc.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> LoginUser()
+        public IActionResult LoginUser()
         {
           
            string login = HttpContext.Request.Form["Login"];
@@ -91,14 +91,14 @@ namespace RealEstateOfficeMvc.Controllers
 
            var userPrincipal = new ClaimsPrincipal(new[] { identity });
            //-----------------------------------------------------------
-           await HttpContext.SignInAsync(userPrincipal);
+           HttpContext.SignInAsync(userPrincipal);
 
             return RedirectToAction("Index", "Home");
 
         }
 
         [HttpPost]
-        public IActionResult EditUser(RealEstateOfficeMvc.Domain.User user)
+        public async Task<IActionResult> EditUser(RealEstateOfficeMvc.Domain.User user)
         {
             int id = Convert.ToInt32((HttpContext.Request.Form["userid"]));
 
@@ -111,7 +111,7 @@ namespace RealEstateOfficeMvc.Controllers
                 usr.Emailaddress = user.Emailaddress;
                 usr.UserType = user.UserType;
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             return RedirectToAction("Index", "Users");

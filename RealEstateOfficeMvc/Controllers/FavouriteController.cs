@@ -16,22 +16,22 @@ namespace RealEstateOfficeMvc.Controllers
 {
     public class FavouriteController : Controller
     {
-        public List<RealEstateOfficeMvc.Domain.FavouriteRealEstate> GetFavouriteRealEstates()
+        public async Task<List<RealEstateOfficeMvc.Domain.FavouriteRealEstate>> GetFavouriteRealEstates()
         {
             var userid = HttpContext.Session.GetString("SESSIONLOGINID");
-            var fav=FavouriteContext.ListOfFavourites();
-            return fav;
+            return await FavouriteContext.ListOfFavourites();
+             
         }
 
 
         [Authorize(Roles = "Client")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             
             var userid = Convert.ToInt16(HttpContext.Session.GetString("SESSIONLOGINID"));
             Filter filter = new Filter();
             var realmodel = DatabaseContext.RealEstateChoice(filter);
-            var favouritemodel = GetFavouriteRealEstates();
+            var favouritemodel = await GetFavouriteRealEstates();
 
             var model = from f in favouritemodel
                         join r in realmodel
@@ -56,22 +56,26 @@ namespace RealEstateOfficeMvc.Controllers
         }
 
         [Authorize(Roles = "Client")]
-        public IActionResult Like()
+        public async Task<IActionResult> Like()
         {
             var number = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
             var userid = Convert.ToInt32(HttpContext.Session.GetString("SESSIONLOGINID"));
             
-            var  favourite = new FavouriteRealEstate();
+            var favourite = new FavouriteRealEstate();
             favourite.UserId = userid;
             favourite.RealEstateId = number;
 
-            FavouriteContext.AddToDatabase(favourite);
+            using (var context = new RealEstateOfficeContext())
+            {
+                context.FavouriteRealEstates.Add(favourite);
+                await context.SaveChangesAsync();
+            }
             return RedirectToAction("Index", "Home");
         }
 
         [Authorize(Roles = "Client")]
         [HttpPost]
-        public IActionResult Unlike()
+        public async Task<IActionResult> Unlike()
         {
             int  realestateid = Convert.ToInt32(HttpContext.Request.Form["realestateid"]);
 
@@ -79,13 +83,12 @@ namespace RealEstateOfficeMvc.Controllers
             {
                 var unlike = context.FavouriteRealEstates.Single(x => x.RealEstateId == realestateid);
                 context.Remove(unlike);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             return RedirectToAction("Index", "Favourite");
            
         }
-        
-
+     
     }
 }

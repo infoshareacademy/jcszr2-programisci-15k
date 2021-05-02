@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using RealEstateOfficeMvc.Models;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace RealEstateOfficeMvc.Controllers
 {
@@ -35,32 +35,27 @@ namespace RealEstateOfficeMvc.Controllers
             return RedirectToAction("Index", "Users");
         }
 
-        public IActionResult EditUser()
+        public async Task<IActionResult> EditUser()
         {
             string userid = HttpContext.Request.Form["useredit"];
 
-            var model = GetUser(Convert.ToInt32(userid));
+            var model = await  GetUserAsync(Convert.ToInt32(userid));
+        
             return View(model);
         }
 
         
 
-        public static Domain.User GetUser(int id)
+        public async static Task<RealEstateOfficeMvc.Domain.User> GetUserAsync(int id)
         {
-            // int ID, string Login, string Password, string Name, string Surname, string EmailAddress, int UserType
+            RealEstateOfficeMvc.Domain.User user = null;
             using (var context = new RealEstateOfficeContext())
             {
-                var user = context.Users.Single(x => x.Id == id);
-                return user;
+              user = await (context.Users.SingleAsync(x => x.Id == id));
+              
             }
-        }
+            return user;
 
-        static string ParseTextLine(string Line, int column)
-        {
-            string[] columns = Line.Split(";");
-            string output = columns[column];
-            return output;
         }
-
     }
 }
