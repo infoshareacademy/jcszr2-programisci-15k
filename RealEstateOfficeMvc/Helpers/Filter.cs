@@ -11,7 +11,13 @@ namespace RealEstateOfficeMvc
     {
         public Filter()
         {
-            _typeOfRealEstate = null;
+            TypesOfRealEstate = new List<bool>(){
+                false,
+                false,
+                false,
+                false,
+                false,
+            };
             OwnerName = null;
             OwnerSurname = null;
             City = null;
@@ -30,7 +36,13 @@ namespace RealEstateOfficeMvc
 
         public void FilterReset()
         {
-            _typeOfRealEstate = null;
+            TypesOfRealEstate = new List<bool>(){
+                false,
+                false,
+                false,
+                false,
+                false,
+            }; ;
             OwnerName = null;
             OwnerSurname = null;
             City = null;
@@ -47,46 +59,7 @@ namespace RealEstateOfficeMvc
             ModificationDateLatest = null;
         }
 
-        public void ShowActiveFilters()
-        {
-            if(_typeOfRealEstate != null) {
-                Console.WriteLine($"Kategoria nieruchomości: {_typeOfRealEstate}");
-            }
-            if (OwnerName != null && OwnerSurname != null)
-            {
-                Console.WriteLine($"Właściciel: {OwnerName} {OwnerSurname}");
-            }
-            if (City != null)
-            {
-                Console.WriteLine($"Miejscowość: {City}");
-            }
-            if (Street != null)
-            {
-                Console.WriteLine($"Ulica: {Street}");
-            }
-            if (PriceLowest != null && PriceHighest != null)
-            {
-                Console.WriteLine($"Cena: od {PriceLowest} PLN do {PriceHighest} PLN");
-            }
-            if (AreaSmallest != null && AreaBiggest != null)
-            {
-                Console.WriteLine($"Powierzchnia: od {AreaSmallest} m^2 do {AreaBiggest} m^2");
-            }
-            if (RoomAmountSmallest != null && RoomAmountBiggest != null)
-            {
-                Console.WriteLine($"Ilość pokoi: między {RoomAmountSmallest} a {RoomAmountBiggest}");
-            }
-            if (CreationDateEarliest != null && CreationDateLatest != null)
-            {
-                Console.WriteLine("Wpis nieruchomości dodany między {0:dd/MM/yyyy} a {1:dd/MM/yyyy}", CreationDateEarliest, CreationDateLatest);
-            }
-            if (ModificationDateEarliest != null && ModificationDateLatest != null)
-            {
-                Console.WriteLine("Wpis nieruchomości zaktualizowany między {0:dd/MM/yyyy} a {1:dd/MM/yyyy}", ModificationDateEarliest, ModificationDateLatest);
-            }
-        }
-
-        private RealEstateOfficeMvc.Models.RealEstate.TypeOfRealEstate? _typeOfRealEstate;
+        public List<bool> TypesOfRealEstate;
         public string OwnerName;
         public string OwnerSurname;
         public string City;
@@ -101,17 +74,5 @@ namespace RealEstateOfficeMvc
         public DateTime? CreationDateLatest;
         public DateTime? ModificationDateEarliest;
         public DateTime? ModificationDateLatest;
-        public RealEstateOfficeMvc.Models.RealEstate.TypeOfRealEstate? TypeOfRealEstate
-        {
-            set
-            {
-                _typeOfRealEstate = value;
-            }
-
-            get
-            {
-                return _typeOfRealEstate;
-            }
-        }
     }
 }
