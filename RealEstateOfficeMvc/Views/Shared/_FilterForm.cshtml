@@ -4,11 +4,11 @@
 @{
 }
 
-@model ValueTuple<Filter, List<SelectListItem>>
+@model ValueTuple<Filter, List<string>>
 
 @{
     var filter = Model.Item1;
-    var realEstateTypeList = Model.Item2;
+    var realEstateType = Model.Item2;
 }
 
 <form method="post" action="/Home/Index">
@@ -16,16 +16,16 @@
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
     <div class="col-8">
-        Typ nieruchomości: <select asp-for="@filter.TypeOfRealEstate" asp-items="realEstateTypeList"></select>
-        @*@Html.DropDownList("realestateType", new List<SelectListItem>
+        @for (int i = 0; i < 5; i++)
         {
-            new SelectListItem {Text = "---", Value = "-1"},
-            new SelectListItem {Text = "Dom", Value = "0"},
-            new SelectListItem {Text = "Mieszkanie", Value = "1"},
-            new SelectListItem {Text = "Działka", Value = "2"},
-            new SelectListItem {Text = "Garaż", Value = "3"},
-            new SelectListItem {Text = "Lokal usługowy", Value = "4"}
-        }, new { style = "width: 180px;" })*@
+            @realEstateType[i];
+
+            @:&#58;
+
+            @Html.CheckBoxFor(m => filter.TypesOfRealEstate[i]);
+
+            @:&nbsp;
+        }
     </div>
     <br />
     <div class="col-8">

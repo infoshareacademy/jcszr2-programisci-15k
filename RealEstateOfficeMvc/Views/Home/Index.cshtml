@@ -5,7 +5,7 @@
     var usertype = String.IsNullOrEmpty(usertypeString) ? 0 : int.Parse(usertypeString);
 }
 
-
+@{ var stuff = Model.filtersShow ? "show" : "";}
 
 <style>
     table {
@@ -40,17 +40,17 @@
 
         @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
         {
-    <form asp-controller="RealEstate" asp-action="Index" method="post">
-        <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Dodaj nieruchomość">Dodaj nieruchomość <i class="bi bi-file-earmark-plus-fill"></i></button>
-    </form>
+            <form asp-controller="RealEstate" asp-action="Index" method="post">
+                <button type="submit" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Dodaj nieruchomość">Dodaj nieruchomość <i class="bi bi-file-earmark-plus-fill"></i></button>
+            </form>
         }
     </tr>
 
-    <div class="collapse" id="FilterForm">
+    <div class="collapse @stuff" id="FilterForm">
         <partial name="_FilterForm" model="(Model.filter, Model.realEstateTypeList)" />
     </div>
 
-
+  
 </table>
 
 <table>
@@ -77,85 +77,85 @@
             <th></th>
         }
     </tr>
-    
+
 
     @foreach (var item in Model.realEstateList)
     {
-<tr>
-    <td>
-        @if (@item.Typeofrealestate == 0)
-        {
-            <p>Dom</p>
-        }
-        else if (@item.Typeofrealestate == 1) 
-        {
-            <p>Mieszkanie</p>
-        }
-        else if (@item.Typeofrealestate == 2)
-        {
-            <p>Działka </p>
-        }
-        else if (@item.Typeofrealestate ==3 )
-        {
-            <p>Garaż  </p>
-        }
-        else if (@item.Typeofrealestate ==4 )
-        {
-           <p>Lokal_usługowy  </p>
-        }
-        else
-        {
-            <p></p>
-        }
-    </td>
-    <td>@item.Price</td>
-    <td>@item.Area</td>
-    <td>@(item.Roomamount > 0 ? item.Roomamount : "-")</td>
-    <td>@item.Ownername @item.Ownersurname </td>
-    <td>@item.City @item.Street @item.EstateAddress</td>
-    <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
+        <tr>
+            <td>
+                @if (@item.Typeofrealestate == 0)
+                {
+                    <p>Dom</p>
+                }
+                else if (@item.Typeofrealestate == 1)
+                {
+                    <p>Mieszkanie</p>
+                }
+                else if (@item.Typeofrealestate == 2)
+                {
+                    <p>Działka </p>
+                }
+                else if (@item.Typeofrealestate == 3)
+                {
+                    <p>Garaż  </p>
+                }
+                else if (@item.Typeofrealestate == 4)
+                {
+                    <p>Lokal_usługowy  </p>
+                }
+                else
+                {
+                    <p></p>
+                }
+            </td>
+            <td>@item.Price</td>
+            <td>@item.Area</td>
+            <td>@(item.Roomamount > 0 ? item.Roomamount : "-")</td>
+            <td>@item.Ownername @item.Ownersurname </td>
+            <td>@item.City @item.Street @item.EstateAddress</td>
+            <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
 
-    @if (usertype == 3) //dla zalogowanego klienta
-    {
-        <td>
-            <form asp-controller="Favourite" asp-action="Like" method="post">
-                <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Dodaj na listę ulubionych"><i class="bi bi-hand-thumbs-up"></i></button>
-                <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-            </form>
-        </td>
+            @if (usertype == 3) //dla zalogowanego klienta
+            {
+                <td>
+                    <form asp-controller="Favourite" asp-action="Like" method="post">
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Dodaj na listę ulubionych"><i class="bi bi-hand-thumbs-up"></i></button>
+                        <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+                    </form>
+                </td>
 
-    }
-
-
-    <td>
-        <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
-           asp-action="Details" method="post"
-           asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
-    </td>
+            }
 
 
+            <td>
+                <a class="btn btn-info" title="Podgląd" asp-controller="RealEstate"
+                   asp-action="Details" method="post"
+                   asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
+            </td>
 
 
 
-    @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
-    {
 
-        <td>
-            <a class="btn btn-info" title="Edytuj" asp-controller="RealEstate"
-               asp-action="EditEstate"
-               asp-route-id="@item.Id"><i class="bi bi-wrench"></i></a>
-        </td>
 
-        <td>
-            <form asp-controller="RealEstate" asp-action="RemoveRealEstate" method="post">
-                <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
-                <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
-            </form>
-        </td>
+            @if (usertype == 1 || usertype == 2) //dla admina i pracownika widoczne
+            {
 
-    }
+                <td>
+                    <a class="btn btn-info" title="Edytuj" asp-controller="RealEstate"
+                       asp-action="EditEstate"
+                       asp-route-id="@item.Id"><i class="bi bi-wrench"></i></a>
+                </td>
 
-</tr>
+                <td>
+                    <form asp-controller="RealEstate" asp-action="RemoveRealEstate" method="post">
+                        <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć tą nieruchomość?')"><i class="bi bi-trash"></i></button>
+                        <input type="hidden" id="realestateid" name="realestateid" value=@item.Id>
+                    </form>
+                </td>
+
+            }
+
+        </tr>
 
 
     }

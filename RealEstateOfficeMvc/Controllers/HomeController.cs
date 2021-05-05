@@ -70,10 +70,12 @@ namespace RealEstateOfficeMvc.Controllers
                 }
 
                 {
-                    filter.TypeOfRealEstate = (int.TryParse(HttpContext.Request.Form["filter.TypeOfRealEstate"], out int number) && number <= 4 && number >= 0)
-                        ? (RealEstate.TypeOfRealEstate)number
-                        : null;
-
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (bool.TryParse(HttpContext.Request.Form[$"filter.TypesOfRealEstate[{i}]"][0], out bool value))
+                            filter.TypesOfRealEstate[i] = value;
+                    }
+                        
 
                 }
 
