@@ -19,7 +19,7 @@ namespace RealEstateOfficeMvc
             base.OnConfiguring(optionsBuilder);
             optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseSqlServer("Server=localhost;Database=RealEstateOfficeDB;Trusted_Connection=True;MultipleActiveResultSets=True;");
+                .UseSqlServer("Server=LAPTOP-IDOLVEGJ\\SQLEXPRESS;Database=RealEstateOfficeDB;Trusted_Connection=True;MultipleActiveResultSets=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

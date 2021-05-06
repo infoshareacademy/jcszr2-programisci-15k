@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,14 +15,13 @@ namespace RealEstateOfficeMvc.Models
 
         public bool filtersShow { get; set; }
 
-        public List<SelectListItem> realEstateTypeList = new List<SelectListItem>
+        public List<string> realEstateTypeList = new List<string>
         {
-            new SelectListItem {Value = "-1", Text = "---"},
-            new SelectListItem {Value = "0", Text = "Dom"},
-            new SelectListItem {Value = "1", Text = "Mieszkanie"},
-            new SelectListItem {Value = "2", Text = "Działka"},
-            new SelectListItem {Value = "3", Text = "Garaż"},
-            new SelectListItem {Value = "4", Text = "Lokal usługowy"},
+            RealEstate.TypeOfRealEstate.Dom.ToString(),
+            RealEstate.TypeOfRealEstate.Mieszkanie.ToString(),
+            RealEstate.TypeOfRealEstate.Działka.ToString(),
+            RealEstate.TypeOfRealEstate.Garaż.ToString(),
+            RealEstate.TypeOfRealEstate.Lokal_usługowy.ToString(),
         };
     }
 }

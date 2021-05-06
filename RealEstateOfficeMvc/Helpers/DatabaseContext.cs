@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using RealEstateOfficeMvc.Models;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
+using RealEstateOfficeMvc.Models;
 
 namespace RealEstateOfficeMvc
 {
@@ -13,16 +13,73 @@ namespace RealEstateOfficeMvc
     {
         public static List<Domain.RealEstate> RealEstatesFilter(Filter filter)
         {
-           
-            List<Domain.RealEstate> RealEstateList = new List<Domain.RealEstate>();
-
-            using(var context = new RealEstateOfficeContext())
+            using (var context = new RealEstateOfficeContext())
             {
-                RealEstateList = context.RealEstates.ToList();
+                IQueryable<Domain.RealEstate> query = context.RealEstates;
+
+                if (!filter.Street.IsNullOrEmpty())
+                    query = query
+                        .Where(x => x.Street == filter.Street);
+
+                if (!filter.City.IsNullOrEmpty())
+                    query = query
+                        .Where(x => x.City == filter.City);
+
+                if (!filter.OwnerName.IsNullOrEmpty())
+                    query = query
+                        .Where(x => x.Ownername == filter.OwnerName);
+
+                if (!filter.OwnerSurname.IsNullOrEmpty())
+                    query = query
+                        .Where(x => x.Ownersurname == filter.OwnerSurname);
+
+                if (filter.TypesOfRealEstate.Any(x => x == true))
+                {
+                    List<int> chosenRealEstateTypes = new List<int>();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (filter.TypesOfRealEstate[i])
+                            chosenRealEstateTypes.Add(i);
+                    }
+                    query = query
+                        .Where(x => chosenRealEstateTypes.Contains(x.Typeofrealestate));
+                }
+
+                if (filter.PriceHighest != null)
+                    query = query
+                        .Where(x => x.Price <= filter.PriceHighest);
+
+                if (filter.PriceLowest != null)
+                    query = query
+                        .Where(x => x.Price >= filter.PriceLowest);
+
+                if (filter.AreaBiggest != null)
+                    query = query
+                        .Where(x => x.Area <= filter.AreaBiggest);
+
+                if (filter.AreaSmallest != null)
+                    query = query
+                        .Where(x => x.Area >= filter.AreaSmallest);
+
+                if (filter.RoomAmountBiggest != null)
+                    query = query
+                        .Where(x => x.Roomamount <= filter.RoomAmountBiggest);
+
+                if (filter.RoomAmountSmallest != null)
+                    query = query
+                        .Where(x => x.Roomamount >= filter.RoomAmountSmallest);
+
+                if (filter.CreationDateEarliest != null)
+                    query = query
+                        .Where(x => DateTime.Compare(x.Creationdate, (DateTime)filter.CreationDateEarliest) <= 0);
+
+                if (filter.CreationDateLatest != null)
+                    query = query
+                        .Where(x => DateTime.Compare(x.Creationdate, (DateTime)filter.CreationDateLatest) >= 0);
+
+                return query
+                    .ToList();
             }
-
-
-            return RealEstateList;
         }
 
 
@@ -33,103 +90,18 @@ namespace RealEstateOfficeMvc
                 var realEstate = await context.RealEstates.SingleAsync(x => x.Id == id);
                 return realEstate;
             }
-         
+
         }
 
         public static List<Domain.RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
         {
-            List<Domain.RealEstate> realEstateList;
-            List<Domain.RealEstate> filteredRealEstateList = new List<Domain.RealEstate>();
-            realEstateList = RealEstatesFilter(filter);  //gets hole list of Real Estates
+            var realEstateList = RealEstatesFilter(filter);  //gets hole list of Real Estates
 
-            for (var i = 0; i < realEstateList.Count; i++)
-            {
-                if (filter.TypeOfRealEstate != null &&
-                    realEstateList[i].Typeofrealestate != (int)filter.TypeOfRealEstate)
-                {
-                    continue;
-                }
-
-                if (filter.PriceLowest != null &&
-                    (realEstateList[i].Price < filter.PriceLowest))
-                {
-                    continue;
-                }
-
-                if (filter.PriceHighest != null &&
-                    (realEstateList[i].Price > filter.PriceHighest))
-                {
-                    continue;
-                }
-
-                if (filter.AreaSmallest != null &&
-                    (realEstateList[i].Area < filter.AreaSmallest))
-                {
-                    continue;
-                }
-
-                if (filter.AreaBiggest != null &&
-                    (realEstateList[i].Area > filter.AreaBiggest))
-                {
-                    continue;
-                }
-
-                if (filter.RoomAmountSmallest != null &&
-                    (realEstateList[i].Roomamount < filter.RoomAmountSmallest))
-                {
-                    continue;
-                }
-
-                if (filter.RoomAmountBiggest != null &&
-                    (realEstateList[i].Roomamount > filter.RoomAmountBiggest))
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(filter.OwnerName) &&
-                    realEstateList[i].Ownername != filter.OwnerName)
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(filter.OwnerSurname) &&
-                    realEstateList[i].Ownersurname != filter.OwnerSurname)
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(filter.City) &&
-                    realEstateList[i].City != filter.City)
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(filter.Street) &&
-                    realEstateList[i].Street != filter.Street)
-                {
-                    continue;
-                }
-
-                if (filter.CreationDateEarliest != null &&
-                    (DateTime.Compare(realEstateList[i].Creationdate, (DateTime)filter.CreationDateEarliest) < 0))
-                {
-                    continue;
-                }
-
-                if (filter.CreationDateLatest != null &&
-                    (DateTime.Compare(realEstateList[i].Creationdate, (DateTime)filter.CreationDateLatest) > 0))
-                {
-                    continue;
-                }
-
-                filteredRealEstateList.Add(realEstateList[i]);
-            }
-
-            return filteredRealEstateList;
+            return realEstateList;
 
         }
 
-         
+
         public static string bingPathToAppDir(string localPath)
         {
             string currentDir = Environment.CurrentDirectory;
@@ -138,6 +110,6 @@ namespace RealEstateOfficeMvc
             return directory.ToString();
         }
 
-      
+
     }
 }

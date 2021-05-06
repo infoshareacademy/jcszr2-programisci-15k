@@ -1,6 +1,6 @@
 ﻿@model RealEstateOfficeMvc.Domain.User
     
-
+<div class="edit-user">
     <form method="post" action="/Register/EditUser">
         <div class="col-8">
             <H2 class="text-secondary">Edycja konta użytkownika</H2>
@@ -32,11 +32,13 @@
 
         <br />
         <div class="col-8">
+            <select class="form-control" 
             @Html.DropDownList("userTyp", new List<SelectListItem>
             {new SelectListItem { Text = "Administrator", Value = "1" },
                 new SelectListItem { Text = "Pracownik", Value = "2" },
                 new SelectListItem { Text = "Klient", Value = "3",Selected=true }
             }, new { style = "width: 180px;" })
+                    </select>
         </div>
         <br />
         <div class="col-8">
@@ -44,3 +46,4 @@
             @*<button type="submit" class="btn btn-info">Anuluj</button>*@
         </div>
     </form>
+</div>

@@ -1,0 +1,168 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ValueTuple<Filter, List<string>>
+
+@{
+    var filter = Model.Item1;
+    var realEstateType = Model.Item2;
+}
+
+<form method="post" action="/Home/Index">
+    <section class="title">
+        <div class="titleContainer">
+            <div class="row text-warning">
+                <div class="col-md-2"></div>
+                <h2 class="col-md-4"> Kryteria wyszukiwania</h2>
+
+            </div>
+
+            <div class="row multiselect">
+                <div class="col-md-2"></div>
+                <div class="col-8">
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        @realEstateType[i];
+
+                        @:&#58;
+
+                        @Html.CheckBoxFor(m => filter.TypesOfRealEstate[i]);
+
+                        @:&nbsp;
+                    }
+                </div>
+            </div>
+
+            <br />
+            @*<div class="col-8">
+            <label>
+                Liczba pokoi:  <input style="width: 85px;" type="text" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest">-
+                <input style="width: 85px;" type="text" value="@filter.RoomAmountBiggest" name="RoomsAmountBiggest">
+            </label>
+
+        </div>*@
+            <div class="form-row">
+                <div class="col-md-2"></div>
+                <div class="col-md-1">Liczba pokoi:</div>
+                <div class="form-group col-md-1">
+                    @*<label for="roomsAmount">Email</label>*@
+                    <input type="text" class="form-control" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest" placeholder="0">
+                </div>
+                <p> - </p>
+                <div class="form-group col-md-1">
+
+                    <input type="text" class="form-control" value="@filter.RoomAmountBiggest" name="RoomsAmountBiggest" placeholder="1">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    @*<div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id=""> cena od - do</span>
+            </div>
+            <input name="pricelowest" type="text" value="@filter.PriceLowest" class="form-control">
+            <input name="pricehighest" type="text" value="@filter.PriceHighest" class="form-control">
+        </div>*@
+<div class="search">
+
+    <div class="form-row input-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Cena od - do" readonly>
+        </div>
+        <div class="col-md-3 ">
+            <input type="text" class="form-control" name="pricelowest" placeholder="0" value="@filter.PriceLowest">
+        </div>
+        <div class="col-md-3 ">
+            <input type="text" class="form-control" name="pricehighest" placeholder="0" value="@filter.PriceHighest">
+        </div>
+        <div class="col-md-2"></div>
+
+    </div>
+
+
+
+    @*<div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Powierzchnia od - do</span>
+            </div>
+            <input name="AreaSmallest" type="text" value="@filter.AreaSmallest" class="form-control">
+            <input name="AreaBiggest" type="text" value="@filter.AreaBiggest" class="form-control">
+        </div>*@
+
+    <div class="form-row input-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Powierzchnia od - do" readonly>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="AreaSmallest" placeholder="0" value="@filter.AreaSmallest">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="AreaBiggest" placeholder="0" value="@filter.AreaBiggest">
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    @*<div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
+            </div>
+            <input name="OwnerName" type="text" value="@filter.OwnerName" class="form-control">
+            <input name="OwnerSurname" type="text" value="@filter.OwnerSurname" class="form-control">
+        </div>*@
+
+    <div class="form-row input-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Imię i nazwisko właściciela" readonly>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="OwnerName" placeholder="Jan" value="@filter.OwnerName">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="OwnerSurname" placeholder="Kowalski" value="@filter.OwnerSurname">
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+
+    @*<div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id=""> Miejscowość, ulica</span>
+            </div>
+            <input name="City" type="text" value="@filter.City" class="form-control">
+            <input name="Street" type="text" value="@filter.Street" class="form-control">
+        </div>*@
+
+    <div class="form-row input-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Miejscowość, ulica" readonly>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="City" placeholder="Kraków" value="@filter.City">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="Street" placeholder="Krakowska" value="@filter.Street">
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <br />
+    <div class="form-row input-group">
+    <div class="col-md-2"></div>
+
+    <div class="col--md-8">
+        <button type="submit" class="btn btn-warning"> Wyszukaj</button>
+        <a class="btn btn-warning" asp-area="" asp-controller="Home" asp-action="Index">Resetuj filtry</a>
+    </div>
+    </div>
+</div>
+</form>
+

@@ -2,58 +2,61 @@
 
 <H2 class="col-8"> Edycja nieruchomości</H2>
 
-<form asp-controller="RealEstate" asp-action="SaveEditedEstate" method="post">
-    <div class="text-secondary">
+<div class="edit-realestate">
+    <form asp-controller="RealEstate" asp-action="SaveEditedEstate" method="post">
+        <div class="text-secondary">
 
-    </div>
-
-
-    <div class="col-8">
-        <select asp-for="@Model.Typeofrealestate" asp-items="Html.GetEnumSelectList<RealEstate.TypeOfRealEstate>()">
-        </select>
-    </div>
-    <br />
-    <div id="rooms" class="col-8">
-        <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmount" value="@Model.Roomamount"></label>
-    </div>
-
-
-    <div class="input-group col-8">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id=""> Cena i powierzchnia</span>
         </div>
-        <input name="Price" type="text" class="form-control" value="@Model.Price">
-        <input name="Area" type="text" class="form-control" value="@Model.Area">
-    </div>
-    <div class="input-group col-8">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
+
+
+        <div class="col-8">
+            <select asp-for="@Model.Typeofrealestate" asp-items="Html.GetEnumSelectList<RealEstate.TypeOfRealEstate>()">
+            </select>
         </div>
-        <input name="OwnerName" type="text" class="form-control" value="@Model.Ownername">
-        <input name="OwnerSurname" type="text" class="form-control" value="@Model.Ownersurname">
-    </div>
-
-
-    <div class="input-group col-8">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id=""> Miejscowość, ulica i numer posesji</span>
+        <br />
+        <div id="rooms" class="col-8">
+            <label>Liczba pokoi:  <input style="width: 85px;" type="text" name="RoomsAmount" value="@Model.Roomamount"></label>
         </div>
-        <input name="City" type="text" class="form-control" value="@Model.City">
-        <input name="Street" type="text" class="form-control" value="@Model.Street">
-        <input name="EstateAddress" type="text" class="form-control" value="@Model.EstateAddress">
-    </div>
-    <input type="hidden" name="id" value=@Model.Id>
-    <br />
-    <div class="col-8">
-        <button type="submit" class="btn btn-info"> Zapisz</button>
-        <a class="btn btn-info" asp-controller="Home" asp-action="Index">Anuluj</a>
-    </div>
-</form>
 
-<form asp-controller="RealEstate" asp-action="UploadFile" method="post" enctype="multipart/form-data">
-    <p><input class="btn btn-info" type="file" name="file"/> <button class="btn btn-info" type="submit"><i class="bi bi-save"></i></button></p>
-    <input type="hidden" id="realedit" name="realedit" value=@Model.Id>
-</form>
+
+        <div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id=""> Cena i powierzchnia</span>
+            </div>
+            <input name="Price" type="text" class="form-control" value="@Model.Price">
+            <input name="Area" type="text" class="form-control" value="@Model.Area">
+        </div>
+        <div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
+            </div>
+            <input name="OwnerName" type="text" class="form-control" value="@Model.Ownername">
+            <input name="OwnerSurname" type="text" class="form-control" value="@Model.Ownersurname">
+        </div>
+
+
+        <div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id=""> Miejscowość, ulica i numer posesji</span>
+            </div>
+            <input name="City" type="text" class="form-control" value="@Model.City">
+            <input name="Street" type="text" class="form-control" value="@Model.Street">
+            <input name="EstateAddress" type="text" class="form-control" value="@Model.EstateAddress">
+        </div>
+        <input type="hidden" name="id" value=@Model.Id>
+        <br />
+        <div class="col-8">
+            <button type="submit" class="btn btn-info"> Zapisz</button>
+            <a class="btn btn-info" asp-controller="Home" asp-action="Index">Anuluj</a>
+        </div>
+    </form>
+    <div class="button-file">
+        <form asp-controller="RealEstate" asp-action="UploadFile" method="post" enctype="multipart/form-data">
+            <p><input class="btn btn-info" type="file" name="file" /> @*<button class="btn btn-info" type="submit"><i class="bi bi-save"></i></button>*@</p>
+            <input type="hidden" id="realedit" name="realedit" value=@Model.Id>
+        </form>
+    </div>
+</div>
 
 <script>
 

@@ -11,7 +11,7 @@ namespace RealEstateOfficeMvc.Domain
         public int Typeofrealestate { get; set; }
 
         public int Area {get; set;}
-        public Decimal Price {get; set; }
+        public decimal Price {get; set; }
         public int Roomamount {get; set; }
         public string Ownername {get; set; }
         public string Ownersurname {get; set; }

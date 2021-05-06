@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Main"><img id="header-logo" src="~/img/logo.png" alt="" class="img-fluid"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,27 +28,27 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Lista nieruchomości</a>
+                            <a class="nav-link text-secondary" asp-area="" asp-controller="Home" asp-action="Index">Lista nieruchomości</a>
                         </li>
 
                         
                     @if  (usertype  == 3 ) //dla zalogowanego klienta 
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Favourite" asp-action="Index">Ulubione</a>
+                            <a class="nav-link text-secondary" asp-area="" asp-controller="Favourite" asp-action="Index">Ulubione</a>
                         </li>
                     }
                         
                     @if  (usertype  == 1 ) //dla admina 
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy</a>
+                            <a class="nav-link text-secondary" asp-area="" asp-controller="Users" asp-action="Index">Użytkownicy</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Raports" asp-action="Index">Raporty</a>
+                        <a class="nav-link text-secondary" asp-area="" asp-controller="Raports" asp-action="Index">Raporty</a>
                        </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logi systemowe</a>
+                            <a class="nav-link text-secondary" asp-area="" asp-controller="Logs" asp-action="Index">Logi systemowe</a>
                         </li>
                     }
                     </ul>
@@ -57,12 +57,12 @@
                         {
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="RegisterClient">Zarejestruj</a>
+                                <a class="nav-link text-secondary" asp-area="" asp-controller="Register" asp-action="RegisterClient">Zarejestruj</a>
                             </li>
 
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown">Zaloguj</a>
+                                <a class="nav-link text-secondary dropdown-toggle" data-toggle="dropdown">Zaloguj</a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <h6 class="dropdown-header">Logowanie</h6>
                                     <form method="post" asp-area="" asp-controller="Register" asp-action="LoginUser" class="px-4 py-3 ">
@@ -91,7 +91,7 @@
                         @if (usertype > 0) //zalogowani mogą się wylogować
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Logout">Wyloguj</a>
+                                <a class="nav-link text-secondary" asp-area="" asp-controller="Register" asp-action="Logout">Wyloguj</a>
                             </li>
                         }
                     </ul>
