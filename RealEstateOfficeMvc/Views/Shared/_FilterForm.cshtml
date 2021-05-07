@@ -15,89 +15,64 @@
     <div class="text-info">
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
-    <div class="search-realestate">
-        <div class="form-row multiselect-and-rooms">
-            <div class="col-md-6">
-                @for (int i = 0; i < 5; i++)
-                {
-                    @realEstateType[i];
+    <div class="col-8">
+        @for (int i = 0; i < 5; i++)
+        {
+            @realEstateType[i];
 
-                    @:&#58;
+            @:&#58;
 
-                    @Html.CheckBoxFor(m => filter.TypesOfRealEstate[i]);
+            @Html.CheckBoxFor(m => filter.TypesOfRealEstate[i]);
 
-                    @:&nbsp;
-                }
-            </div>
-            <div class="col-md-1">Liczba pokoi:</div>
-            <div class="form-group col-md-1">
-                @*<label for="roomsAmount">Email</label>*@
-                <input type="text" class="form-control" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest" placeholder="0">
-            </div>
-            <p> - </p>
-            <div class="form-group col-md-1">
+            @:&nbsp;
+        }
+    </div>
+    <br />
+    <div class="col-8">
+        <label>
+            Liczba pokoi:  <input style="width: 85px;" type="text" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest">-
+            <input style="width: 85px;" type="text" value="@filter.RoomAmountBiggest" name="RoomsAmountBiggest">
+        </label>
 
-                <input type="text" class="form-control" value="@filter.RoomAmountBiggest" name="RoomsAmountBiggest" placeholder="1">
-            </div>
+    </div>
 
 
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id=""> Cena od - do</span>
         </div>
+        <input name="PriceLowest" type="text" value="@filter.PriceLowest" class="form-control">
+        <input name="PriceHighest" type="text" value="@filter.PriceHighest" class="form-control">
+    </div>
 
-        <br />
-
-        <div class="field">
-
-            <div class="form-row input-group">
-
-                <div class="input-group col-6">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="">Cena od - do</span>
-                    </div>
-                    <input name="pricelowest" type="text" value="@filter.PriceLowest" class="form-control">
-                    <input name="pricehighest" type="text" value="@filter.PriceHighest" class="form-control">
-                </div>
-
-
-                <div class="input-group col-6">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="">Powierzchnia od - do</span>
-                    </div>
-                    <input name="AreaSmallest" type="text" value="@filter.AreaSmallest" class="form-control">
-                    <input name="AreaBiggest" type="text" value="@filter.AreaBiggest" class="form-control">
-                </div>
-
-
-
-
-                <div class="input-group col-6">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
-                    </div>
-                    <input name="OwnerName" type="text" value="@filter.OwnerName" class="form-control">
-                    <input name="OwnerSurname" type="text" value="@filter.OwnerSurname" class="form-control">
-                </div>
-
-
-
-
-
-
-                <div class="input-group col-6">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id=""> Miejscowość, ulica</span>
-                    </div>
-                    <input name="city" type="text" value="@filter.City" class="form-control">
-                    <input name="street" type="text" value="@filter.Street." class="form-control">
-                </div>
-
-
-                <br />
-                <div class="col-8">
-                    <button type="submit" class="btn btn-info"> Wyszukaj</button>
-                    <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Resetuj filtry</a>
-                </div>
-            </div>
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="">Powierzchnia od - do</span>
         </div>
+        <input name="AreaSmallest" type="text" value="@filter.AreaSmallest" class="form-control">
+        <input name="AreaBiggest" type="text" value="@filter.AreaBiggest" class="form-control">
+    </div>
+
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id=""> Imię i nazwisko właściciela</span>
+        </div>
+        <input name="OwnerName" type="text" value="@filter.OwnerName" class="form-control">
+        <input name="OwnerSurname" type="text" value="@filter.OwnerSurname" class="form-control">
+    </div>
+
+
+    <div class="input-group col-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id=""> Miejscowość, ulica</span>
+        </div>
+        <input name="City" type="text" value="@filter.City" class="form-control">
+        <input name="Street" type="text" value="@filter.Street" class="form-control">
+    </div>
+    <br />
+    <div class="col-8">
+        <button type="submit" class="btn btn-info"> Wyszukaj</button>
+        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Resetuj filtry</a>
     </div>
 </form>
 
