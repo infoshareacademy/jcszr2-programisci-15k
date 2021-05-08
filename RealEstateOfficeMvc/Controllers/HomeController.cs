@@ -76,7 +76,6 @@ namespace RealEstateOfficeMvc.Controllers
                             filter.TypesOfRealEstate[i] = value;
                     }
 
-
                 }
 
                 filter.OwnerName = HttpContext.Request.Form["OwnerName"];
