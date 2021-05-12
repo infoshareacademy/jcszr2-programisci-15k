@@ -12,6 +12,8 @@ namespace RealEstateOfficeMvc.Models
 
         public Filter filter { get; set; }
 
+        public SearchResults searchResults { get; set; }
+
         public bool filtersShow { get; set; }
 
         public List<string> realEstateTypeList = new List<string>

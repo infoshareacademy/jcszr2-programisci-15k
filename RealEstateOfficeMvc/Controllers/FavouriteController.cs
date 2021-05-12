@@ -27,10 +27,11 @@ namespace RealEstateOfficeMvc.Controllers
         [Authorize(Roles = "Client")]
         public async Task<IActionResult> Index()
         {
-            
+            SearchResults searchResults = new SearchResults();
+
             var userid = Convert.ToInt16(HttpContext.Session.GetString("SESSIONLOGINID"));
             Filter filter = new Filter();
-            var realmodel = DatabaseContext.RealEstateChoice(filter);
+            var realmodel = DatabaseContext.RealEstateChoice(filter, searchResults);
             var favouritemodel = await GetFavouriteRealEstates();
 
             var model = from f in favouritemodel
