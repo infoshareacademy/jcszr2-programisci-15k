@@ -11,7 +11,7 @@
     var realEstateType = Model.Item2;
 }
 
-<form method="post" action="/Home/Index">
+<form asp-controller="Home" id="Search" method="post" asp-route-page="1" asp-action="FilteredList">
     <div class="text-info">
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
@@ -30,10 +30,17 @@
     <br />
     <div class="col-8">
         <label>
-            Liczba pokoi:  <input style="width: 85px;" type="text" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest">-
+            Liczba pokoi:  <input style="width: 85px;" type="text" value="@filter.RoomAmountSmallest" name="RoomsAmountSmallest">
+            &nbsp; - &nbsp;
             <input style="width: 85px;" type="text" value="@filter.RoomAmountBiggest" name="RoomsAmountBiggest">
         </label>
 
+        <label>
+            Data:
+            @Html.EditorFor(m => filter.CreationDateEarliest)
+            &nbsp; - &nbsp;
+            @Html.EditorFor(m => filter.CreationDateLatest)
+        </label>
     </div>
 
 
@@ -69,10 +76,12 @@
         <input name="City" type="text" value="@filter.City" class="form-control">
         <input name="Street" type="text" value="@filter.Street" class="form-control">
     </div>
+
     <br />
     <div class="col-8">
         <button type="submit" class="btn btn-info"> Wyszukaj</button>
-        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Resetuj filtry</a>
+        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="DefaultList">Resetuj filtry</a>
     </div>
+
 </form>
 

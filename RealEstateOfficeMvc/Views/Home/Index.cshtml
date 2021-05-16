@@ -36,7 +36,8 @@
     <tr>
 
 
-        <button type="button" class="btn btn-warning " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">Pokaż filtry</button>
+
+        <button type="button" class="btn btn-warning " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">Schowaj filtry</button>
 
         &nbsp;
 
@@ -52,8 +53,22 @@
         <partial name="_FilterForm" model="(Model.filter, Model.realEstateTypeList)" />
     </div>
 
-  
+    @*<div>
+        Sortowanie (domyślnie: rosnąco, odznacz żeby było malejąco):
+        @Html.CheckBoxFor(m => m.SearchSettings.IsDescending)
+        według
+        @Html.DropDownListFor(m => m.SearchSettings.listSortOrder,
+            new SelectList(Enum.GetValues(typeof(SearchSettings.ListSortOrder))))
+        <div class="input-group col-8">
+            Ilość wyników:
+            @Html.EditorFor(m => m.SearchSettings.PageSize)
+            @Html.EditorFor(m => m.SearchSettings.PageNumber)
+        </div>
+        
+    </div>*@
 </table>
+
+
 
 <table>
     <tr>
@@ -166,9 +181,9 @@
 
 <script>
     function changeLabel(el) {
-        if (el.innerHTML === "Schowaj filtry")
-            el.innerHTML = "Pokaż filtry";
-        else el.innerHTML = "Schowaj filtry";
+        if (el.innerHTML === "Pokaż filtry")
+            el.innerHTML = "Schowaj filtry";
+        else el.innerHTML = "Pokaż filtry";
     }
 </script>
 

@@ -11,7 +11,19 @@ namespace RealEstateOfficeMvc
 {
     class DatabaseContext
     {
-        public static List<Domain.RealEstate> RealEstatesFilter(Filter filter)
+
+
+        public static async Task<Domain.RealEstate> GetAsync(int id)
+        {
+            using (var context = new RealEstateOfficeContext())
+            {
+                var realEstate = await context.RealEstates.SingleAsync(x => x.Id == id);
+                return realEstate;
+            }
+         
+        }
+
+        public static List<Domain.RealEstate> RealEstateChoice(Filter filter, SearchSettings searchSettings)   //List<RealEstate> 
         {
             using (var context = new RealEstateOfficeContext())
             {
@@ -32,18 +44,6 @@ namespace RealEstateOfficeMvc
                 if (!filter.OwnerSurname.IsNullOrEmpty())
                     query = query
                         .Where(x => x.Ownersurname == filter.OwnerSurname);
-
-                if (filter.TypesOfRealEstate.Any(x => x == true))
-                {
-                    List<int> chosenRealEstateTypes = new List<int>();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (filter.TypesOfRealEstate[i])
-                            chosenRealEstateTypes.Add(i);
-                    }
-                    query = query
-                        .Where(x => chosenRealEstateTypes.Contains(x.Typeofrealestate));
-                }
 
                 if (filter.PriceHighest != null)
                     query = query
@@ -71,34 +71,35 @@ namespace RealEstateOfficeMvc
 
                 if (filter.CreationDateEarliest != null)
                     query = query
-                        .Where(x => DateTime.Compare(x.Creationdate, (DateTime)filter.CreationDateEarliest) <= 0);
+                        .Where(x => DateTime.Compare(x.Creationdate, (DateTime)filter.CreationDateEarliest) >= 0);
 
                 if (filter.CreationDateLatest != null)
                     query = query
-                        .Where(x => DateTime.Compare(x.Creationdate, (DateTime)filter.CreationDateLatest) >= 0);
+                        .Where(x => DateTime.Compare(x.Creationdate, (DateTime)filter.CreationDateLatest) <= 0);
+
+                if (filter.TypesOfRealEstate.Any(x => x == true))
+                {
+                    List<int> chosenRealEstateTypes = new List<int>();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (filter.TypesOfRealEstate[i])
+                            chosenRealEstateTypes.Add(i);
+                    }
+                    query = query
+                        .Where(x => chosenRealEstateTypes.Contains(x.Typeofrealestate));
+                }
+
+                searchSettings.TableSize = query.Count();
+                searchSettings.PageSize = 5;
+                searchSettings.PageCount = searchSettings.TableSize / searchSettings.PageSize;
+
+                
 
                 return query
+                    .Skip(searchSettings.PageNumber * searchSettings.PageSize)
+                    .Take(searchSettings.PageSize)
                     .ToList();
             }
-        }
-
-
-        public static async Task<Domain.RealEstate> GetAsync(int id)
-        {
-            using (var context = new RealEstateOfficeContext())
-            {
-                var realEstate = await context.RealEstates.SingleAsync(x => x.Id == id);
-                return realEstate;
-            }
-
-        }
-
-        public static List<Domain.RealEstate> RealEstateChoice(Filter filter)   //List<RealEstate> 
-        {
-            var realEstateList = RealEstatesFilter(filter);  //gets hole list of Real Estates
-
-            return realEstateList;
-
         }
 
 
