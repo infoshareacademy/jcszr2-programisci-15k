@@ -11,7 +11,8 @@ namespace RealEstateOfficeMvc
     {
         public Filter()
         {
-            TypesOfRealEstate = new List<bool>(){
+            TypesOfRealEstate = new List<bool>()
+            {
                 false,
                 false,
                 false,
@@ -36,13 +37,14 @@ namespace RealEstateOfficeMvc
 
         public void FilterReset()
         {
-            TypesOfRealEstate = new List<bool>(){
+            TypesOfRealEstate = new List<bool>()
+            {
                 false,
                 false,
                 false,
                 false,
                 false,
-            }; ;
+            };
             OwnerName = null;
             OwnerSurname = null;
             City = null;
