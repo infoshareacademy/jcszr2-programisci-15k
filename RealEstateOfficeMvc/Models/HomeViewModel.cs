@@ -12,7 +12,7 @@ namespace RealEstateOfficeMvc.Models
 
         public Filter filter { get; set; }
 
-        public SearchResults searchResults { get; set; }
+        public SearchSettings SearchSettings { get; set; }
 
         public bool filtersShow { get; set; }
 

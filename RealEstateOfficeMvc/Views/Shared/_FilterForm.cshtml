@@ -11,7 +11,7 @@
     var realEstateType = Model.Item2;
 }
 
-<form id="Search" method="post" action="/Home/Index">
+<form asp-controller="Home" id="Search" method="post" asp-route-page="1" asp-action="FilteredList">
     <div class="text-info">
         <H2 class="col-8"> Kryteria wyszukiwania</H2>
     </div>
@@ -80,7 +80,7 @@
     <br />
     <div class="col-8">
         <button type="submit" class="btn btn-info"> Wyszukaj</button>
-        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Index">Resetuj filtry</a>
+        <a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="DefaultList">Resetuj filtry</a>
     </div>
 
 </form>

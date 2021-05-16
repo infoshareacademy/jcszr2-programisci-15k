@@ -23,15 +23,11 @@ namespace RealEstateOfficeMvc
          
         }
 
-        public static List<Domain.RealEstate> RealEstateChoice(Filter filter, SearchResults searchResults)   //List<RealEstate> 
+        public static List<Domain.RealEstate> RealEstateChoice(Filter filter, SearchSettings searchSettings)   //List<RealEstate> 
         {
             using (var context = new RealEstateOfficeContext())
             {
                 IQueryable<Domain.RealEstate> query = context.RealEstates;
-
-                //filter.searchResults.TableSize = query.Count();
-                //filter.searchResults.PageSize = 5;
-                //filter.searchResults.PageCount = filter.searchResults.TableSize / filter.searchResults.PageSize;
 
                 if (!filter.Street.IsNullOrEmpty())
                     query = query
@@ -93,9 +89,15 @@ namespace RealEstateOfficeMvc
                         .Where(x => chosenRealEstateTypes.Contains(x.Typeofrealestate));
                 }
 
+                searchSettings.TableSize = query.Count();
+                searchSettings.PageSize = 5;
+                searchSettings.PageCount = searchSettings.TableSize / searchSettings.PageSize;
+
+                
+
                 return query
-                    //.Skip(filter.searchResults.PageNumber * filter.searchResults.PageSize)
-                    //.Take(filter.searchResults.PageSize)
+                    .Skip(searchSettings.PageNumber * searchSettings.PageSize)
+                    .Take(searchSettings.PageSize)
                     .ToList();
             }
         }
