@@ -71,7 +71,7 @@ namespace RealEstateOfficeMvc.Controllers
                 context.FavouriteRealEstates.Add(favourite);
                 await context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Favourite");
         }
 
         [Authorize(Roles = "Client")]
