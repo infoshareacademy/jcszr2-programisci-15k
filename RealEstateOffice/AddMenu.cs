@@ -48,7 +48,7 @@ namespace RealEstateOffice
             Console.WriteLine("1 - Mieszkanie,");
             Console.WriteLine("2 - Działka,");
             Console.WriteLine("3 - Garaż,");
-            Console.WriteLine("4 - Lokal_usługowy");
+            Console.WriteLine("4 - Lokal usługowy");
             Console.WriteLine();
 
             while (!isEnumSet)

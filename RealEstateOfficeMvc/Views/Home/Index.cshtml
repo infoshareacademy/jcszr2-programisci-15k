@@ -10,7 +10,8 @@
 <style>
     table {
         border-collapse: collapse;
-        width: 100%;
+        width: 90%;
+        margin: 10px auto;
     }
 
     th {
@@ -18,6 +19,7 @@
         background-color: black;
         color: white;
         text-align: left;
+        padding: 8px;
     }
 
     td {
@@ -34,7 +36,8 @@
     <tr>
 
 
-        <button type="button" class="btn btn-info " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">Schowaj filtry</button>
+
+        <button type="button" class="btn btn-warning " data-toggle="collapse" data-target="#FilterForm" onclick="changeLabel(this)">Schowaj filtry</button>
 
         &nbsp;
 
@@ -122,12 +125,12 @@
                     <p></p>
                 }
             </td>
-            <td>@item.Price</td>
-            <td>@item.Area</td>
-            <td>@(item.Roomamount > 0 ? item.Roomamount : "-")</td>
+            <td class="text-right">@item.Price</td>
+            <td class="text-right pr-4">@item.Area</td>
+            <td class="text-right">@(item.Roomamount > 0 ? item.Roomamount : "-")</td>
             <td>@item.Ownername @item.Ownersurname </td>
             <td>@item.City @item.Street @item.EstateAddress</td>
-            <td>@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
+            <td class="text-right">@(Math.Round(item.Price / item.Area,2).ToString("N2"))</td>
 
             @if (usertype == 3) //dla zalogowanego klienta
             {

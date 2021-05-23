@@ -3,41 +3,46 @@
 *@
 @{
 }
-<form method="post" action="/Register/AddUser">
-    <div class="col-8">
-        <H2 class="text-secondary">Nowe konto użytkownika</H2>
-    </div>
-    <div class="input-group col-8">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="">Imię i nazwisko</span>
-        </div>
-        <input name="Name" type="text" class="form-control">
-        <input name="Surname" type="text" class="form-control">
-    </div>
 
-    <div class="input-group col-8">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="">Login i hasło</span>
+<div class="add-account">
+    <form method="post" action="/Register/AddUser">
+        <div class="col-8">
+            <H2 class="text-secondary">Nowe konto użytkownika</H2>
         </div>
-        <input name="Login" type="text" class="form-control">
-        <input name="Password" type="password" class="form-control">
-    </div>
-    <div class="input-group col-8">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="">E-mail</span>
+        <div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Imię i nazwisko</span>
+            </div>
+            <input name="Name" type="text" class="form-control">
+            <input name="Surname" type="text" class="form-control">
         </div>
-        <input name="email" type="text" class="form-control">
+
+        <div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Login i hasło</span>
+            </div>
+            <input name="Login" type="text" class="form-control">
+            <input name="Password" type="password" class="form-control">
+        </div>
+        <div class="input-group col-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">E-mail</span>
+            </div>
+            <input name="email" type="text" class="form-control">
+        </div>
+        <br />
+        <div class="col-8">
+            <select class="form-control"
+                @Html.DropDownList("userTyp", new List<SelectListItem>
+                {new SelectListItem { Text = "Administrator", Value = "1" },
+                 new SelectListItem { Text = "Pracownik", Value = "2" },
+                 new SelectListItem { Text = "Klient", Value = "3" }
+                }, new { style = "width: 180px;" })
+                </select>
+        </div>
+        <br />
+        <div class="col-8">
+            <button type="submit" class="btn btn-info">Zapisz</button>
+        </div>
+    </form>
     </div>
-    <br />
-    <div class="col-8">
-        @Html.DropDownList("userTyp", new List<SelectListItem>
-        {new SelectListItem { Text = "Administrator", Value = "1" },
-         new SelectListItem { Text = "Pracownik", Value = "2" },
-         new SelectListItem { Text = "Klient", Value = "3" }
-        }, new { style = "width: 180px;" })
-    </div>
-    <br />
-    <div class="col-8">
-        <button type="submit" class="btn btn-info">Zapisz</button>
-    </div>
-</form>
