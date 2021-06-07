@@ -78,8 +78,7 @@ namespace RealEstateOfficeMvc.Controllers
                 context.RealEstates.Add(realest);
                 await context.SaveChangesAsync();
              }
-
-            return RedirectToAction("Index", "Home");
+             return Redirect("/Home/Index/1");
 
         }
 
@@ -120,8 +119,8 @@ namespace RealEstateOfficeMvc.Controllers
 
                await context.SaveChangesAsync();
             }
-           
-            return RedirectToAction("Index", "Home");
+
+            return Redirect("/Home/Index/1");
         }
 
 
@@ -211,7 +210,9 @@ namespace RealEstateOfficeMvc.Controllers
                context.Remove(context.RealEstates.Single(r => r.Id == id));
                await context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Home");
+           
+            return Redirect("/Home/Index/1");
+
         }
 
 

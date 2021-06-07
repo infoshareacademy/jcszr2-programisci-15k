@@ -92,11 +92,9 @@ namespace RealEstateOfficeMvc
                 searchSettings.TableSize = query.Count();
                 searchSettings.PageSize = 20;
                 searchSettings.PageCount = searchSettings.TableSize / searchSettings.PageSize;
-
-                
-
+             
                 return query
-                    .Skip(searchSettings.PageNumber  * searchSettings.PageSize)
+                    .Skip(Math.Max(searchSettings.PageNumber -1,0)  * searchSettings.PageSize)
                     .Take(searchSettings.PageSize)
                     .ToList();
             }
