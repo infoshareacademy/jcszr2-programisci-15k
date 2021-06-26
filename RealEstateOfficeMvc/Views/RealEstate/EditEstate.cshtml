@@ -52,7 +52,7 @@
     </form>
     <div class="button-file">
         <form asp-controller="RealEstate" asp-action="UploadFile" method="post" enctype="multipart/form-data">
-            <p><input class="btn btn-info" type="file" name="file" /> @*<button class="btn btn-info" type="submit"><i class="bi bi-save"></i></button>*@</p>
+            <p><input class="btn btn-info" type="file" name="file" /> <button class="btn btn-info" type="submit"><i class="bi bi-save"></i></button></p>
             <input type="hidden" id="realedit" name="realedit" value=@Model.Id>
         </form>
     </div>
